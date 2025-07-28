@@ -50,7 +50,7 @@ export default function App() {
   return (
     <Box sx={{height: 800, p: 2}}>
       <Typography variant="h5" gutterBottom>
-        Mutual Fund Scores (Green → Red)
+        Mutual Fund Scores
       </Typography>
       <DataGrid
         rows={rows}

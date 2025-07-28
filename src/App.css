@@ -32,3 +32,8 @@
   border-right: none;
 }
 
+.MuiDataGrid-columnHeaderTitle,.css-1rxsvxt{
+  font-size: large;
+  font-weight: bolder;
+}
+

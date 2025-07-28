@@ -58,7 +58,7 @@ export default function App() {
         pageSize={10}
         getRowClassName={getRowClassName}
         rowHeight={40}
-        style={{border:"2px", borderStyle:"solid",fontFamily:"sans-serif"}}
+        style={{border:"2px", borderStyle:"solid",fontFamily:"revert-layer"}}
       />
     </Box>
   );

@@ -1,4 +1,4 @@
-import { Provider  } from "./components/ui/provider"
+import { Provider } from "../src/Components/ui/provider.jsx"
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'

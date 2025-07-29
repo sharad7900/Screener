@@ -15,7 +15,8 @@
 /* Optional text color fix for visibility */
 [class^="score-row-"] {
   color: black;
-  border: 1px solid black;
+  border-top: 1px solid rgb(62, 62, 62);
+  /* border-bottom: 1px solid rgb(62, 62, 62); */
 }
 
 .MuiDataGrid-root{
@@ -35,5 +36,11 @@
 .MuiDataGrid-columnHeaderTitle,.css-1rxsvxt{
   font-size: large;
   font-weight: bolder;
+}
+
+
+.MuiDataGrid-columnHeaders{
+  border-bottom: 1px solid rgb(62, 62, 62);
+  text-align: center;
 }
 

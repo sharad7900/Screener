@@ -1,10 +1,11 @@
-import * as React from "react";
 import { useEffect, useState } from "react";
 import { DataGrid, GridOverlay } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 import "./App.css";
+import { Image } from "@chakra-ui/react";
+import { ColorModeButton } from "./components/ui/color-mode";
 
 // 🔄 Custom loading overlay
 function CustomLoadingOverlay() {
@@ -36,13 +37,14 @@ export default function App() {
   const [loading, setLoading] = useState(true);
 
   const columns = [
-    { field: "mfName", headerName: "Mutual Fund Name", width: 400 },
+    { field: "mfName", headerName: "Mutual Fund Name", width: 412 },
     { field: "score", headerName: "Score", width: 100 },
     { field: "cat", headerName: "Category", width: 200 },
-    { field: "assetClass", headerName: "Asset Class", width: 158 },
-    { field: "nav", headerName: "NAV", width: 200 },
-    { field: "aum", headerName: "AUM", width: 150 },
-    { field: "ter", headerName: "Expense Ratio", width: 200 },
+    { field: "assetClass", headerName: "Asset Class", width: 140 },
+    { field: "nav", headerName: "NAV", width: 125 },
+    { field: "aum", headerName: "AUM (Cr.)", width: 150 },
+    { field: "ter", headerName: "Expense Ratio", width: 150 },
+    { field: "per", headerName: "% Equity", width: 100 },
   ];
 
   const getRowClassName = (params) => {
@@ -59,10 +61,14 @@ export default function App() {
 
     const promises = entries.map(async ([key, mfObj], index) => {
       const [mfName, score] = Object.entries(mfObj)[0];
-
+      const per = Object?.entries(mfObj)?.[1]?.[1] || "N/A";
+      const assetClass = Object?.entries(mfObj)?.[2]?.[1] || "N/A";
+      const cat=Object?.entries(mfObj)?.[3]?.[1] || "NA";
+      const aum = Object?.entries(mfObj)?.[4]?.[1] || "NA";
+      const ter = Object?.entries(mfObj)?.[5]?.[1] || "NA";
       try {
-        const [res1, res2] = await Promise.all([
-          fetch(`https://dotnet.ngenmarkets.com/ngenindia.asmx/ReturnSQLResult?sql=exec%20c_getFundMetaData%${key}`).then((res) => res.json()),
+        const [res2] = await Promise.all([
+          
           fetch(`https://dotnet.ngenmarkets.com/ngenindia.asmx/ReturnSQLResult?sql=exec%20c_getSchemeNavJSON%${key}`).then((res) => res.json()),
         ]);
 
@@ -70,10 +76,11 @@ export default function App() {
           id: index + 1,
           mfName,
           score: parseFloat(score.toFixed(2)),
-          assetClass: res1?.meta?.[0]?.assetClass || "N/A",
-          cat: res1?.meta?.[0]?.category || "N/A",
-          aum: res1?.meta?.[0]?.aum || "N/A",
-          ter: res1?.meta?.[0]?.ter || "N/A",
+          per: parseFloat(per.toFixed(2)),
+          assetClass,
+          cat,
+          aum,
+          ter,
           nav: res2?.[res2.length - 1].nav || "N/A",
         };
       } catch (err) {
@@ -111,7 +118,14 @@ export default function App() {
   }, []);
 
   return (
-    <div className="outerdiv" style={{display:"flex",justifyContent:"center", alignItems:"center"}}>
+    <>
+    <div className="navbar">
+      <ul>
+        <li><Image rounded="md" src="sgc.png" alt="SGC" style={{height:"50px"}}/></li>
+        <li><ColorModeButton/></li>
+      </ul>
+    </div>
+    <div className="outerdiv" style={{display:"flex",justifyContent:"center", alignItems:"center",marginBottom:"2%"}}>
     <Box sx={{ height: 800, p: 2 }} style={{width:"75%"}}>
       <Typography variant="h5" gutterBottom>
         Mutual Fund Scores
@@ -131,5 +145,5 @@ export default function App() {
       />
     </Box>
     </div>
-  );
+  </>);
 }

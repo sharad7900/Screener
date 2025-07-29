@@ -43,3 +43,19 @@
   border-bottom: 1px solid rgb(62, 62, 62);
   text-align: center;
 }
+
+.navbar>ul{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 1%;
+    border-bottom: 2px solid gray;
+}
+
+.navbar>ul>li:nth-child(-n+1){
+    width: 80%;
+
+}
+.navbar{
+  margin-bottom: 2%;
+}

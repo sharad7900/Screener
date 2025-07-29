@@ -36,12 +36,12 @@ export default function App() {
   const [loading, setLoading] = useState(true);
 
   const columns = [
-    { field: "mfName", headerName: "Mutual Fund Name", width: 500 },
-    { field: "score", headerName: "Score", width: 152 },
-    { field: "cat", headerName: "Category", width: 300 },
-    { field: "assetClass", headerName: "Asset Class", width: 200 },
+    { field: "mfName", headerName: "Mutual Fund Name", width: 400 },
+    { field: "score", headerName: "Score", width: 100 },
+    { field: "cat", headerName: "Category", width: 200 },
+    { field: "assetClass", headerName: "Asset Class", width: 158 },
     { field: "nav", headerName: "NAV", width: 200 },
-    { field: "aum", headerName: "AUM", width: 300 },
+    { field: "aum", headerName: "AUM", width: 150 },
     { field: "ter", headerName: "Expense Ratio", width: 200 },
   ];
 
@@ -111,7 +111,8 @@ export default function App() {
   }, []);
 
   return (
-    <Box sx={{ height: 800, p: 2 }}>
+    <div className="outerdiv" style={{display:"flex",justifyContent:"center", alignItems:"center"}}>
+    <Box sx={{ height: 800, p: 2 }} style={{width:"75%"}}>
       <Typography variant="h5" gutterBottom>
         Mutual Fund Scores
       </Typography>
@@ -129,5 +130,6 @@ export default function App() {
         style={{ border: "2px", borderStyle: "solid", fontFamily: "revert-layer" }}
       />
     </Box>
+    </div>
   );
 }

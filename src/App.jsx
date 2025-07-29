@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 import "./App.css";
 import { Image } from "@chakra-ui/react";
-import { ColorModeButton } from "./components/ui/color-mode";
+import { ColorModeButton } from "./Components/ui/color-mode.jsx";
 
 // 🔄 Custom loading overlay
 function CustomLoadingOverlay() {

@@ -70,15 +70,10 @@ export default function App() {
       const cat = Object?.entries(mfObj)?.[3]?.[1] || "NA";
       const aum = Object?.entries(mfObj)?.[4]?.[1] || "NA";
       const ter = Object?.entries(mfObj)?.[5]?.[1] || "NA";
+      const nav = nvdt[key];
    
 
-        try {
-
-          const [res2] = await Promise.all([
-
-            fetch(`https://dotnet.ngenmarkets.com/ngenindia.asmx/ReturnSQLResult?sql=exec%20c_getSchemeNavJSON%${key}`).then((res) => res.json()),
-          ]);
-
+    
           
           return {
             id: index + 1,
@@ -89,12 +84,9 @@ export default function App() {
             cat,
             aum,
             ter,
-            nav: res2?.[res2.length - 1].nav || "N/A",
+            nav
           };
-        } catch (err) {
-          console.error(`Fetch failed for ${key}`, err);
-          return null;
-        }
+         
     });
 
     const allData = await Promise.all(promises);

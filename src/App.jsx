@@ -70,7 +70,7 @@ export default function App() {
       const cat = Object?.entries(mfObj)?.[3]?.[1] || "NA";
       const aum = Object?.entries(mfObj)?.[4]?.[1] || "NA";
       const ter = Object?.entries(mfObj)?.[5]?.[1] || "NA";
-      console.log(nvdt);
+   
 
         try {
 

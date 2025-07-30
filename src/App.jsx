@@ -7,6 +7,7 @@ import "./App.css";
 import { Image } from "@chakra-ui/react";
 import { ColorModeButton } from "./Components/ui/color-mode.jsx";
 
+
 // 🔄 Custom loading overlay
 function CustomLoadingOverlay() {
   return (
@@ -35,6 +36,9 @@ export default function App() {
   const [minScore, setMinScore] = useState(0);
   const [maxScore, setMaxScore] = useState(100);
   const [loading, setLoading] = useState(true);
+  const d = new Date();
+  const [newnav, setNav] = useState({ "timestamp": d });
+  const [prevnav, setprevNav] = useState();
 
   const columns = [
     { field: "mfName", headerName: "Mutual Fund Name", width: 412 },
@@ -56,37 +60,41 @@ export default function App() {
   };
 
   // 📦 Simulated batch fetcher
-  const batchFetchFundData = async (keysMap) => {
+  const batchFetchFundData = async (keysMap, nvdt) => {
     const entries = Object.entries(keysMap);
 
     const promises = entries.map(async ([key, mfObj], index) => {
       const [mfName, score] = Object.entries(mfObj)[0];
       const per = Object?.entries(mfObj)?.[1]?.[1] || "N/A";
       const assetClass = Object?.entries(mfObj)?.[2]?.[1] || "N/A";
-      const cat=Object?.entries(mfObj)?.[3]?.[1] || "NA";
+      const cat = Object?.entries(mfObj)?.[3]?.[1] || "NA";
       const aum = Object?.entries(mfObj)?.[4]?.[1] || "NA";
       const ter = Object?.entries(mfObj)?.[5]?.[1] || "NA";
-      try {
-        const [res2] = await Promise.all([
-          
-          fetch(`https://dotnet.ngenmarkets.com/ngenindia.asmx/ReturnSQLResult?sql=exec%20c_getSchemeNavJSON%${key}`).then((res) => res.json()),
-        ]);
+      console.log(nvdt);
 
-        return {
-          id: index + 1,
-          mfName,
-          score: parseFloat(score.toFixed(2)),
-          per: parseFloat(per.toFixed(2)),
-          assetClass,
-          cat,
-          aum,
-          ter,
-          nav: res2?.[res2.length - 1].nav || "N/A",
-        };
-      } catch (err) {
-        console.error(`Fetch failed for ${key}`, err);
-        return null;
-      }
+        try {
+
+          const [res2] = await Promise.all([
+
+            fetch(`https://dotnet.ngenmarkets.com/ngenindia.asmx/ReturnSQLResult?sql=exec%20c_getSchemeNavJSON%${key}`).then((res) => res.json()),
+          ]);
+
+          
+          return {
+            id: index + 1,
+            mfName,
+            score: parseFloat(score.toFixed(2)),
+            per: parseFloat(per.toFixed(2)),
+            assetClass,
+            cat,
+            aum,
+            ter,
+            nav: res2?.[res2.length - 1].nav || "N/A",
+          };
+        } catch (err) {
+          console.error(`Fetch failed for ${key}`, err);
+          return null;
+        }
     });
 
     const allData = await Promise.all(promises);
@@ -94,13 +102,24 @@ export default function App() {
   };
 
   useEffect(() => {
-    
+
     const fetchData = async () => {
       try {
         const res = await fetch("/Final_Table.json");
+    
         const data = await res.json();
+        const response = await fetch(`https://screener-back.vercel.app/`,{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body: JSON.stringify(data)
+            })
+        const navs = await response.json();
+      
 
-        const formatted = await batchFetchFundData(data);
+
+        const formatted = await batchFetchFundData(data,navs);
         formatted.sort((a, b) => b.score - a.score);
 
         const scores = formatted.map((row) => row.score);
@@ -117,33 +136,38 @@ export default function App() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    // console.log("newnav updated:", newnav);
+    // console.log(d);
+  }, [newnav]);
+
   return (
     <>
-    <div className="navbar">
-      <ul>
-        <li><Image rounded="md" src="sgc.png" alt="SGC" style={{height:"50px"}}/></li>
-        <li><ColorModeButton/></li>
-      </ul>
-    </div>
-    <div className="outerdiv" style={{display:"flex",justifyContent:"center", alignItems:"center",marginBottom:"2%"}}>
-    <Box sx={{ height: 800, p: 2 }} style={{width:"75%"}}>
-      <Typography variant="h5" gutterBottom>
-        Mutual Fund Scores
-      </Typography>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={10}
-        getRowId={(row) => row.id}
-        getRowClassName={getRowClassName}
-        rowHeight={40}
-        loading={loading}
-        slots={{
-          loadingOverlay: CustomLoadingOverlay,
-        }}
-        style={{ border: "2px", borderStyle: "solid", fontFamily: "revert-layer" }}
-      />
-    </Box>
-    </div>
-  </>);
+      <div className="navbar">
+        <ul>
+          <li><Image rounded="md" src="sgc.png" alt="SGC" style={{ height: "50px" }} /></li>
+          <li><ColorModeButton /></li>
+        </ul>
+      </div>
+      <div className="outerdiv" style={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "2%" }}>
+        <Box sx={{ height: 800, p: 2 }} style={{ width: "75%" }}>
+          <Typography variant="h5" gutterBottom>
+            Mutual Fund Scores
+          </Typography>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            pageSize={10}
+            getRowId={(row) => row.id}
+            getRowClassName={getRowClassName}
+            rowHeight={40}
+            loading={loading}
+            slots={{
+              loadingOverlay: CustomLoadingOverlay,
+            }}
+            style={{ border: "2px", borderStyle: "solid", fontFamily: "revert-layer" }}
+          />
+        </Box>
+      </div>
+    </>);
 }

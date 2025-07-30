@@ -6,6 +6,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import "./App.css";
 import { Image } from "@chakra-ui/react";
 import { ColorModeButton } from "./Components/ui/color-mode.jsx";
+import Footer from "./Components/Footer.jsx";
 
 
 // 🔄 Custom loading overlay
@@ -128,10 +129,7 @@ export default function App() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    // console.log("newnav updated:", newnav);
-    // console.log(d);
-  }, [newnav]);
+ 
 
   return (
     <>
@@ -141,7 +139,7 @@ export default function App() {
           <li><ColorModeButton /></li>
         </ul>
       </div>
-      <div className="outerdiv" style={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "2%" }}>
+      <div className="outerdiv" style={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "5%" }}>
         <Box sx={{ height: 800, p: 2 }} style={{ width: "75%" }}>
           <Typography variant="h5" gutterBottom>
             Mutual Fund Scores
@@ -161,5 +159,9 @@ export default function App() {
           />
         </Box>
       </div>
+      <div style={{ border: "2px", borderStyle: "solid", fontFamily: "revert-layer" }}>
+        <Footer/>
+      </div>
+      
     </>);
 }

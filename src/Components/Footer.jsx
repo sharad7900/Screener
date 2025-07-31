@@ -38,12 +38,24 @@ const Footer = () => {
 
         <Box height="1px" bg="gray.600" w="100%" />
 
-        <Flex justify="center">
-        <Box>
-          <Text fontSize="sm">Made with ❤️ by Sharad Bansal</Text>
-          <Text fontSize="sm">📧 sharadbansal67@gmail.com</Text>
+        
+
+        <Box mx="auto" marginTop={5}>
+          <Text fontSize="xs" textAlign="justify" mb={1}>
+            Mutual fund investments are subject to market risks. Please read the scheme information and other related documents carefully before investing. Past performance of the schemes is neither an indicator nor a guarantee of future performance.
+          </Text>
+          <Text fontSize="xs" textAlign="justify" mb={1}>
+            Please consider your specific investment requirements, risk tolerance, investment goal, time frame and the cost associated with the investment before choosing a mutual fund / fixed deposit, or designing a portfolio of mutual funds that suits your needs.
+          </Text>
+          <Text fontSize="xs" textAlign="justify">
+            Sui Generis Consulting (SGC) Pvt. Ltd. has gathered the data, information, statistics from sources believed to be highly reliable and true. All necessary precautions have been taken to avoid any error, lapse or insufficiency, however, no representations or warranties are made (express or implied) as to the reliability, accuracy or completeness of such information. The Company cannot be held liable for any loss arising directly or indirectly from the use of, or any action taken in on, any information appearing herein.
+          </Text>
         </Box>
-          
+        <Flex justify="center" mt={4}>
+          <Box textAlign="center">
+            <Text fontSize="sm">Made with ❤️ by Sharad Bansal</Text>
+            <Text fontSize="sm">📧 sharadbansal67@gmail.com</Text>
+          </Box>
         </Flex>
         
       </Stack>

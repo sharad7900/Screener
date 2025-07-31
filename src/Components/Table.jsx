@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 import "./Table.css";
-import { Image } from "@chakra-ui/react";
+import { Flex, Image } from "@chakra-ui/react";
 import { ColorModeButton } from "../Components/ui/color-mode.jsx";
 import Footer from "./Footer.jsx";
 
@@ -42,14 +42,14 @@ export default function Table() {
   const [prevnav, setprevNav] = useState();
 
   const columns = [
-    { field: "mfName", headerName: "Mutual Fund Name", width: 412 },
-    { field: "score", headerName: "Score", width: 100 },
-    { field: "cat", headerName: "Category", width: 200 },
-    { field: "assetClass", headerName: "Asset Class", width: 140 },
-    { field: "nav", headerName: "NAV", width: 125 },
-    { field: "aum", headerName: "AUM (Cr.)", width: 150 },
-    { field: "ter", headerName: "Expense Ratio", width: 150 },
-    { field: "per", headerName: "% Equity", width: 100 },
+    { field: "mfName", headerName: "Mutual Fund Name", flex:2 },
+    { field: "score", headerName: "Score", flex:0.5 },
+    { field: "cat", headerName: "Category", flex:0.75},
+    { field: "assetClass", headerName: "Asset Class", flex:0.5 },
+    { field: "nav", headerName: "NAV", flex:0.4 },
+    { field: "aum", headerName: "AUM (Cr.)", flex:0.5 },
+    { field: "ter", headerName: "Expense Ratio", flex:0.6 },
+    { field: "per", headerName: "% Equity", flex:0.5 },
   ];
 
   const getRowClassName = (params) => {
@@ -101,14 +101,14 @@ export default function Table() {
         const res = await fetch("/Final_Table.json");
     
         const data = await res.json();
-        const response = await fetch(`https://screener-back.vercel.app/`,{
+        const response = await fetch(`http://screener-back.vercel.app//`,{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json"
                 },
                 body: JSON.stringify(data)
             })
-        const navs = await response.json();
+           const navs = await response.json();
       
 
 
@@ -139,7 +139,17 @@ export default function Table() {
           <li><ColorModeButton /></li>
         </ul>
       </div>
+      {/* Apply Filters Here! */}
+      {/* <div className="outerdiv" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+      <Box style={{ width: "75%" }} sx={{ height: 200, p: 2 }}>
+       
+        <div style={{border:"2px", borderColor:"gray", borderStyle:"solid", borderRadius:"3px", height:"100%"}}>
+
+        </div>
+      </Box>
+      </div> */}
       <div className="outerdiv" style={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "5%" }}>
+        
         <Box sx={{ height: 800, p: 2 }} style={{ width: "75%" }}>
           <Typography variant="h5" gutterBottom>
             Mutual Fund Scores
@@ -150,6 +160,7 @@ export default function Table() {
             pageSize={10}
             getRowId={(row) => row.id}
             getRowClassName={getRowClassName}
+            
             rowHeight={40}
             loading={loading}
             slots={{

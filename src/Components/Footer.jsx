@@ -55,8 +55,8 @@ const Footer = () => {
           </Box>
 
           <Box width="50%" pl={4} display="flex" flexDirection="column" justifyContent="center" alignItems="flex-end" textAlign="center">
-            <Text fontSize="sm">Made with ❤️ by Sharad Bansal</Text>
-            <Text fontSize="sm">📧 sharadbansal67@gmail.com</Text>
+            <Text fontSize="sm">Made by Sharad Bansal</Text>
+            <Text fontSize="sm">sharadbansal67@gmail.com</Text>
           </Box>
         </Flex>
 

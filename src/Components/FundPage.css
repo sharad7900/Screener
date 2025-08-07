@@ -8,6 +8,9 @@
     width: 60%;
 }
 
-/* li{
-    padding: 30%;
-} */
+.spinner{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20% 0 20% 0;
+}

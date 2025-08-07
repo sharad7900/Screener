@@ -2,7 +2,7 @@ import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import "./FundPage.css";
 import { ColorModeButton } from "./ui/color-mode";
-import { Box, Card, Flex, Image, SimpleGrid, Text } from "@chakra-ui/react";
+import { Box, Card, Flex, Image, SimpleGrid, Spinner, Text } from "@chakra-ui/react";
 import Footer from "./Footer";
 import { DataGrid } from "@mui/x-data-grid";
 import Stack from "@mui/material/Stack";
@@ -74,6 +74,9 @@ const FundPage = () => {
                 <li><ColorModeButton /></li>
             </ul>
         </div>
+        {fundName['MFName'] ? 
+
+        <div>
         <Typography variant="h4" gutterBottom textAlign={"center"} paddingY={"2%"} fontStyle={"italic"}>
             {fundName['MFName']}
         </Typography>
@@ -176,6 +179,11 @@ const FundPage = () => {
                 </Stack>
             </Box>
         </div>
+        </div>
+        
+        
+        : <div  className="spinner"><Spinner size="xl"/></div>}
+        
         <div style={{ border: "2px", borderStyle: "solid", fontFamily: "revert-layer" }}>
             <Footer />
         </div>

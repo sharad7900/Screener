@@ -42,7 +42,9 @@ export default function Table() {
   const navigate = useNavigate();
 
   const columns = [
-    { field: "mfName", headerName: "Mutual Fund Name", flex: 2 },
+    { field: "mfName", headerName: "Mutual Fund Name", flex: 2,  renderCell: (params) => (
+    <span style={{ fontWeight: 550 }}>{params.value}</span>
+  ) },
     { field: "score", headerName: "Score", flex: 0.5 },
     { field: "cat", headerName: "Category", flex: 0.75 },
     { field: "assetClass", headerName: "Asset Class", flex: 0.5 },
@@ -165,7 +167,7 @@ export default function Table() {
             columns={columns}
             pageSize={10}
             getRowId={(row) => row.id}
-            getRowClassName={getRowClassName}
+            // getRowClassName={getRowClassName}
             onRowClick={(params) => {
               handelRowClick(params.id);
             }}
@@ -175,7 +177,7 @@ export default function Table() {
             slots={{
               loadingOverlay: CustomLoadingOverlay,
             }}
-            style={{ border: "2px", borderStyle: "solid", fontFamily: "revert-layer" }}
+            style={{ border: "2px", borderStyle: "solid", fontFamily: "revert-layer", cursor:"pointer" }}
           />
         </Box>
       </div>

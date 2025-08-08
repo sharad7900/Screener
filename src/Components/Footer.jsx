@@ -5,20 +5,13 @@ const Footer = () => {
     <Box bg="gray.300" color="gray.800" px={6} py={8}>
       <Stack spacing={6}>
         <Flex justify="space-between" wrap="wrap" align="flex-start">
-          <Box maxW="300px">
+          <Box maxW="300px" pl={"5%"}>
             <Text fontSize="lg" fontWeight="bold">
               ScreenerApp
             </Text>
             <Text fontSize="sm">© {new Date().getFullYear()} All rights reserved</Text>
           </Box>
 
-          <Box maxW="350px">
-            <Text fontWeight="semibold" mb={1}>Registered Office:</Text>
-            <Text fontSize="sm">
-              303, IIIrd Floor, E-7A, Friends Complex,<br />
-              Near Hira Sweets, Vikas Marg, Delhi- 92
-            </Text>
-          </Box>
 
           <Box maxW="350px">
             <Text fontWeight="semibold" mb={1}>Corporate Office:</Text>
@@ -29,7 +22,7 @@ const Footer = () => {
             </Text>
           </Box>
 
-          <Box>
+          <Box pr={"5%"}>
             <Text fontWeight="semibold" mb={1}>Contact:</Text>
             <Text fontSize="sm">📞 +91-562-2600020</Text>
             <Text fontSize="sm">📧 info@suigenerisconsulting.biz</Text>

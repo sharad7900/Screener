@@ -24,7 +24,7 @@
 }
 
 .MuiDataGrid-cell {
-  border-right: 1px solid hsl(0, 0%, 34%); /* Divider between cells */
+  border: none; /* Divider between cells */
 }
 
 /* Optional: Remove the last column's right border */

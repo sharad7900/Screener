@@ -1,0 +1,642 @@
+{
+    "20127039": {
+        "Motilal Oswal Midcap Fund (G)": 46.46233022622516,
+        "per": 83.37497,
+        "assetClass": "Equity",
+        "category": "Mid Cap Fund",
+        "aum": 33053.1257,
+        "ter": 1.56
+    },
+    "20100377": {
+        "Nippon India Growth Mid Cap Fund - (G)": 51.313782492577026,
+        "per": 97.73997999999996,
+        "assetClass": "Equity",
+        "category": "Mid Cap Fund",
+        "aum": 39065.5499,
+        "ter": 1.55
+    },
+    "20140225": {
+        "Edelweiss Mid Cap Fund (G)": 52.79943412791992,
+        "per": 96.32997999999999,
+        "assetClass": "Equity",
+        "category": "Mid Cap Fund",
+        "aum": 10988.162,
+        "ter": 1.69
+    },
+    "20101065": {
+        "Quant Mid Cap Fund (G)": 46.33638039823529,
+        "per": 92.9842,
+        "assetClass": "Equity",
+        "category": "Mid Cap Fund",
+        "aum": 9140.4137,
+        "ter": 1.74
+    },
+    "20105758": {
+        "HDFC Mid Cap Fund - Regular (G)": 47.68625569435897,
+        "per": 92.76999999999997,
+        "assetClass": "Equity",
+        "category": "Mid Cap Fund",
+        "aum": 84061.4276,
+        "ter": 1.38
+    },
+    "20102528": {
+        "ICICI Pru MidCap Fund (G)": 49.929409317872015,
+        "per": 97.554936,
+        "assetClass": "Equity",
+        "category": "Mid Cap Fund",
+        "aum": 6824.4418,
+        "ter": 1.86
+    },
+    "20102941": {
+        "SBI Midcap Fund (G)": 50.003404053435375,
+        "per": 94.09,
+        "assetClass": "Equity",
+        "category": "Mid Cap Fund",
+        "aum": 23269.0012,
+        "ter": 1.66
+    },
+    "20105503": {
+        "Invesco India Midcap Fund (G)": 50.10828810860708,
+        "per": 99.01,
+        "assetClass": "Equity",
+        "category": "Mid Cap Fund",
+        "aum": 7405.9153,
+        "ter": 1.78
+    },
+    "20147479": {
+        "Mirae Asset Midcap Fund (G)": 48.22431019882132,
+        "per": 98.09036000000002,
+        "assetClass": "Equity",
+        "category": "Mid Cap Fund",
+        "aum": 17184.8077,
+        "ter": 1.66
+    },
+    "20101539": {
+        "Sundaram Mid Cap Fund - (G)": 52.65838568050147,
+        "per": 95.72441999999998,
+        "assetClass": "Equity",
+        "category": "Mid Cap Fund",
+        "aum": 12818.0991,
+        "ter": 1.73
+    },
+    "20101592": {
+        "Aditya Birla SL Midcap Fund - (G)": 50.25841797231587,
+        "per": 96.14708999999998,
+        "assetClass": "Equity",
+        "category": "Mid Cap Fund",
+        "aum": 6204.5691,
+        "ter": 1.87
+    },
+    "20102328": {
+        "Tata Mid Cap Fund - (G)": 49.278329931873685,
+        "per": 94.07997999999999,
+        "assetClass": "Equity",
+        "category": "Mid Cap Fund",
+        "aum": 4985.2002,
+        "ter": 1.85
+    },
+    "20102394": {
+        "UTI-Mid Cap Fund (G)": 53.33496532771571,
+        "per": 97.51998999999996,
+        "assetClass": "Equity",
+        "category": "Mid Cap Fund",
+        "aum": 12224.2714,
+        "ter": 1.75
+    },
+    "20100473": {
+        "Franklin India Mid Cap Fund (G)": 51.06948345189471,
+        "per": 97.36268999999997,
+        "assetClass": "Equity",
+        "category": "Mid Cap Fund",
+        "aum": 12784.8076,
+        "ter": 1.76
+    },
+    "20151034": {
+        "HSBC Midcap Fund (G)": 53.22084524999701,
+        "per": 97.64863899999996,
+        "assetClass": "Equity",
+        "category": "Mid Cap Fund",
+        "aum": 12146.017,
+        "ter": 1.71
+    },
+    "20114564": {
+        "AXIS Midcap Fund (G)": 54.39750711860344,
+        "per": 96.53999,
+        "assetClass": "Equity",
+        "category": "Mid Cap Fund",
+        "aum": 32068.5243,
+        "ter": 1.56
+    },
+    "20104481": {
+        "DSP Midcap Fund (G)": 48.087936045857745,
+        "per": 93.64999999999998,
+        "assetClass": "Equity",
+        "category": "Mid Cap Fund",
+        "aum": 19559.228,
+        "ter": 1.67
+    },
+    "20150583": {
+        "WhiteOak Capital Mid Cap Fund (G)": 48.1195375715616,
+        "per": 91.17998999999996,
+        "assetClass": "Equity",
+        "category": "Mid Cap Fund",
+        "aum": 3454.2306,
+        "ter": 1.87
+    },
+    "20113177": {
+        "Nippon India Small Cap Fund (G)": 27.67269310415641,
+        "per": 55.13999000000002,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 66601.7954,
+        "ter": 1.4
+    },
+    "20130502": {
+        "HDFC Small Cap Fund (G)": 20.649355326357465,
+        "per": 46.669979999999995,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 35780.5878,
+        "ter": 1.57
+    },
+    "20125494": {
+        "SBI Small Cap Fund (G)": 22.856876539208344,
+        "per": 42.29,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 35696.1889,
+        "ter": 1.57
+    },
+    "20100177": {
+        "Quant Small Cap Fund - (G)": 16.521537089050952,
+        "per": 38.62893000000001,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 29629.0886,
+        "ter": 1.58
+    },
+    "20125350": {
+        "AXIS Small Cap Fund (G)": 30.71671778629277,
+        "per": 59.51998000000001,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 26379.2022,
+        "ter": 1.59
+    },
+    "20102875": {
+        "Kotak Small Cap Fund (G)": 33.9445948409627,
+        "per": 66.94,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 18031.0194,
+        "ter": 1.65
+    },
+    "20105989": {
+        "DSP Small Cap Fund (G)": 19.17226051716666,
+        "per": 41.41,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 17125.7576,
+        "ter": 1.7
+    },
+    "20151133": {
+        "HSBC Small Cap Fund (G)": 35.14150235338363,
+        "per": 65.96998000000002,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 16909.2085,
+        "ter": 1.67
+    },
+    "20103360": {
+        "Franklin India Small Cap Fund (G)": 30.633308332810532,
+        "per": 61.48597,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 13995.2745,
+        "ter": 1.74
+    },
+    "20146127": {
+        "Canara Robeco Small Cap Fund - Regular (G)": 40.00738014608715,
+        "per": 75.38999999999999,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 13103.8675,
+        "ter": 1.67
+    },
+    "20147944": {
+        "Bandhan Small Cap Fund (G)": 14.917446594788863,
+        "per": 33.460573999999994,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 12981.5659,
+        "ter": 1.66
+    },
+    "20145208": {
+        "Tata Small Cap Fund - Regular (G)": 8.510026919571656,
+        "per": 20.48,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 11163.8386,
+        "ter": 1.67
+    },
+    "20106823": {
+        "ICICI Pru Smallcap Fund (G)": 22.502041303465543,
+        "per": 44.51852000000002,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 8565.6039,
+        "ter": 1.78
+    },
+    "20145139": {
+        "Invesco India Smallcap Fund - Regular (G)": 42.0629753861051,
+        "per": 82.50000000000001,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 7424.6399,
+        "ter": 1.75
+    },
+    "20152232": {
+        "Motilal Oswal Small Cap Fund - Regular (G)": 28.01747203942376,
+        "per": 50.69609000000001,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 5228.6536,
+        "ter": 1.83
+    },
+    "20105804": {
+        "Aditya Birla SL Small Cap Fund (G)": 32.837468505484324,
+        "per": 66.02904,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 5134.1382,
+        "ter": 1.89
+    },
+    "20146193": {
+        "Edelweiss Small Cap Fund - Regular (G)": 37.850698205787594,
+        "per": 72.29,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 4929.7591,
+        "ter": 1.82
+    },
+    "20148617": {
+        "UTI-Small Cap Fund (G)": 31.35692252394578,
+        "per": 63.440000000000005,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 4844.3768,
+        "ter": 1.85
+    },
+    "20150912": {
+        "Mahindra Manulife Small Cap Fund - Regular (G)": 23.373548563562338,
+        "per": 49.17,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 4065.4085,
+        "ter": 1.85
+    },
+    "20100795": {
+        "Sundaram Small Cap Fund (G)": 28.114106143621207,
+        "per": 59.22411999999999,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 3438.8887,
+        "ter": 1.94
+    },
+    "20145677": {
+        "Bank of India Small Cap Fund (G)": 23.053416531279183,
+        "per": 46.93,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 1907.8201,
+        "ter": 1.96
+    },
+    "20153196": {
+        "Mirae Asset Small Cap Fund - Direct (G)": 37.488543004884384,
+        "per": 70.16533000000001,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 1789.7277,
+        "ter": 0.42
+    },
+    "20129647": {
+        "Union Small Cap Fund (G)": 40.33412808140612,
+        "per": 79.25999,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 1671.8557,
+        "ter": 2.11
+    },
+    "20149020": {
+        "PGIM India Small Cap Fund (G)": 38.90228841449379,
+        "per": 72.71999999999998,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 1560.6826,
+        "ter": 2.07
+    },
+    "20152130": {
+        "Baroda BNP Paribas Small Cap Fund - Regular (G)": 31.43649024624821,
+        "per": 61.61,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 1318.4723,
+        "ter": 2.16
+    },
+    "20152940": {
+        "TRUSTMF Small Cap Fund - Regular (G)": 32.740856513351915,
+        "per": 66.6239,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 1030.3367,
+        "ter": 2.15
+    },
+    "20152612": {
+        "JM Small Cap Fund - Regular (G)": 26.719522440129666,
+        "per": 53.96726,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 763.0885,
+        "ter": 2.26
+    },
+    "20152003": {
+        "LIC MF Small Cap Fund - Regular (G)": 10.928292708798557,
+        "per": 28.68,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 604.5236,
+        "ter": 2.37
+    },
+    "20152108": {
+        "Quantum Small Cap Fund - Regular (G)": 20.70758207303704,
+        "per": 40.38,
+        "assetClass": "Equity",
+        "category": "Small Cap Fund",
+        "aum": 141.8327,
+        "ter": 2.1
+    },
+    "20108466": {
+        "ICICI Pru Large Cap Fund (G)": 39.12440725715163,
+        "per": 66.77825,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 72336.0509,
+        "ter": 1.42
+    },
+    "20103504": {
+        "SBI Large Cap Fund (G)": 40.86113389811427,
+        "per": 73.68,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 53959.0806,
+        "ter": 1.48
+    },
+    "20106235": {
+        "Nippon India Large Cap Fund (G)": 39.903883618929235,
+        "per": 72.44999999999997,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 43828.5997,
+        "ter": 1.51
+    },
+    "20107578": {
+        "Mirae Asset Large Cap Fund (G)": 39.251241609805106,
+        "per": 70.814074,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 40724.5936,
+        "ter": 1.51
+    },
+    "20102000": {
+        "HDFC Large Cap Fund - Regular (G)": 42.834932737797125,
+        "per": 73.78,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 38905.1245,
+        "ter": 1.59
+    },
+    "20112277": {
+        "AXIS Large Cap Fund (G)": 42.657889808983846,
+        "per": 74.47999,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 34373.875,
+        "ter": 1.56
+    },
+    "20103174": {
+        "Aditya Birla SL Large Cap Fund (G)": 40.29742858705356,
+        "per": 71.45109999999998,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 30927.4416,
+        "ter": 1.63
+    },
+    "20113221": {
+        "Canara Robeco Large Cap Fund (G)": 43.9330334449193,
+        "per": 75.63999000000001,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 16617.3296,
+        "ter": 1.64
+    },
+    "20100651": {
+        "UTI-Large Cap Fund (G)": 42.09827985927387,
+        "per": 70.00999999999999,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 13074.2632,
+        "ter": 1.74
+    },
+    "20114458": {
+        "Kotak Large Cap Fund (G)": 42.07244789293543,
+        "per": 75.31999,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 10515.7458,
+        "ter": 1.73
+    },
+    "20100471": {
+        "Franklin India Large Cap Fund (G)": 37.48202182331141,
+        "per": 67.10738000000002,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 7983.816,
+        "ter": 1.84
+    },
+    "20101635": {
+        "DSP Large Cap Fund - Regular (G)": 39.19308838815789,
+        "per": 69.14,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 6323.2679,
+        "ter": 1.85
+    },
+    "20153069": {
+        "ICICI Pru Equity Minimum Variance Fund-Reg (G)": 29.394935938293777,
+        "per": 50.31894,
+        "assetClass": "Equity",
+        "category": "Sectoral: Other Sectoral",
+        "aum": 3770.0294,
+        "ter": 1.91
+    },
+    "20148504": {
+        "Sundaram Large Cap Fund - Regular (G)": 42.95592629902079,
+        "per": 72.72809000000001,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 3471.1255,
+        "ter": 1.9
+    },
+    "20150441": {
+        "Quant Large Cap Fund (G)": 26.62205812166667,
+        "per": 54.011469999999996,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 2753.2825,
+        "ter": 1.9
+    },
+    "20150185": {
+        "Baroda BNP Paribas Large Cap Fund - Regular (G)": 40.05366130863277,
+        "per": 70.25997,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 2719.2244,
+        "ter": 1.97
+    },
+    "20100475": {
+        "Tata Large Cap Fund - Regular (G)": 37.24065607178596,
+        "per": 70.39,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 2701.7776,
+        "ter": 2.0
+    },
+    "20152352": {
+        "Motilal Oswal Large Cap Fund - Regular (G)": 36.84376967003017,
+        "per": 66.34343999999999,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 2533.9208,
+        "ter": 1.99
+    },
+    "20108799": {
+        "Bandhan Large Cap Fund (G)": 42.23789333930112,
+        "per": 77.74999000000003,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 1928.3758,
+        "ter": 2.03
+    },
+    "20101594": {
+        "HSBC Large Cap Fund (G)": 45.34919201926385,
+        "per": 78.69999999999999,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 1887.7311,
+        "ter": 2.13
+    },
+    "20112098": {
+        "Invesco India Largecap Fund (G)": 40.416597871383004,
+        "per": 72.56998999999999,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 1558.2449,
+        "ter": 2.05
+    },
+    "20152780": {
+        "Bajaj Finserv Large Cap Fund - Regular (G)": 40.188768507565705,
+        "per": 71.86,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 1552.5173,
+        "ter": 2.06
+    },
+    "20106871": {
+        "LIC MF Large Cap Fund (G)": 36.6929089652195,
+        "per": 64.57000000000001,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 1505.3189,
+        "ter": 2.12
+    },
+    "20111940": {
+        "Edelweiss Large Cap Fund (G)": 41.61420612209202,
+        "per": 71.28607199999999,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 1322.0746,
+        "ter": 2.11
+    },
+    "20150799": {
+        "WhiteOak Capital Large Cap Fund - Regular (G)": 38.78226508948397,
+        "per": 69.59,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 981.7052,
+        "ter": 2.18
+    },
+    "20146551": {
+        "Mahindra Manulife Large Cap Fund - Reg (G)": 35.48387937921005,
+        "per": 62.24999000000002,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 729.8135,
+        "ter": 2.3
+    },
+    "20138308": {
+        "PGIM India Large Cap Fund (G)": 46.14363645318356,
+        "per": 79.53999,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 619.9802,
+        "ter": 2.37
+    },
+    "20100219": {
+        "JM Large Cap Fund - (G)": 44.293350078686125,
+        "per": 82.5749,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 539.6798,
+        "ter": 2.35
+    },
+    "20141247": {
+        "Union Largecap Fund - Regular (G)": 42.736024167761215,
+        "per": 75.48,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 465.3033,
+        "ter": 2.49
+    },
+    "20146644": {
+        "SBI Equity Minimum Variance - Regular (G)": 28.801585732245048,
+        "per": 54.019999999999996,
+        "assetClass": "Equity",
+        "category": "Sectoral: Other Sectoral",
+        "aum": 225.0612,
+        "ter": 0.75
+    },
+    "20148982": {
+        "Bank of India Large Cap Fund - Regular (G)": 37.562104989694035,
+        "per": 69.06,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 209.1032,
+        "ter": 2.3
+    },
+    "20153238": {
+        "Samco Large Cap Fund - Regular (G)": 42.26052538234727,
+        "per": 71.71000000000001,
+        "assetClass": "Equity",
+        "category": "Large Cap Fund",
+        "aum": 160.1832,
+        "ter": 2.37
+    },
+    "20152538": {
+        "PGIM India Retirement Fund - Regular (G)": 47.27959891340359,
+        "per": 84.15999,
+        "assetClass": "Solution Oriented",
+        "category": "Retirement Fund",
+        "aum": 89.6593,
+        "ter": 2.32
+    }
+}

@@ -1,0 +1,17 @@
+.results{
+    color: black;
+    background-color: white;
+    padding: "10px";
+    border-radius: 5px;
+    padding: 5px;
+    
+    
+}
+.results:hover{
+    cursor: pointer;
+    background-color: #e0e0e0;
+    border-radius: "5px";
+}
+.results>p{
+    padding: "25%";
+}

@@ -7,7 +7,7 @@ import Footer from "./Footer";
 import { DataGrid } from "@mui/x-data-grid";
 import Stack from "@mui/material/Stack";
 import { Chart, useChart } from "@chakra-ui/charts"
-import { Bar, BarChart, CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts"
+import { Area, AreaChart, Bar, BarChart, CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts"
 import { useLocation } from "react-router";
 
 
@@ -22,50 +22,50 @@ const FundPage = () => {
     const [fundName, setFundName] = useState({});
     const [rows, setRows] = useState([]);
 
-   const getFilteredGraph = (range, graphData = []) => {
-  const now = new Date();
-  let fromDate = new Date();
+    const getFilteredGraph = (range, graphData = []) => {
+        const now = new Date();
+        let fromDate = new Date();
 
-  switch (range) {
-    case "1D":
-      fromDate.setDate(now.getDate() - 1);
-      break;
-    case "5D":
-      fromDate.setDate(now.getDate() - 5);
-      break;
-    case "1M":
-      fromDate.setMonth(now.getMonth() - 1);
-      break;
-    case "6M":
-      fromDate.setMonth(now.getMonth() - 6);
-      break;
-    case "YTD":
-      fromDate = new Date(now.getFullYear(), 0, 1);
-      break;
-    case "1Y":
-      fromDate.setFullYear(now.getFullYear() - 1);
-      break;
-    case "3Y":
-      fromDate.setFullYear(now.getFullYear() - 3);
-      break;
-    case "5Y":
-      fromDate.setFullYear(now.getFullYear() - 5);
-      break;
-    case "Max":
-    default:
-      return graphData;
-  }
+        switch (range) {
+            case "1D":
+                fromDate.setDate(now.getDate() - 1);
+                break;
+            case "5D":
+                fromDate.setDate(now.getDate() - 5);
+                break;
+            case "1M":
+                fromDate.setMonth(now.getMonth() - 1);
+                break;
+            case "6M":
+                fromDate.setMonth(now.getMonth() - 6);
+                break;
+            case "YTD":
+                fromDate = new Date(now.getFullYear(), 0, 1);
+                break;
+            case "1Y":
+                fromDate.setFullYear(now.getFullYear() - 1);
+                break;
+            case "3Y":
+                fromDate.setFullYear(now.getFullYear() - 3);
+                break;
+            case "5Y":
+                fromDate.setFullYear(now.getFullYear() - 5);
+                break;
+            case "Max":
+            default:
+                return graphData;
+        }
 
-  // Reset time to midnight to catch entire day range
-  fromDate.setHours(0, 0, 0, 0);
+        // Reset time to midnight to catch entire day range
+        fromDate.setHours(0, 0, 0, 0);
 
-  const filtered = graphData.filter(item => {
-    const mark = new Date(item.markDate);
-    return mark >= fromDate;
-  });
+        const filtered = graphData.filter(item => {
+            const mark = new Date(item.markDate);
+            return mark >= fromDate;
+        });
 
-  return filtered.length > 0 ? filtered : graphData;
-};
+        return filtered.length > 0 ? filtered : graphData;
+    };
 
     const columns = [
         { field: "name", headerName: "Asset", flex: 1.5 },
@@ -101,7 +101,6 @@ const FundPage = () => {
 
             const res = await response.json();
             const row = [];
-            console.log(res['asset']);
             // const Stocks_Data = await fetch("/Stocks_Data.json");
             // const sd = await Stocks_Data.json();
             // for (let i in res['selected_stock']) {
@@ -193,39 +192,40 @@ const FundPage = () => {
 
                         </Stack>
                     </Box>
-                     <Box width="60%" display="flex" justifyContent="flex-end" mt={10}>
-                    <Flex justify="flex-end" gap={2} my={4} wrap="wrap" mt={"10%"}>
-                        {["5D", "1M", "6M", "YTD", "1Y", "3Y", "5Y", "Max"].map(range => (
-                            <Box
-                                key={range}
-                                as="button"
-                                px={3}
-                                py={1}
-                                border="1px solid gray"
-                                borderRadius="md"
-                                bg={selectedRange === range ? "teal.300" : "gray.100"}
-                                fontWeight="medium"
-                                onClick={() => {
-                                    setSelectedRange(range);
-                                    setFilteredGraphData(getFilteredGraph(range, fundName['graph'] || []));
-                                }}
-                            >
-                                {range}
-                            </Box>
-                        ))}
-                    </Flex>
-                   </Box>
+                    <Box width="60%" display="flex" justifyContent="flex-end" mt={10}>
+                        <Flex justify="flex-end" gap={2} my={4} wrap="wrap" mt={"10%"}>
+                            {["5D", "1M", "6M", "YTD", "1Y", "3Y", "5Y", "Max"].map(range => (
+                                <Box
+                                    key={range}
+                                    as="button"
+                                    px={3}
+                                    py={1}
+                                    border="1px solid gray"
+                                    borderRadius="md"
+                                    bg={selectedRange === range ? "teal.300" : "gray.100"}
+                                    fontWeight="medium"
+                                    onClick={() => {
+                                        setSelectedRange(range);
+                                        setFilteredGraphData(getFilteredGraph(range, fundName['graph'] || []));
+                                    }}
+                                >
+                                    {range}
+                                </Box>
+                            ))}
+                        </Flex>
+                    </Box>
+
+
+
                     <Chart.Root maxH="sm" chart={chart} width={"60%"} mb={"8%"}>
-                        <LineChart data={filteredGraphData}>
+                        <AreaChart data={filteredGraphData}>
                             <CartesianGrid stroke={chart.color("border")} vertical={false} />
                             <XAxis
-                                axisLine={true}
                                 dataKey={chart.key("markDate")}
                                 tickFormatter={(markDate) => new Date(markDate).getFullYear()}
                                 stroke={chart.color("border")}
                             />
                             <YAxis
-                                axisLine={true}
                                 tickLine={false}
                                 tickMargin={10}
                                 stroke={chart.color("border")}
@@ -235,22 +235,20 @@ const FundPage = () => {
                                 cursor={false}
                                 content={<Chart.Tooltip />}
                             />
-                            {chart.series.map((item) => (
-                                <Line
-                                    key={item.markDate}
-                                    isAnimationActive={true}
-                                    dataKey={chart.key('nav')}
-                                    // stroke={chart.color({ name: "sale", color: "teal.solid" })}
-                                    strokeWidth={2}
-                                    dot={false}
-                                />
-                            ))}
-                        </LineChart>
+                            <Area
+                                type="monotone"
+                                dataKey={chart.key('nav')}
+                                stroke="#008080" // teal line
+                                fill="#008080"   // teal fill
+                                fillOpacity={0.2} // transparency
+                            />
+                        </AreaChart>
                     </Chart.Root>
+
 
                     <Box bg="gray.300" color="gray.800" py={8} width={"60%"} border={"2px"} borderStyle={"solid"} borderColor={"black"} borderRadius={"5px"}>
                         <Stack>
-                            <Flex justify="space-between" align="flex-start" px={10}>
+                            <Flex justify="flex-start" align="flex-start" px={10}>
 
                                 <Text fontWeight="semibold" width={"125px"}>Exit Load: </Text>
                                 <Text fontWeight={"normal"}>{fundName['exitload']}</Text>
@@ -259,11 +257,16 @@ const FundPage = () => {
 
                         </Stack>
                     </Box>
+
+
                 </div>
+
             </div>
 
 
             : <div className="spinner"><Spinner size="xl" /></div>}
+
+
 
         <div style={{ border: "2px", borderStyle: "solid", fontFamily: "revert-layer" }}>
             <Footer />

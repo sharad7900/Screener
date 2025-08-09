@@ -1,0 +1,14 @@
+.bgimage{
+    background-image: url("pxfuel.jpg");
+    border-bottom-left-radius: 100px; /* Adjust value as needed */
+    border-bottom-right-radius: 100px;
+    height: 700px;
+    background-size: cover; /* or other background-size values */
+  background-position: center;
+  color: white;
+  position: relative;
+
+  margin-bottom: 20%;
+  
+    
+}

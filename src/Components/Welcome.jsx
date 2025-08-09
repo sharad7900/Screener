@@ -2,7 +2,6 @@ import { Button, Image, Input, InputGroup, List, ListItem } from "@chakra-ui/rea
 import "./Welcome.css";
 import { TypeAnimation } from "react-type-animation";
 import Footer from "./Footer";
-import { LuSearch } from "react-icons/lu";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import finalTable from "./Final_Table.json";
@@ -51,8 +50,8 @@ const Welcome = () => {
 
         <div className="bgimage">
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", position: "absolute", marginTop: "2%", left: "22%" }}>
-                <pre style={{ fontSize: "50px", fontWeight: "bold", fontFamily: "arial" }}>Find the right pick with </pre>
-                <TypeAnimation style={{ fontSize: "50px", fontWeight: "bold", color: "#EB03FF" }}
+                <pre style={{ fontSize: "2.5vw", fontWeight: "bold", fontFamily: "arial" }}>Find the right pick with </pre>
+                <TypeAnimation style={{ fontSize: "2.5vw", fontWeight: "bold", color: "#EB03FF", display: "inline-block" }}
                     sequence={[
                         " Mutual Fund Screener",
                     ]}
@@ -61,7 +60,7 @@ const Welcome = () => {
                 />
             </div>
 
-            <div style={{ position: "absolute", textAlign: "center", width: "100%", top: "17%", fontSize: "20px" }}>
+            <div style={{ position: "absolute", textAlign: "center", width: "100%", top: "17%", fontSize: "1.2vw" }}>
                 The tool you need to make wise & effective investment decisions
             </div>
 

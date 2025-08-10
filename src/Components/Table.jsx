@@ -177,7 +177,6 @@ export default function Table() {
               borderStyle: "solid",
               fontFamily: "revert-layer",
               cursor: "pointer",
-              fontSize:"5vw"
             }}
           />
         </Box>

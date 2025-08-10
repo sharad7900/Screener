@@ -1,10 +1,11 @@
 import { Box, Flex, Text, Stack } from '@chakra-ui/react';
+import "./footer.css";
 
 const Footer = () => {
   return (
     <Box bg="gray.300" color="gray.800" px={6} py={8}>
       <Stack spacing={6}>
-        <Flex justify="space-between" wrap="wrap" align="flex-start">
+        <Flex justify="space-between" wrap="wrap" align="flex-start" className='companyInfo'>
           <Box maxW="300px" pl={"5%"}>
             <Text fontSize="lg" fontWeight="bold">
               ScreenerApp

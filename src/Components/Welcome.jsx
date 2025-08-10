@@ -49,35 +49,35 @@ const Welcome = () => {
 
 
         <div className="bgimage">
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", position: "absolute", marginTop: "2%", left: "22%" }}>
-                <pre style={{ fontSize: "2.5vw", fontWeight: "bold", fontFamily: "arial" }}>Find the right pick with </pre>
-                <TypeAnimation style={{ fontSize: "2.5vw", fontWeight: "bold", color: "#EB03FF", display: "inline-block" }}
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", position: "absolute", marginTop: "2%" }} className="animationType">
+                <pre style={{ fontWeight: "bold", fontFamily: "arial" }}>Find the right pick with </pre>
+                <TypeAnimation style={{ fontWeight: "bold", color: "#EB03FF", display: "inline-block" }}
                     sequence={[
                         " Mutual Fund Screener",
                     ]}
 
-                    speed={50}
+                    speed={70}
                 />
             </div>
 
-            <div style={{ position: "absolute", textAlign: "center", width: "100%", top: "17%", fontSize: "1.2vw" }}>
+            <div style={{ position: "absolute", textAlign: "center", width: "100%", top: "17%" }} className="txt">
                 The tool you need to make wise & effective investment decisions
             </div>
 
-            <div style={{ position: "absolute", textAlign: "center", width: "100%", top: "47%" }}>
-                <Button fontSize={"20px"} background={"white"} p={"1%"} pt={"1.5%"} pb={"1.5%"} color={"black"} boxShadow={"5px 5px 10px 2px rgba(0, 0, 0, 0.5)"} onClick={handleClick}>Enter in Screener &rarr;</Button>
+            <div style={{ position: "absolute", textAlign: "center", width: "100%", top: "47%" }} className="EnterBTN">
+                <Button background={"white"} p={"1%"} pt={"1.5%"} pb={"1.5%"} color={"black"} boxShadow={"5px 5px 10px 2px rgba(0, 0, 0, 0.5)"} onClick={handleClick}>Enter in Screener &rarr;</Button>
             </div>
 
 
 
-            <div style={{ position: "absolute", left: "50%", transform: "translateX(-50%)", top: "77%", height: "200px", width: "600px", boxShadow: "5px 5px 10px 2px rgba(0, 0, 0, 0.5)", borderRadius: "10px", backgroundColor: "#d4d4d8" }}>
-                <p style={{ color: "black", textAlign: "center", paddingTop: "4%", fontSize: "25px" }}>Search the scheme name: </p>
+            <div style={{ position: "absolute", left: "50%", transform: "translateX(-50%)", top: "77%", boxShadow: "5px 5px 10px 2px rgba(0, 0, 0, 0.5)", borderRadius: "10px", backgroundColor: "#d4d4d8" }} className="searchbox">
+                <p style={{ color: "black", textAlign: "center", paddingTop: "4%" }}>Search the scheme name: </p>
 
 
 
-                <div style={{ margin: "5% 15% 0% 15%", display: "flex", alignItems: "center", backgroundColor: "white", padding: "1%", borderRadius: "10px", border: "2px solid gray" }}>
-                    <BiSearch color="black" size={"25px"} />
-                    <Input fontSize={"15px"} placeholder="Search Mutual Fund Scheme" value={searchTerm} onChange={handleSearchChange} p={2} border={"none"} color={"black"}  w={"100%"}/>
+                <div style={{ display: "flex", alignItems: "center", backgroundColor: "white", borderRadius: "10px", border: "2px solid gray" }} className="searchinput">
+                    <BiSearch color="black"  />
+                    <Input placeholder="Search Mutual Fund Scheme" value={searchTerm} onChange={handleSearchChange} p={2} border={"none"} color={"black"}  w={"100%"}/>
                 
                 </div>
                 {filteredFunds.length>0 ? <div style={{ margin: "2% 15% 0% 15%", backgroundColor: "white", padding: "1%", borderRadius: "10px", border: "2px solid gray", maxHeight:"200px", overflowY:"scroll" }}>

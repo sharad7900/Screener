@@ -59,3 +59,17 @@
 .navbar{
   margin-bottom: 2%;
 }
+
+@media (max-width: 1000px){
+  .footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+
+
+}
+.tableOuter{
+  padding-bottom: 70%;
+}
+}

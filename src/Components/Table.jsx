@@ -156,7 +156,7 @@ export default function Table() {
         </div>
       </Box>
       </div> */}
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "5%" }}>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "5%" }} className="tableOuter">
 
         <Box sx={{ height: 800, p: 2 }} style={{ width: "75%" }}>
           <Typography variant="h5" gutterBottom>
@@ -181,7 +181,7 @@ export default function Table() {
           />
         </Box>
       </div>
-      <div style={{ border: "2px", borderStyle: "solid", fontFamily: "revert-layer" }}>
+      <div style={{ border: "2px", borderStyle: "solid", fontFamily: "revert-layer" }} className="footer">
         <Footer />
       </div>
 

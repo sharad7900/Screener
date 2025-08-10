@@ -144,7 +144,7 @@ export default function Table() {
       <div className="navbar">
         <ul>
           <li><Image rounded="md" src="sgc.png" alt="SGC" style={{ height: "50px" }} /></li>
-          <li><ColorModeButton /></li>
+
         </ul>
       </div>
       {/* Apply Filters Here! */}

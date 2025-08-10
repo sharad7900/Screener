@@ -16,7 +16,7 @@ export function useColorMode() {
   const { resolvedTheme, setTheme, forcedTheme } = useTheme()
   const colorMode = forcedTheme || resolvedTheme
   const toggleColorMode = () => {
-    setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
+    setTheme(resolvedTheme === 'dark' ? 'light' : 'light')
   }
   return {
     colorMode: colorMode,
@@ -27,7 +27,7 @@ export function useColorMode() {
 
 export function useColorModeValue(light, dark) {
   const { colorMode } = useColorMode()
-  return colorMode === 'dark' ? dark : light
+  return colorMode === 'dark' ? light : light
 }
 
 export function ColorModeIcon() {
@@ -80,9 +80,9 @@ export const DarkMode = React.forwardRef(function DarkMode(props, ref) {
     <Span
       color='fg'
       display='contents'
-      className='chakra-theme dark'
+      className='chakra-theme light'
       colorPalette='gray'
-      colorScheme='dark'
+      colorScheme='light'
       ref={ref}
       {...props}
     />

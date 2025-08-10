@@ -125,7 +125,7 @@ const FundPage = () => {
                 flexWrap="wrap"
             >
                 <Image rounded="md" src="sgc.png" alt="SGC" h="50px" />
-                <ColorModeButton />
+               
             </Box>
 
             {fundName["MFName"] ? (

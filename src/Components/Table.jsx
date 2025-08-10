@@ -5,10 +5,9 @@ import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 import "./Table.css";
 import { Flex, Image } from "@chakra-ui/react";
-import { ColorModeButton } from "../Components/ui/color-mode.jsx";
 import Footer from "./Footer.jsx";
 import { useNavigate } from "react-router-dom";
-
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 // 🔄 Custom loading overlay
 function CustomLoadingOverlay() {
@@ -16,15 +15,15 @@ function CustomLoadingOverlay() {
     <GridOverlay>
       <Box
         sx={{
-          position: 'absolute',
+          position: "absolute",
           top: 0,
           bottom: 0,
           left: 0,
           right: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: 'rgba(255, 255, 255, 0.5)',
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "rgba(255, 255, 255, 0.5)",
         }}
       >
         <CircularProgress />
@@ -38,41 +37,35 @@ export default function Table() {
   const [minScore, setMinScore] = useState(0);
   const [maxScore, setMaxScore] = useState(100);
   const [loading, setLoading] = useState(true);
-  const d = new Date();
   const navigate = useNavigate();
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   const columns = [
-    { field: "mfName", headerName: "Mutual Fund Name", flex: 2,  renderCell: (params) => (
-    <span style={{ fontWeight: 550 }}>{params.value}</span>
-  ) },
-    { field: "score", headerName: "Score", flex: 0.5 },
-    { field: "cat", headerName: "Category", flex: 0.75 },
-    { field: "assetClass", headerName: "Asset Class", flex: 0.5 },
-    { field: "nav", headerName: "NAV", flex: 0.4 },
-    { field: "aum", headerName: "AUM (Cr.)", flex: 0.5 },
-    { field: "ter", headerName: "Expense Ratio", flex: 0.6 },
-    { field: "per", headerName: "% Equity", flex: 0.5 },
+    {
+      field: "mfName",
+      headerName: "Mutual Fund Name",
+      flex: 2,
+      minWidth: 200,
+      renderCell: (params) => (
+        <span style={{ fontWeight: 550 }}>{params.value}</span>
+      ),
+    },
+    { field: "score", headerName: "Score", flex: 0.5, minWidth: 80 },
+    { field: "cat", headerName: "Category", flex: 0.75, minWidth: 120 },
+    { field: "assetClass", headerName: "Asset Class", flex: 0.5, minWidth: 100 },
+    { field: "nav", headerName: "NAV", flex: 0.4, minWidth: 80 },
+    { field: "aum", headerName: "AUM (Cr.)", flex: 0.5, minWidth: 100 },
+    { field: "ter", headerName: "Expense Ratio", flex: 0.6, minWidth: 120 },
+    { field: "per", headerName: "% Equity", flex: 0.5, minWidth: 100 },
   ];
 
-  const getRowClassName = (params) => {
-    const score = params.row.score;
-    const ratio = (score - minScore) / (maxScore - minScore);
-    const hue = 120 - ratio * 120;
-    const hueRounded = Math.round(hue / 10) * 10;
-    return `score-row-${hueRounded}`;
+  const handelRowClick = (id) => {
+    navigate("/MFinfo", { state: { id } });
   };
 
-  const handelRowClick = (params)=>{
-
-   navigate("/MFinfo",{ state: { id: params } });
-
-  }
-
-  // 📦 Simulated batch fetcher
   const batchFetchFundData = async (keysMap, nvdt) => {
     const entries = Object.entries(keysMap);
-
-    const promises = entries.map(async ([key, mfObj], index) => {
+    const promises = entries.map(async ([key, mfObj]) => {
       const [mfName, score] = Object.entries(mfObj)[0];
       const per = Object?.entries(mfObj)?.[1]?.[1] || "N/A";
       const assetClass = Object?.entries(mfObj)?.[2]?.[1] || "N/A";
@@ -80,9 +73,6 @@ export default function Table() {
       const aum = Object?.entries(mfObj)?.[4]?.[1] || "NA";
       const ter = Object?.entries(mfObj)?.[5]?.[1] || "NA";
       const nav = nvdt[key];
-
- 
-
 
       return {
         id: key,
@@ -93,36 +83,28 @@ export default function Table() {
         cat,
         aum,
         ter,
-        nav
+        nav,
       };
-
     });
-
     const allData = await Promise.all(promises);
     return allData.filter((d) => d !== null);
   };
 
   useEffect(() => {
-
     const fetchData = async () => {
       try {
         const res = await fetch("/Final_Table.json");
-
         const data = await res.json();
-        const response = await fetch(`https://screener-back.vercel.app/`, {
+        const response = await fetch(`http://localhost:5000/`, {
           method: "POST",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(data)
-        })
+          body: JSON.stringify(data),
+        });
         const navs = await response.json();
-
-
-
         const formatted = await batchFetchFundData(data, navs);
         formatted.sort((a, b) => b.score - a.score);
-
         const scores = formatted.map((row) => row.score);
         setMinScore(Math.min(...scores));
         setMaxScore(Math.max(...scores));
@@ -133,33 +115,48 @@ export default function Table() {
         setLoading(false);
       }
     };
-
     fetchData();
   }, []);
-
-
 
   return (
     <>
       <div className="navbar">
         <ul>
-          <li><Image rounded="md" src="sgc.png" alt="SGC" style={{ height: "50px" }} /></li>
-
+          <li>
+            <Image
+              rounded="md"
+              src="sgc.png"
+              alt="SGC"
+              style={{ height: "50px" }}
+            />
+          </li>
         </ul>
       </div>
-      {/* Apply Filters Here! */}
-      {/* <div className="outerdiv" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-      <Box style={{ width: "75%" }} sx={{ height: 200, p: 2 }}>
-       
-        <div style={{border:"2px", borderColor:"gray", borderStyle:"solid", borderRadius:"3px", height:"100%"}}>
 
-        </div>
-      </Box>
-      </div> */}
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "5%" }} className="tableOuter">
-
-        <Box sx={{ height: 800, p: 2 }} style={{ width: "75%" }}>
-          <Typography variant="h5" gutterBottom>
+      {/* 📱 Responsive Table Container */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginBottom: "5%",
+          overflowX: isMobile ? "auto" : "visible",
+        }}
+        className="tableOuter"
+      >
+        <Box
+          sx={{
+            height: 800,
+            width: isMobile ? "150%" : "60%",
+            p: 2,
+            overflowX: isMobile ? "auto" : "visible",
+          }}
+          className="tablebox"
+        >
+          <Typography
+            variant="h5"
+            gutterBottom
+            sx={{ fontSize: isMobile ? "1rem" : "1.25rem" }}
+          >
             Mutual Fund Scores
           </Typography>
           <DataGrid
@@ -167,23 +164,35 @@ export default function Table() {
             columns={columns}
             pageSize={10}
             getRowId={(row) => row.id}
-            // getRowClassName={getRowClassName}
             onRowClick={(params) => {
               handelRowClick(params.id);
             }}
-
             rowHeight={40}
             loading={loading}
             slots={{
               loadingOverlay: CustomLoadingOverlay,
             }}
-            style={{ border: "2px", borderStyle: "solid", fontFamily: "revert-layer", cursor:"pointer" }}
+            style={{
+              border: "2px",
+              borderStyle: "solid",
+              fontFamily: "revert-layer",
+              cursor: "pointer",
+              fontSize:"5vw"
+            }}
           />
         </Box>
       </div>
-      <div style={{ border: "2px", borderStyle: "solid", fontFamily: "revert-layer" }} className="footer">
+
+      <div
+        style={{
+          border: "2px",
+          borderStyle: "solid",
+          fontFamily: "revert-layer",
+        }}
+        className="footer"
+      >
         <Footer />
       </div>
-
-    </>);
+    </>
+  );
 }

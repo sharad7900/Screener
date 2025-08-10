@@ -26,6 +26,9 @@
 .MuiDataGrid-cell {
   border: none; /* Divider between cells */
 }
+.tablebox{
+  width: 75%;
+}
 
 /* Optional: Remove the last column's right border */
 .MuiDataGrid-columnHeader:last-of-type,
@@ -71,5 +74,13 @@
 }
 .tableOuter{
   padding-bottom: 70%;
+ 
 }
+}
+
+@media (max-width: 780px){
+  .tablebox{
+    width: 100%;
+  }
+  
 }

@@ -109,7 +109,7 @@ export default function Table() {
         const res = await fetch("/Final_Table.json");
 
         const data = await res.json();
-        const response = await fetch(`https://screener-back.vercel.app/`, {
+        const response = await fetch(`http://localhost:5000/`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"

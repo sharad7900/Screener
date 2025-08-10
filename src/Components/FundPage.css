@@ -14,3 +14,27 @@
     align-items: center;
     margin: 20% 0 20% 0;
 }
+.responsive{
+    margin-right: 10%;
+    margin-left: 10%;
+}
+
+@media (max-width: 1050px) {
+  .responsive {
+    margin-right: 5%;
+    margin-left: 5%;
+  }
+}
+@media (max-width: 930px) {
+  .responsive {
+    margin-right: 2%;
+    margin-left: 2%;
+  }
+}
+
+@media (max-width: 880px) {
+ .responsive {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}

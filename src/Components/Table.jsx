@@ -8,6 +8,7 @@ import { Flex, Image } from "@chakra-ui/react";
 import Footer from "./Footer.jsx";
 import { useNavigate } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useQuery } from "@tanstack/react-query";
 
 // 🔄 Custom loading overlay
 function CustomLoadingOverlay() {
@@ -34,8 +35,6 @@ function CustomLoadingOverlay() {
 
 export default function Table() {
   const [rows, setRows] = useState([]);
-  const [minScore, setMinScore] = useState(0);
-  const [maxScore, setMaxScore] = useState(100);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -104,10 +103,10 @@ export default function Table() {
         });
         const navs = await response.json();
         const formatted = await batchFetchFundData(data, navs);
-        formatted.sort((a, b) => b.score - a.score);
-        const scores = formatted.map((row) => row.score);
-        setMinScore(Math.min(...scores));
-        setMaxScore(Math.max(...scores));
+        // formatted.sort((a, b) => b.score - a.score);
+        // const scores = formatted.map((row) => row.score);
+        // setMinScore(Math.min(...scores));
+        // setMaxScore(Math.max(...scores));
         setRows(formatted);
       } catch (err) {
         console.error("Initial data load failed", err);
@@ -169,6 +168,12 @@ export default function Table() {
             }}
             rowHeight={40}
             loading={loading}
+            sortModel={[
+              {
+                field: "score",
+                sort: "desc",
+              },
+            ]}
             slots={{
               loadingOverlay: CustomLoadingOverlay,
             }}

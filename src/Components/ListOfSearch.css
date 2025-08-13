@@ -15,3 +15,14 @@
 .results>p{
     padding: "25%";
 }
+
+
+@media (max-width:500px){
+
+    
+.results{
+    font-size: x-small;
+    padding-bottom: 0;
+}
+
+}

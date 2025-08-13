@@ -1,4 +1,4 @@
-import { Button, Image, Input, InputGroup, List, ListItem } from "@chakra-ui/react";
+import { Button, Input, useMediaQuery } from "@chakra-ui/react";
 import "./Welcome.css";
 import { TypeAnimation } from "react-type-animation";
 import Footer from "./Footer";
@@ -8,10 +8,11 @@ import finalTable from "./Final_Table.json";
 import { BiSearch } from "react-icons/bi";
 import ListOfSearch from "./ListOfSearch";
 const Welcome = () => {
-
-
+    
+    
     const [searchTerm, setSearchTerm] = useState("");
     const [filteredFunds, setFilteredFunds] = useState([]);
+    const [isMobile] = useMediaQuery("(max-width: 768px)");
 
     const navigate = useNavigate();
     const handleClick = () => {
@@ -80,8 +81,9 @@ const Welcome = () => {
                     <Input placeholder="Search Mutual Fund Scheme" value={searchTerm} onChange={handleSearchChange} p={2} border={"none"} color={"black"}  w={"100%"}/>
                 
                 </div>
-                {filteredFunds.length>0 ? <div style={{ margin: "2% 15% 0% 15%", backgroundColor: "white", padding: "1%", borderRadius: "10px", border: "2px solid gray", maxHeight:"200px", overflowY:"scroll" }}>
+                {filteredFunds.length>0 ? <div style={{ margin: "2% 15% 0% 15%", backgroundColor: "white", padding: "1%", borderRadius: "10px", maxHeight: isMobile ? "125px":"200px", overflowY:"scroll", border: "2px solid gray" }}>
                 <ListOfSearch params = {{filteredFunds,NameToId}}/>
+                {console.log(isMobile)}
                </div>: ""
 }
                 

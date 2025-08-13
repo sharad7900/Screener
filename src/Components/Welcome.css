@@ -95,6 +95,7 @@
   height: 300px;
   border-bottom-left-radius: 30px; /* Adjust value as needed */
     border-bottom-right-radius: 30px;
+   margin-bottom: 50%;
   
 }
 .searchbox>p{
@@ -106,6 +107,7 @@
    font-size: 10px;
 
 }
+
 
 .searchinput{
   height: 35%;
@@ -138,5 +140,6 @@
   left: 5%;
  
 }
+
 
 }

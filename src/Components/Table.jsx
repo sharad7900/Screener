@@ -8,7 +8,6 @@ import { Flex, Image } from "@chakra-ui/react";
 import Footer from "./Footer.jsx";
 import { useNavigate } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { useQuery } from "@tanstack/react-query";
 
 // 🔄 Custom loading overlay
 function CustomLoadingOverlay() {
@@ -168,12 +167,11 @@ export default function Table() {
             }}
             rowHeight={40}
             loading={loading}
-            sortModel={[
-              {
-                field: "score",
-                sort: "desc",
-              },
-            ]}
+            initialState={{
+              sorting: {
+                sortModel: [{ field: "score", sort: "desc" }]
+              }
+            }}
             slots={{
               loadingOverlay: CustomLoadingOverlay,
             }}

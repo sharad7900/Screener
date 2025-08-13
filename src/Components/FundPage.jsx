@@ -125,175 +125,174 @@ const FundPage = () => {
                 flexWrap="wrap"
             >
                 <Image rounded="md" src="sgc.png" alt="SGC" h="50px" />
-               
+
             </Box>
 
             {fundName["MFName"] ? (
                 <div className="responsive">
-                <Box px={{ base: 4, md: "10%" }} py={6}>
-                    <Typography
-                        variant="h4"
-                        gutterBottom
-                        textAlign={"center"}
-                        paddingY={"2%"}
-                        fontStyle={"italic"}
-                    >
-                        {fundName["MFName"]}
-                    </Typography>
-
-                    {/* Holdings Table */}
-                    <Typography
-                        variant="h5"
-                        gutterBottom
-                        textAlign={"left"}
-                        py={2}
-                        width="100%"
-                    >
-                        Holdings:
-                    </Typography>
-
-                    <Box
-                        height="500px"
-                        width="100%"
-                        mb={20}
-                        sx={{ overflowX: "auto" }}
-                        
-                    >
-                        <DataGrid
-                            rows={rows}
-                            columns={columns}
-                            pageSize={10}
-                            getRowId={(row) => row.name}
-                            rowHeight={40}
-                            sortModel={[
-                                {
-                                    field: "perc",
-                                    sort: "desc",
-                                },
-                            ]}
-                            sx={{
-                                border: "1px solid",
-                                fontFamily: "revert-layer",
-                            }}
-                        />
-                    </Box>
-
-                    {/* Fund Info */}
-                    <Box
-                        bg="gray.300"
-                        color="gray.800"
-                        py={6}
-                        px={4}
-                        border="2px solid"
-                        borderColor="black"
-                        borderRadius="5px"
-                        mb={20}
-                    >
-                        <Flex
-                            justify="space-around"
-                            wrap="wrap"
-                            gap={6}
-                            textAlign="center"
+                    <Box px={{ base: 4, md: "10%" }} py={6}>
+                        <Typography
+                            variant="h4"
+                            gutterBottom
+                            textAlign={"center"}
+                            paddingY={"2%"}
+                            fontStyle={"italic"}
                         >
-                            {[
-                                { label: "NAV", value: fundName["nav"] },
-                                { label: "Inception Date", value: fundName["inception"] },
-                                { label: "%NAV Change", value: fundName["change"] },
-                                { label: "CAGR", value: fundName["cagr"] },
-                                { label: "Expense Ratio", value: fundName["ter"] },
-                            ].map((item, i) => (
-                                <Box key={i} minW="100px">
-                                    <Text fontWeight="semibold" mb={1}>
-                                        {item.label}:
-                                    </Text>
-                                    <Text fontSize="sm">{item.value}</Text>
+                            {fundName["MFName"]}
+                        </Typography>
+
+                        {/* Holdings Table */}
+                        <Typography
+                            variant="h5"
+                            gutterBottom
+                            textAlign={"left"}
+                            py={2}
+                            width="100%"
+                        >
+                            Holdings:
+                        </Typography>
+
+                        <Box
+                            height="500px"
+                            width="100%"
+                            mb={20}
+                            sx={{ overflowX: "auto" }}
+
+                        >
+                            <DataGrid
+                                rows={rows}
+                                columns={columns}
+                                pageSize={10}
+                                getRowId={(row) => row.name}
+                                rowHeight={40}
+                                initialState={{
+                                    sorting: {
+                                        sortModel: [{ field: "perc", sort: "desc" }]
+                                    }
+                                }}
+                                sx={{
+                                    border: "1px solid",
+                                    fontFamily: "revert-layer",
+                                }}
+                            />
+                        </Box>
+
+                        {/* Fund Info */}
+                        <Box
+                            bg="gray.300"
+                            color="gray.800"
+                            py={6}
+                            px={4}
+                            border="2px solid"
+                            borderColor="black"
+                            borderRadius="5px"
+                            mb={20}
+                        >
+                            <Flex
+                                justify="space-around"
+                                wrap="wrap"
+                                gap={6}
+                                textAlign="center"
+                            >
+                                {[
+                                    { label: "NAV", value: fundName["nav"] },
+                                    { label: "Inception Date", value: fundName["inception"] },
+                                    { label: "%NAV Change", value: fundName["change"] },
+                                    { label: "CAGR", value: fundName["cagr"] },
+                                    { label: "Expense Ratio", value: fundName["ter"] },
+                                ].map((item, i) => (
+                                    <Box key={i} minW="100px">
+                                        <Text fontWeight="semibold" mb={1}>
+                                            {item.label}:
+                                        </Text>
+                                        <Text fontSize="sm">{item.value}</Text>
+                                    </Box>
+                                ))}
+                            </Flex>
+                        </Box>
+
+                        {/* Range Selector */}
+                        <Flex
+                            justify="flex-end"
+                            gap={2}
+                            flexWrap="wrap"
+                            mb={10}
+                        >
+                            {["5D", "1M", "6M", "YTD", "1Y", "3Y", "5Y", "Max"].map((range) => (
+                                <Box
+                                    key={range}
+                                    as="button"
+                                    px={3}
+                                    py={1}
+                                    border="1px solid gray"
+                                    borderRadius="md"
+                                    bg={selectedRange === range ? "teal.300" : "gray.100"}
+                                    fontWeight="medium"
+                                    onClick={() => {
+                                        setSelectedRange(range);
+                                        setFilteredGraphData(
+                                            getFilteredGraph(range, fundName["graph"] || [])
+                                        );
+                                    }}
+                                >
+                                    {range}
                                 </Box>
                             ))}
                         </Flex>
-                    </Box>
 
-                    {/* Range Selector */}
-                    <Flex
-                        justify="flex-end"
-                        gap={2}
-                        flexWrap="wrap"
-                        mb={10}
-                    >
-                        {["5D", "1M", "6M", "YTD", "1Y", "3Y", "5Y", "Max"].map((range) => (
-                            <Box
-                                key={range}
-                                as="button"
-                                px={3}
-                                py={1}
-                                border="1px solid gray"
-                                borderRadius="md"
-                                bg={selectedRange === range ? "teal.300" : "gray.100"}
-                                fontWeight="medium"
-                                onClick={() => {
-                                    setSelectedRange(range);
-                                    setFilteredGraphData(
-                                        getFilteredGraph(range, fundName["graph"] || [])
-                                    );
-                                }}
-                            >
-                                {range}
-                            </Box>
-                        ))}
-                    </Flex>
+                        {/* Chart */}
+                        <Box overflowX="auto" mb={20}>
+                            <Chart.Root maxH="sm" chart={chart} minW={{ base: "100%", md: "60%" }} mb={8}>
+                                <AreaChart data={filteredGraphData}>
+                                    <CartesianGrid stroke={chart.color("border")} vertical={false} />
+                                    <XAxis
+                                        dataKey={chart.key("markDate")}
+                                        tickFormatter={(markDate) =>
+                                            new Date(markDate).getFullYear()
+                                        }
+                                        stroke={chart.color("border")}
+                                    />
+                                    <YAxis tickLine={false} tickMargin={10} stroke={chart.color("border")} />
+                                    <Tooltip
+                                        animationDuration={100}
+                                        cursor={false}
+                                        content={<Chart.Tooltip />}
+                                    />
+                                    <Area
+                                        type="monotone"
+                                        dataKey={chart.key("nav")}
+                                        stroke="#008080"
+                                        fill="#008080"
+                                        fillOpacity={0.2}
+                                    />
+                                </AreaChart>
+                            </Chart.Root>
+                        </Box>
 
-                    {/* Chart */}
-                    <Box overflowX="auto" mb={20}>
-                        <Chart.Root maxH="sm" chart={chart} minW={{ base: "100%", md: "60%" }} mb={8}>
-                            <AreaChart data={filteredGraphData}>
-                                <CartesianGrid stroke={chart.color("border")} vertical={false} />
-                                <XAxis
-                                    dataKey={chart.key("markDate")}
-                                    tickFormatter={(markDate) =>
-                                        new Date(markDate).getFullYear()
-                                    }
-                                    stroke={chart.color("border")}
-                                />
-                                <YAxis tickLine={false} tickMargin={10} stroke={chart.color("border")} />
-                                <Tooltip
-                                    animationDuration={100}
-                                    cursor={false}
-                                    content={<Chart.Tooltip />}
-                                />
-                                <Area
-                                    type="monotone"
-                                    dataKey={chart.key("nav")}
-                                    stroke="#008080"
-                                    fill="#008080"
-                                    fillOpacity={0.2}
-                                />
-                            </AreaChart>
-                        </Chart.Root>
-                    </Box>
-
-                    {/* Exit Load */}
-                    <Box
-                        bg="gray.300"
-                        color="gray.800"
-                        py={4}
-                        mt={10}
-                        px={4}
-                        border="2px solid"
-                        borderColor="black"
-                        borderRadius="5px"
-                    >
-                        <Flex
-                            justify="flex-start"
-                            align="flex-start"
-                            flexWrap="wrap"
-                            gap={4}
+                        {/* Exit Load */}
+                        <Box
+                            bg="gray.300"
+                            color="gray.800"
+                            py={4}
+                            mt={10}
+                            px={4}
+                            border="2px solid"
+                            borderColor="black"
+                            borderRadius="5px"
                         >
-                            <Text fontWeight="semibold" minW="125px">
-                                Exit Load:
-                            </Text>
-                            <Text>{fundName["exitload"]}</Text>
-                        </Flex>
+                            <Flex
+                                justify="flex-start"
+                                align="flex-start"
+                                flexWrap="wrap"
+                                gap={4}
+                            >
+                                <Text fontWeight="semibold" minW="125px">
+                                    Exit Load:
+                                </Text>
+                                <Text>{fundName["exitload"]}</Text>
+                            </Flex>
+                        </Box>
                     </Box>
-                </Box>
                 </div>
             ) : (
                 <Box className="spinner" textAlign="center" py={20}>

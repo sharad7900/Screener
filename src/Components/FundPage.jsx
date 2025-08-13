@@ -1,16 +1,12 @@
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import "./FundPage.css";
-import { ColorModeButton } from "./ui/color-mode";
 import {
     Box,
-    Card,
     Flex,
     Image,
-    SimpleGrid,
     Spinner,
     Text,
-    Stack,
 } from "@chakra-ui/react";
 import Footer from "./Footer";
 import { DataGrid } from "@mui/x-data-grid";
@@ -163,7 +159,7 @@ const FundPage = () => {
                                 rows={rows}
                                 columns={columns}
                                 pageSize={10}
-                                getRowId={(row) => row.name}
+                                getRowId={(row) => row.isin}
                                 rowHeight={40}
                                 initialState={{
                                     sorting: {
@@ -304,6 +300,7 @@ const FundPage = () => {
             <Box border="2px solid" fontFamily="revert-layer" mt={6}>
                 <Footer />
             </Box>
+            
         </>
     );
 };

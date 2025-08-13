@@ -83,7 +83,6 @@ const Welcome = () => {
                 </div>
                 {filteredFunds.length>0 ? <div style={{ margin: "2% 15% 0% 15%", backgroundColor: "white", padding: "1%", borderRadius: "10px", maxHeight: isMobile ? "125px":"200px", overflowY:"scroll", border: "2px solid gray" }}>
                 <ListOfSearch params = {{filteredFunds,NameToId}}/>
-                {console.log(isMobile)}
                </div>: ""
 }
                 

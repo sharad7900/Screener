@@ -96,10 +96,10 @@ export default function Table() {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log(data);
       try {
         const res = await fetch("/Final_Table.json");
         const data = await res.json();
+        console.log(data);
         const response = await fetch(`https://screener-back.vercel.app/`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },

@@ -77,7 +77,7 @@ export default function Table() {
       const aum = Object?.entries(mfObj)?.[4]?.[1] || "NA";
       const ter = Object?.entries(mfObj)?.[5]?.[1] || "NA";
       const nav = nvdt[key];
-      console.log(nav);
+      console.log(nvdt);
 
       return {
         id: key,
@@ -107,6 +107,7 @@ export default function Table() {
         const navs = await response.json();
         const formatted = await batchFetchFundData(data, navs);
         setRows(formatted);
+        console.log()
         setAllRows(formatted);
       } catch (err) {
         console.error("Initial data load failed", err);

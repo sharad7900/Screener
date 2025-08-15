@@ -56,7 +56,7 @@ const Welcome = () => {
                     sequence={[
                         " Mutual Fund Screener",
                     ]}
-                    speed={100}
+                    speed={25}
                 />
             </div>
 

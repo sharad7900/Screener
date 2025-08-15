@@ -77,6 +77,7 @@ export default function Table() {
       const aum = Object?.entries(mfObj)?.[4]?.[1] || "NA";
       const ter = Object?.entries(mfObj)?.[5]?.[1] || "NA";
       const nav = nvdt[key];
+      console.log(nav);
 
       return {
         id: key,
@@ -233,7 +234,9 @@ export default function Table() {
             style={{
               border: "2px solid #000000ff",
               fontFamily: "revert-layer",
-              cursor: "pointer"
+              cursor: "pointer",
+              height: "100vh",
+              overflowY:"scroll"
             }}
           />
         </Box>

@@ -96,6 +96,7 @@ export default function Table() {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log(data);
       try {
         const res = await fetch("/Final_Table.json");
         const data = await res.json();
@@ -107,7 +108,6 @@ export default function Table() {
         const navs = await response.json();
         const formatted = await batchFetchFundData(data, navs);
         setRows(formatted);
-        console.log()
         setAllRows(formatted);
       } catch (err) {
         console.error("Initial data load failed", err);

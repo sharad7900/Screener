@@ -1,0 +1,46 @@
+.filters{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border: 2px solid black;
+    border-radius: 1rem;
+    margin-bottom: 4%;
+    background-color: rgb(226, 226, 226);
+    
+}
+.selects{
+    margin: 2%;
+    
+}
+
+.selects>select{
+    border: 1px solid #474747;
+    
+}
+
+.selects>select:focus{
+
+    outline: none;
+    
+}
+
+.Accord{
+  
+    margin: 2%;
+    background-color: #d5d5d5;
+    padding: 2%;
+    border: 1px solid black;
+    border-radius: 10px;
+
+}
+
+.Accord-item{
+    padding: 2%;
+}
+
+.Sliders{
+    width: 75%;
+    margin: 1% 5% 0 5%;
+
+    
+}

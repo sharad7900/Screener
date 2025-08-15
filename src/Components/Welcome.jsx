@@ -56,8 +56,7 @@ const Welcome = () => {
                     sequence={[
                         " Mutual Fund Screener",
                     ]}
-
-                    speed={70}
+                    speed={100}
                 />
             </div>
 
@@ -78,7 +77,7 @@ const Welcome = () => {
 
                 <div style={{ display: "flex", alignItems: "center", backgroundColor: "white", borderRadius: "10px", border: "2px solid gray" }} className="searchinput">
                     <BiSearch color="black"  />
-                    <Input placeholder="Search Mutual Fund Scheme" value={searchTerm} onChange={handleSearchChange} p={2} border={"none"} color={"black"}  w={"100%"}/>
+                    <Input placeholder="Search Mutual Fund Scheme" value={searchTerm} onChange={handleSearchChange} p={2} border={"none"} color={"black"}  w={"100%"} />
                 
                 </div>
                 {filteredFunds.length>0 ? <div style={{ margin: "2% 15% 0% 15%", backgroundColor: "white", padding: "1%", borderRadius: "10px", maxHeight: isMobile ? "125px":"200px", overflowY:"scroll", border: "2px solid gray" }}>

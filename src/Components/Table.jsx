@@ -1,15 +1,21 @@
 import { useEffect, useState } from "react";
 import { DataGrid, GridOverlay } from "@mui/x-data-grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import CircularProgress from "@mui/material/CircularProgress";
-import "./Table.css";
-import { Flex, Image } from "@chakra-ui/react";
+import {
+  Box,
+  Typography,
+  CircularProgress,
+  IconButton,
+  Drawer,
+  Button,
+  useMediaQuery
+} from "@mui/material";
+import { Image } from "@chakra-ui/react";
 import Footer from "./Footer.jsx";
 import { useNavigate } from "react-router-dom";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import Filters from "./Filters.jsx";
+import CloseIcon from "@mui/icons-material/Close";
 
-// 🔄 Custom loading overlay
+// Custom loading overlay
 function CustomLoadingOverlay() {
   return (
     <GridOverlay>
@@ -23,7 +29,7 @@ function CustomLoadingOverlay() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "rgba(255, 255, 255, 0.5)",
+          backgroundColor: "rgba(255, 255, 255, 0.5)"
         }}
       >
         <CircularProgress />
@@ -34,7 +40,9 @@ function CustomLoadingOverlay() {
 
 export default function Table() {
   const [rows, setRows] = useState([]);
+  const [allRows, setAllRows] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
   const isMobile = useMediaQuery("(max-width: 768px)");
 
@@ -44,9 +52,7 @@ export default function Table() {
       headerName: "Mutual Fund Name",
       flex: 2,
       minWidth: 200,
-      renderCell: (params) => (
-        <span style={{ fontWeight: 550 }}>{params.value}</span>
-      ),
+      renderCell: (params) => <strong>{params.value}</strong>
     },
     { field: "score", headerName: "Score", flex: 0.5, minWidth: 80 },
     { field: "cat", headerName: "Category", flex: 0.75, minWidth: 120 },
@@ -54,7 +60,7 @@ export default function Table() {
     { field: "nav", headerName: "NAV", flex: 0.4, minWidth: 80 },
     { field: "aum", headerName: "AUM (Cr.)", flex: 0.5, minWidth: 100 },
     { field: "ter", headerName: "Expense Ratio", flex: 0.6, minWidth: 120 },
-    { field: "per", headerName: "% Equity", flex: 0.5, minWidth: 100 },
+    { field: "per", headerName: "% Equity", flex: 0.5, minWidth: 100 }
   ];
 
   const handelRowClick = (id) => {
@@ -79,13 +85,12 @@ export default function Table() {
         per: parseFloat(per.toFixed(2)),
         assetClass,
         cat,
-        aum,
-        ter,
-        nav,
+        aum: parseFloat(aum),
+        ter: parseFloat(ter),
+        nav: parseFloat(nav)
       };
     });
-    const allData = await Promise.all(promises);
-    return allData.filter((d) => d !== null);
+    return (await Promise.all(promises)).filter((d) => d !== null);
   };
 
   useEffect(() => {
@@ -95,18 +100,13 @@ export default function Table() {
         const data = await res.json();
         const response = await fetch(`https://screener-back.vercel.app/`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
         });
         const navs = await response.json();
         const formatted = await batchFetchFundData(data, navs);
-        // formatted.sort((a, b) => b.score - a.score);
-        // const scores = formatted.map((row) => row.score);
-        // setMinScore(Math.min(...scores));
-        // setMaxScore(Math.max(...scores));
         setRows(formatted);
+        setAllRows(formatted);
       } catch (err) {
         console.error("Initial data load failed", err);
       } finally {
@@ -116,85 +116,172 @@ export default function Table() {
     fetchData();
   }, []);
 
+  const handleFilterChange = (filters) => {
+    let filtered = allRows.filter((row) => {
+      const matchFund = !filters.mfName || row.mfName === filters.mfName;
+      const matchAsset =
+        !filters.assetClass || row.assetClass === filters.assetClass;
+      const matchCategory = !filters.category || row.cat === filters.category;
+      const matchNav = row.nav >= filters.nav[0] && row.nav <= filters.nav[1];
+      const matchAum = row.aum >= filters.aum[0] && row.aum <= filters.aum[1];
+      const matchTer = row.ter >= filters.ter[0] && row.ter <= filters.ter[1];
+      const matchEquity =
+        row.per >= filters.equity[0] && row.per <= filters.equity[1];
+
+      return (
+        matchFund &&
+        matchAsset &&
+        matchCategory &&
+        matchNav &&
+        matchAum &&
+        matchTer &&
+        matchEquity
+      );
+    });
+
+    setRows(filtered);
+  };
+
+  const handleClearFilters = () => {
+    setRows(allRows);
+  };
+
   return (
     <>
-      <div className="navbar">
-        <ul>
-          <li>
-            <Image
-              rounded="md"
-              src="sgc.png"
-              alt="SGC"
-              style={{ height: "50px" }}
-            />
-          </li>
-        </ul>
-      </div>
-
-      {/* 📱 Responsive Table Container */}
-      <div
+      {/* Navbar */}
+      <Box
+  sx={{
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    width: "100%",
+    backgroundColor: "white",
+    borderBottom: "2px solid gray",
+    zIndex: 2000,
+    overflowX: "hidden",
+  }}
+>
+  <ul
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      padding: "0.3% 1%",
+      margin: 0,
+      listStyle: "none",
+      flexWrap: "wrap",
+    }}
+  >
+    <li>
+      <Image
+        rounded="md"
+        src="sgc.png"
+        alt="SGC"
         style={{
-          display: "flex",
-          justifyContent: "center",
-          marginBottom: "5%",
-          overflowX: isMobile ? "auto" : "visible",
+          height: "50px",
+          maxWidth: "100%",
+          display: "block",
         }}
-        className="tableOuter"
-      >
-        <Box
-          sx={{
-            height: 800,
-            width: isMobile ? "150%" : "60%",
-            p: 2,
-            overflowX: isMobile ? "auto" : "visible",
-          }}
-          className="tablebox"
-        >
-          <Typography
-            variant="h5"
-            gutterBottom
-            sx={{ fontSize: isMobile ? "1rem" : "1.25rem" }}
+      />
+    </li>
+  </ul>
+</Box>
+
+      <Box sx={{ display: "flex", px: isMobile ? 0 : 3, py: 2 }} mt={8}>
+        {/* Sidebar filters only on desktop */}
+        {!isMobile && (
+          <Box
+            sx={{
+              flex: "0 0 300px",
+              position: "sticky",
+              top: 20,
+              height: "fit-content",
+              mr: 3
+            }}
           >
+            <Filters
+              fundOptions={[...new Set(allRows.map((r) => r.mfName))]}
+              assetClassOptions={[...new Set(allRows.map((r) => r.assetClass))]}
+              categoryOptions={[...new Set(allRows.map((r) => r.cat))]}
+              onFilterChange={handleFilterChange}
+              onClearFilters={handleClearFilters}
+            />
+          </Box>
+        )}
+
+        {/* Table full width on mobile */}
+        <Box sx={{ flex: 1 }} pb={isMobile ? 8 : 10}>
+          <Typography variant="h5" gutterBottom>
             Mutual Fund Scores
           </Typography>
+
           <DataGrid
             rows={rows}
             columns={columns}
             pageSize={10}
             getRowId={(row) => row.id}
-            onRowClick={(params) => {
-              handelRowClick(params.id);
-            }}
+            onRowClick={(params) => handelRowClick(params.id)}
             rowHeight={40}
             loading={loading}
             initialState={{
-              sorting: {
-                sortModel: [{ field: "score", sort: "desc" }]
-              }
+              sorting: { sortModel: [{ field: "score", sort: "desc" }] }
             }}
             slots={{
-              loadingOverlay: CustomLoadingOverlay,
+              loadingOverlay: CustomLoadingOverlay
             }}
             style={{
-              border: "2px",
-              borderStyle: "solid",
+              border: "2px solid #000000ff",
               fontFamily: "revert-layer",
-              cursor: "pointer",
+              cursor: "pointer"
             }}
           />
         </Box>
-      </div>
+      </Box>
 
-      <div
-        style={{
-          border: "2px",
-          borderStyle: "solid",
-          fontFamily: "revert-layer",
-        }}
-        className="footer"
-      >
-        <Footer />
-      </div>
+      {/* Sticky bottom filter button for mobile */}
+      {isMobile && (
+        <Box
+          sx={{
+            position: "fixed",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            bgcolor: "white",
+            p: 1,
+            borderTop: "1px solid #ccc",
+            zIndex: 1000
+          }}
+        >
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={() => setDrawerOpen(true)}
+          >
+            Filters
+          </Button>
+        </Box>
+      )}
+
+      {/* Drawer for filters on mobile */}
+      <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+        <Box sx={{ width: 300, p: 2 }}>
+          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
+            <Typography variant="h6">Filters</Typography>
+            <IconButton onClick={() => setDrawerOpen(false)}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+          <Filters
+            fundOptions={[...new Set(allRows.map((r) => r.mfName))]}
+            assetClassOptions={[...new Set(allRows.map((r) => r.assetClass))]}
+            categoryOptions={[...new Set(allRows.map((r) => r.cat))]}
+            onFilterChange={handleFilterChange}
+            onClearFilters={handleClearFilters}
+          />
+        </Box>
+      </Drawer>
     </>
   );
 }

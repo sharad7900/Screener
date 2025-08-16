@@ -4,12 +4,15 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 import "./Table.css";
-import { Flex, Image } from "@chakra-ui/react";
+import {Flex, Image } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Filters from "./Filters.jsx";
+import { Button, Drawer } from "@mui/material";
 
 // 🔄 Custom loading overlay
+
+
 function CustomLoadingOverlay() {
   return (
     <GridOverlay>
@@ -44,9 +47,11 @@ export default function Table() {
   };
 
   const columns = [
-    { field: "mfName", headerName: "Mutual Fund Name", flex: 2, minWidth: 200, renderCell: (params) => (
-    <strong>{params.value}</strong>
-  ), },
+    {
+      field: "mfName", headerName: "Mutual Fund Name", flex: 2, minWidth: 200, renderCell: (params) => (
+        <strong>{params.value}</strong>
+      ),
+    },
     { field: "score", headerName: "Score", flex: 0.5, minWidth: 80 },
     { field: "cat", headerName: "Category", flex: 0.75, minWidth: 120 },
     { field: "assetClass", headerName: "Asset Class", flex: 0.5, minWidth: 100 },
@@ -92,7 +97,7 @@ export default function Table() {
       try {
         const res = await fetch("/Final_Table.json");
         const data = await res.json();
-        const response = await fetch(`https://screener-back.vercel.app/`, {
+        const response = await fetch(`https://screener-back.varcel.app/`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
@@ -110,6 +115,19 @@ export default function Table() {
     fetchData();
   }, []);
 
+  const [open, setOpen] = useState(false);
+
+  const toggleDrawer = (newOpen) => () => {
+    setOpen(newOpen);
+  };
+
+  const DrawerList = (
+    <Box mt={5} position="sticky" top={20} height="fit-content">
+      <Filters rows={rows} onFilterChange={handleFilterChange} />
+    </Box>
+  );
+
+
   return (
     <>
       <div className="navbar">
@@ -120,9 +138,9 @@ export default function Table() {
         </ul>
       </div>
 
-      <div className="tableOuter" style={{ marginBottom: "5%", marginTop: "5%", overflowX: isMobile ? "auto" : "visible" }}>
+      <div className="tableOuter" style={{ marginBottom: "5%", marginTop: isMobile ? "15%" : "5%", overflowX: isMobile ? "auto" : "visible" }}>
         <Flex>
-          <Box flex={1} mt={5} position="sticky" top={20} height="fit-content" maxWidth={"19%"}>
+          <Box flex={1} mt={5} position="sticky" top={20} height="fit-content" maxWidth={isMobile ? "0%" : "19%"} visibility={isMobile ? "hidden" : "visible"}>
             <Filters rows={rows} onFilterChange={handleFilterChange} />
           </Box>
 
@@ -153,6 +171,41 @@ export default function Table() {
           </Box>
         </Flex>
       </div>
+      <Box visibility={isMobile ? "visible" : "hidden"} position="fixed" bottom={0} left={0} right={0} zIndex={1000} boxShadow="md" display="flex" justifyContent="center">
+        {/* <Drawer.Root>
+          <Drawer.Trigger asChild>
+            <Button variant="outline" size="sm" style={{ backgroundColor: "#007bffff", color: "#ffffffff", width: "100%" }}>
+              Apply Filters
+            </Button>
+          </Drawer.Trigger>
+          <Portal>
+            <Drawer.Backdrop />
+            <Drawer.Positioner>
+              <Drawer.Content>
+                <Drawer.Header>
+                </Drawer.Header>
+                <Drawer.Body>
+                  <Box flex={1} mt={5} position="sticky" top={20} height="fit-content">
+                    <Filters rows={rows} onFilterChange={handleFilterChange} />
+                  </Box>
+                </Drawer.Body>
+                <Drawer.Footer>
+                  <Button variant="outline">Cancel</Button>
+                  <Button>Save</Button>
+                </Drawer.Footer>
+                <Drawer.CloseTrigger asChild>
+                  <CloseButton size="sm" />
+                </Drawer.CloseTrigger>
+              </Drawer.Content>
+            </Drawer.Positioner>
+          </Portal>
+        </Drawer.Root> */}
+        {isMobile && (<><Button onClick={toggleDrawer(true)} style={{backgroundColor:"#0095ffff", width:"100%", color:"white"}}>Apply Filters</Button>
+          <Drawer open={open} onClose={toggleDrawer(false)} >
+            {DrawerList}
+          </Drawer></>)}
+
+      </Box>
     </>
   );
 }

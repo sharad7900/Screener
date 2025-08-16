@@ -21,6 +21,7 @@ import {
 } from "recharts";
 import { useLocation } from "react-router";
 
+
 const FundPage = () => {
     const [selectedRange, setSelectedRange] = useState("Max");
     const [filteredGraphData, setFilteredGraphData] = useState([]);
@@ -29,6 +30,7 @@ const FundPage = () => {
     const { id } = location.state || {};
     const [fundName, setFundName] = useState({});
     const [rows, setRows] = useState([]);
+    const isMobile = window.innerWidth <= 480;
 
     const getFilteredGraph = (range, graphData = []) => {
         const now = new Date();
@@ -128,7 +130,7 @@ const FundPage = () => {
                 <div className="responsive">
                     <Box px={{ base: 4, md: "10%" }} py={6}>
                         <Typography
-                            variant="h4"
+                            variant={isMobile ? "h5" : "h4"}
                             gutterBottom
                             textAlign={"center"}
                             paddingY={"2%"}
@@ -139,7 +141,7 @@ const FundPage = () => {
 
                         {/* Holdings Table */}
                         <Typography
-                            variant="h5"
+                            variant={isMobile ? "h6" : "h5"}
                             gutterBottom
                             textAlign={"left"}
                             py={2}

@@ -148,7 +148,7 @@ const Filters = ({ rows, onFilterChange }) => {
       />
 
       {/* AUM */}
-      <Typography sx={{ mt: 3 }}>AUM (Cr.)</Typography>
+      <Typography sx={{ mt: 3 }} textAlign={"left"} width={"100%"}>AUM (Cr.)</Typography>
       <Slider
         value={aum}
         onChange={(e, val) => setAum(val)}
@@ -160,7 +160,7 @@ const Filters = ({ rows, onFilterChange }) => {
       />
 
       {/* TER */}
-      <Typography sx={{ mt: 3 }}>Expense Ratio</Typography>
+      <Typography sx={{ mt: 3 }} textAlign={"left"} width={"100%"}>Expense Ratio</Typography>
       <Slider
         value={ter}
         onChange={(e, val) => setTer(val)}
@@ -172,7 +172,7 @@ const Filters = ({ rows, onFilterChange }) => {
       />
 
       {/* Equity */}
-      <Typography sx={{ mt: 3 }}>Equity %</Typography>
+      <Typography sx={{ mt: 3 }} textAlign={"left"} width={"100%"}>Equity %</Typography>
       <Slider
         value={equity}
         onChange={(e, val) => setEquity(val)}
@@ -184,7 +184,7 @@ const Filters = ({ rows, onFilterChange }) => {
       />
 
       {/* Score */}
-      <Typography sx={{ mt: 3 }}>Score</Typography>
+      <Typography sx={{ mt: 3 }} textAlign={"left"} width={"100%"}>Score</Typography>
       <Slider
         value={score}
         onChange={(e, val) => setScore(val)}

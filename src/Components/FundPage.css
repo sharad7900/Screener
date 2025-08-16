@@ -17,6 +17,7 @@
 .responsive{
     margin-right: 10%;
     margin-left: 10%;
+    margin-top: 5%;
 }
 
 @media (max-width: 1050px) {
@@ -36,5 +37,13 @@
  .responsive {
     margin-right: 0;
     margin-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+ .responsive {
+    margin-right: 0;
+    margin-left: 0;
+    margin-top: 15%;
   }
 }

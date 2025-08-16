@@ -5,9 +5,9 @@ import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 import "./Table.css";
 import { Flex, Image } from "@chakra-ui/react";
-import Footer from "./Footer.jsx";
 import { useNavigate } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import Filters from "./Filters.jsx";
 
 // 🔄 Custom loading overlay
 function CustomLoadingOverlay() {
@@ -35,19 +35,18 @@ function CustomLoadingOverlay() {
 export default function Table() {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filteredRows, setFilteredRows] = useState([]);
   const navigate = useNavigate();
   const isMobile = useMediaQuery("(max-width: 768px)");
 
+  const handleFilterChange = (newRows) => {
+    setFilteredRows(newRows);
+  };
+
   const columns = [
-    {
-      field: "mfName",
-      headerName: "Mutual Fund Name",
-      flex: 2,
-      minWidth: 200,
-      renderCell: (params) => (
-        <span style={{ fontWeight: 550 }}>{params.value}</span>
-      ),
-    },
+    { field: "mfName", headerName: "Mutual Fund Name", flex: 2, minWidth: 200, renderCell: (params) => (
+    <strong>{params.value}</strong>
+  ), },
     { field: "score", headerName: "Score", flex: 0.5, minWidth: 80 },
     { field: "cat", headerName: "Category", flex: 0.75, minWidth: 120 },
     { field: "assetClass", headerName: "Asset Class", flex: 0.5, minWidth: 100 },
@@ -57,7 +56,7 @@ export default function Table() {
     { field: "per", headerName: "% Equity", flex: 0.5, minWidth: 100 },
   ];
 
-  const handelRowClick = (id) => {
+  const handleRowClick = (id) => {
     navigate("/MFinfo", { state: { id } });
   };
 
@@ -65,11 +64,11 @@ export default function Table() {
     const entries = Object.entries(keysMap);
     const promises = entries.map(async ([key, mfObj]) => {
       const [mfName, score] = Object.entries(mfObj)[0];
-      const per = Object?.entries(mfObj)?.[1]?.[1] || "N/A";
-      const assetClass = Object?.entries(mfObj)?.[2]?.[1] || "N/A";
-      const cat = Object?.entries(mfObj)?.[3]?.[1] || "NA";
-      const aum = Object?.entries(mfObj)?.[4]?.[1] || "NA";
-      const ter = Object?.entries(mfObj)?.[5]?.[1] || "NA";
+      const per = Object.entries(mfObj)[1]?.[1] || "N/A";
+      const assetClass = Object.entries(mfObj)[2]?.[1] || "N/A";
+      const cat = Object.entries(mfObj)[3]?.[1] || "NA";
+      const aum = Object.entries(mfObj)[4]?.[1] || "NA";
+      const ter = Object.entries(mfObj)[5]?.[1] || "NA";
       const nav = nvdt[key];
 
       return {
@@ -95,18 +94,13 @@ export default function Table() {
         const data = await res.json();
         const response = await fetch(`https://screener-back.vercel.app/`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
         });
         const navs = await response.json();
         const formatted = await batchFetchFundData(data, navs);
-        // formatted.sort((a, b) => b.score - a.score);
-        // const scores = formatted.map((row) => row.score);
-        // setMinScore(Math.min(...scores));
-        // setMaxScore(Math.max(...scores));
         setRows(formatted);
+        setFilteredRows(formatted); // initialize with full data
       } catch (err) {
         console.error("Initial data load failed", err);
       } finally {
@@ -121,85 +115,44 @@ export default function Table() {
       <div className="navbar">
         <ul>
           <li>
-            <Image
-              rounded="md"
-              src="sgc.png"
-              alt="SGC"
-              style={{ height: "50px" }}
-            />
+            <Image rounded="md" src="sgc.png" alt="SGC" style={{ height: "50px" }} />
           </li>
         </ul>
       </div>
 
-      {/* 📱 Responsive Table Container */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          marginBottom: "5%",
-          marginTop:"5%",
-          overflowX: isMobile ? "auto" : "visible",
-        }}
-        className="tableOuter"
-      >
-        <Box
-          sx={{
-            height: 800,
-            width: isMobile ? "150%" : "60%",
-            p: 2,
-            overflowX: isMobile ? "auto" : "visible",
-          }}
-          className="tablebox"
-        >
-          {/* <div>
-            <Filters/>
-          </div> */}
-          <Typography
-            variant="h5"
-            gutterBottom
-            sx={{ fontSize: isMobile ? "1rem" : "1.25rem" }}
-          >
-            Mutual Fund Scores
-          </Typography>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            pageSize={10}
-            getRowId={(row) => row.id}
-            onRowClick={(params) => {
-              handelRowClick(params.id);
-            }}
-            rowHeight={40}
-            loading={loading}
-            initialState={{
-              sorting: {
-                sortModel: [{ field: "score", sort: "desc" }]
-              }
-            }}
-            slots={{
-              loadingOverlay: CustomLoadingOverlay,
-            }}
-            style={{
-              border: "2px",
-              borderStyle: "solid",
-              fontFamily: "revert-layer",
-              cursor: "pointer",
-            }}
-          />
-        </Box>
-      </div>
+      <div className="tableOuter" style={{ marginBottom: "5%", marginTop: "5%", overflowX: isMobile ? "auto" : "visible" }}>
+        <Flex>
+          <Box flex={1} mt={5} position="sticky" top={20} height="fit-content" maxWidth={"19%"}>
+            <Filters rows={rows} onFilterChange={handleFilterChange} />
+          </Box>
 
-      <div
-        style={{
-          border: "2px",
-          borderStyle: "solid",
-          fontFamily: "revert-layer",
-        }}
-        className="footer"
-      >
-        <Footer />
+          <Box flex={4} sx={{ height: 900, p: 2, overflowX: isMobile ? "auto" : "visible" }} className="tablebox">
+            <Typography variant="h5" gutterBottom sx={{ fontSize: isMobile ? "1rem" : "1.25rem" }}>
+              Mutual Fund Scores
+            </Typography>
+            <DataGrid
+              rows={filteredRows}
+              columns={columns}
+              pageSize={10}
+              getRowId={(row) => row.id}
+              onRowClick={(params) => handleRowClick(params.id)}
+              rowHeight={40}
+              loading={loading}
+              initialState={{
+                sorting: {
+                  sortModel: [{ field: "score", sort: "desc" }],
+                },
+              }}
+              slots={{ loadingOverlay: CustomLoadingOverlay }}
+              style={{
+                border: "2px solid",
+                fontFamily: "revert-layer",
+                cursor: "pointer",
+              }}
+            />
+          </Box>
+        </Flex>
       </div>
     </>
   );
 }
-

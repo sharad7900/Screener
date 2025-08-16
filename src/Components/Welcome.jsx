@@ -84,7 +84,6 @@ const Welcome = () => {
                 <ListOfSearch params = {{filteredFunds,NameToId}}/>
                </div>: ""
 }
-                
               
             </div>
             

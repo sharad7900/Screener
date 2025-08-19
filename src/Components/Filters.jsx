@@ -36,7 +36,7 @@ const MenuProps = {
 };
 
 const assetClassOptions = ["Equity", "Debt", "Solution Oriented", "Others"];
-const categoryOptions = ["Large Cap", "Mid Cap", "Small Cap", "Sectoral", "Retirement"];
+const categoryOptions = ["Large Cap", "Mid Cap", "Small Cap", "Sectoral", "Retirement", "Contra", "Value"];
 
 const Filters = ({ rows, onFilterChange }) => {
   const [assetClass, setAssetClass] = useState([]);

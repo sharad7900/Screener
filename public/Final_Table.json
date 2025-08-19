@@ -24,8 +24,8 @@
         "ter": 1.69
     },
     "20101065": {
-        "Quant Mid Cap Fund (G)": 44.992459722810445,
-        "per": 90.21332,
+        "Quant Mid Cap Fund (G)": 45.578462132810444,
+        "per": 91.22193,
         "assetClass": "Equity",
         "category": "Mid Cap Fund",
         "aum": 8778.418,
@@ -136,8 +136,8 @@
         "ter": 1.66
     },
     "20150583": {
-        "WhiteOak Capital Mid Cap Fund (G)": 46.84126804754674,
-        "per": 90.46339500000003,
+        "WhiteOak Capital Mid Cap Fund (G)": 49.309776122546744,
+        "per": 94.28999000000003,
         "assetClass": "Equity",
         "category": "Mid Cap Fund",
         "aum": 3500.439,
@@ -225,7 +225,7 @@
     },
     "20147944": {
         "Bandhan Small Cap Fund (G)": 37.49010794186961,
-        "per": 87.84,
+        "per": 87.80000000000001,
         "assetClass": "Equity",
         "category": "Small Cap Fund",
         "aum": 14062.1924,
@@ -638,5 +638,101 @@
         "category": "Retirement Fund",
         "aum": 90.7826,
         "ter": 2.32
+    },
+    "20102414": {
+        "SBI Contra Fund (G)": 39.82275373363478,
+        "per": 78.37999999999998,
+        "assetClass": "Equity",
+        "category": "Contra Fund",
+        "aum": 46947.0144,
+        "ter": 1.5
+    },
+    "20105460": {
+        "Invesco India Contra Fund (G)": 52.51187901067887,
+        "per": 98.09999999999997,
+        "assetClass": "Equity",
+        "category": "Contra Fund",
+        "aum": 19287.7172,
+        "ter": 1.63
+    },
+    "20103040": {
+        "Kotak Contra Fund (G)": 51.63409278872313,
+        "per": 98.29000000000002,
+        "assetClass": "Equity",
+        "category": "Contra Fund",
+        "aum": 4471.7642,
+        "ter": 1.86
+    },
+    "20102594": {
+        "ICICI Pru Value Fund (G)": 50.41295368613413,
+        "per": 90.01491999999996,
+        "assetClass": "Equity",
+        "category": "Value Fund",
+        "aum": 53715.5169,
+        "ter": 1.51
+    },
+    "20151110": {
+        "HSBC Value Fund (G)": 54.02120736716413,
+        "per": 98.85,
+        "assetClass": "Equity",
+        "category": "Value Fund",
+        "aum": 13816.7688,
+        "ter": 1.71
+    },
+    "20103098": {
+        "UTI-Value Fund (G)": 52.76087817076627,
+        "per": 99.13999999999997,
+        "assetClass": "Equity",
+        "category": "Value Fund",
+        "aum": 9898.5088,
+        "ter": 1.82
+    },
+    "20108909": {
+        "Bandhan Value Fund (G)": 48.8298908378017,
+        "per": 91.13,
+        "assetClass": "Equity",
+        "category": "Value Fund",
+        "aum": 9964.4935,
+        "ter": 1.75
+    },
+    "20103085": {
+        "Nippon India Value Fund (G)": 49.55977141306956,
+        "per": 96.34999000000002,
+        "assetClass": "Equity",
+        "category": "Value Fund",
+        "aum": 8768.2904,
+        "ter": 1.83
+    },
+    "20101672": {
+        "Tata Value Fund - (G)": 55.409765854427654,
+        "per": 95.01999999999998,
+        "assetClass": "Equity",
+        "category": "Value Fund",
+        "aum": 8607.9307,
+        "ter": 1.77
+    },
+    "20101764": {
+        "HDFC Value Fund - Regular (G)": 54.40716318745225,
+        "per": 98.31999,
+        "assetClass": "Equity",
+        "category": "Value Fund",
+        "aum": 7348.2941,
+        "ter": 1.84
+    },
+    "20108167": {
+        "Aditya Birla SL Value Fund (G)": 48.93057657956222,
+        "per": 95.70400000000004,
+        "assetClass": "Equity",
+        "category": "Value Fund",
+        "aum": 6099.1027,
+        "ter": 1.87
+    },
+    "20100496": {
+        "Templeton India Value Fund - (G)": 50.178270359374615,
+        "per": 93.02667999999997,
+        "assetClass": "Equity",
+        "category": "Value Fund",
+        "aum": 2237.4833,
+        "ter": 2.04
     }
 }

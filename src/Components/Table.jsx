@@ -172,34 +172,7 @@ export default function Table() {
         </Flex>
       </div>
       <Box visibility={isMobile ? "visible" : "hidden"} position="fixed" bottom={0} left={0} right={0} zIndex={1000} boxShadow="md" display="flex" justifyContent="center">
-        {/* <Drawer.Root>
-          <Drawer.Trigger asChild>
-            <Button variant="outline" size="sm" style={{ backgroundColor: "#007bffff", color: "#ffffffff", width: "100%" }}>
-              Apply Filters
-            </Button>
-          </Drawer.Trigger>
-          <Portal>
-            <Drawer.Backdrop />
-            <Drawer.Positioner>
-              <Drawer.Content>
-                <Drawer.Header>
-                </Drawer.Header>
-                <Drawer.Body>
-                  <Box flex={1} mt={5} position="sticky" top={20} height="fit-content">
-                    <Filters rows={rows} onFilterChange={handleFilterChange} />
-                  </Box>
-                </Drawer.Body>
-                <Drawer.Footer>
-                  <Button variant="outline">Cancel</Button>
-                  <Button>Save</Button>
-                </Drawer.Footer>
-                <Drawer.CloseTrigger asChild>
-                  <CloseButton size="sm" />
-                </Drawer.CloseTrigger>
-              </Drawer.Content>
-            </Drawer.Positioner>
-          </Portal>
-        </Drawer.Root> */}
+        
         {isMobile && (<><Button onClick={toggleDrawer(true)} style={{backgroundColor:"#0095ffff", width:"100%", color:"white"}}>Apply Filters</Button>
           <Drawer open={open} onClose={toggleDrawer(false)} >
             {DrawerList}

@@ -35,8 +35,8 @@ const MenuProps = {
   },
 };
 
-const assetClassOptions = ["Equity", "Debt", "Solution Oriented", "Others"];
-const categoryOptions = ["Large Cap", "Mid Cap", "Small Cap", "Sectoral", "Retirement", "Contra", "Value"];
+const assetClassOptions = ["Equity", "Debt", "Solution Oriented", "Other", "Hybrid"];
+const categoryOptions = ["Large Cap", "Mid Cap", "Small Cap", "Flexi Cap", "Sectoral: Other Sectoral", "Retirement", "Contra", "Value", "Focused","Multi Asset Allocation", "FoFs Domestic", "Banking and PSU", "Sectoral: Auto"];
 
 const Filters = ({ rows, onFilterChange }) => {
   const [assetClass, setAssetClass] = useState([]);

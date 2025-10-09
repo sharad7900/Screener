@@ -66,10 +66,14 @@ export default function Table() {
   };
 
   const batchFetchFundData = async (keysMap, nvdt) => {
+   
     const entries = Object.entries(keysMap);
+    
     const promises = entries.map(async ([key, mfObj]) => {
       const [mfName, score] = Object.entries(mfObj)[0];
+      
       const per = Object.entries(mfObj)[1]?.[1] || "N/A";
+    
       const assetClass = Object.entries(mfObj)[2]?.[1] || "N/A";
       const cat = Object.entries(mfObj)[3]?.[1] || "NA";
       const aum = Object.entries(mfObj)[4]?.[1] || "NA";
@@ -80,7 +84,8 @@ export default function Table() {
         id: key,
         mfName,
         score: parseFloat(score.toFixed(2)),
-        per: parseFloat(per.toFixed(2)),
+        per: (per != null && !isNaN(per)) ? parseFloat(Number(per).toFixed(2)) : 0,
+
         assetClass,
         cat,
         aum,
@@ -97,11 +102,13 @@ export default function Table() {
       try {
         const res = await fetch("/Final_Table.json");
         const data = await res.json();
+        //https://screener-back.vercel.app
         const response = await fetch(`https://screener-back.vercel.app/`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
         });
+
         const navs = await response.json();
         const formatted = await batchFetchFundData(data, navs);
         setRows(formatted);

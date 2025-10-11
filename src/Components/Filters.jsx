@@ -13,9 +13,8 @@ import {
   Button,
 } from "@mui/material";
 import { Separator } from "@chakra-ui/react";
-import "./Filters.css";
 
-// ---------- Utility ----------
+// Defensive debounce
 function useDebounce(value, delay = 400) {
   const [debounced, setDebounced] = useState(value);
   useEffect(() => {
@@ -25,20 +24,15 @@ function useDebounce(value, delay = 400) {
   return debounced;
 }
 
-const ITEM_HEIGHT = 48;
+const assetClassOptions = ["Equity", "Debt", "Solution Oriented", "Other", "Hybrid"];
+const categoryOptions = [
+  "Large Cap", "Mid Cap", "Small Cap", "Flexi Cap", "Sectoral", "Retirement", "Contra", "Value", "Focused"
+];
 const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5,
-      width: 250,
-    },
-  },
+  PaperProps: { style: { maxHeight: 220, width: 250 } }
 };
 
-const assetClassOptions = ["Equity", "Debt", "Solution Oriented", "Other", "Hybrid"];
-const categoryOptions = ["Large Cap", "Mid Cap", "Small Cap", "Flexi Cap", "Sectoral: Other Sectoral", "Retirement", "Contra", "Value", "Focused","Multi Asset Allocation", "FoFs Domestic", "Banking and PSU", "Sectoral: Auto"];
-
-const Filters = ({ rows, onFilterChange }) => {
+const Filters = ({ rows = [], onFilterChange }) => {
   const [assetClass, setAssetClass] = useState([]);
   const [category, setCategory] = useState([]);
   const [mfName, setMfName] = useState("");
@@ -50,8 +44,6 @@ const Filters = ({ rows, onFilterChange }) => {
   const debouncedMfName = useDebounce(mfName);
   const debouncedAum = useDebounce(aum);
   const debouncedTer = useDebounce(ter);
-  const debouncedEquity = useDebounce(equity);
-  const debouncedScore = useDebounce(score);
 
   const clearAllFilters = () => {
     setAssetClass([]);
@@ -59,56 +51,48 @@ const Filters = ({ rows, onFilterChange }) => {
     setMfName("");
     setAum([0, 100000]);
     setTer([0, 4]);
-    setEquity([0, 100]);
-    setScore([0, 100]);
-    onFilterChange(rows);
+    onFilterChange(Array.isArray(rows) ? rows : []);
   };
 
-  useEffect(() => {
-    if (!rows) return;
+ useEffect(() => {
+  if (!Array.isArray(rows)) return;
+  const filtered = rows.filter((row) => {
+    if (assetClass.length && !assetClass.includes(row.assetClass)) return false;
+    if (category.length && !category.some(cat => row.cat?.toLowerCase().includes(cat.toLowerCase()))) return false;
+    if (debouncedMfName && !row.mfName.toLowerCase().includes(debouncedMfName.toLowerCase())) return false;
+    if (row.aum < debouncedAum[0] || row.aum > debouncedAum[1]) return false;
+    if (row.ter < debouncedTer[0] || row.ter > debouncedTer[1]) return false;
+    if (row.per < equity[0] || row.per > equity[1]) return false;
 
-    const filtered = rows.filter((row) => {
-      if (assetClass.length && !assetClass.includes(row.assetClass)) return false;
-      if (category.length && !category.some((cat) => row.cat?.toLowerCase().includes(cat.toLowerCase()))) return false;
-      if (debouncedMfName && !row.mfName.toLowerCase().includes(debouncedMfName.toLowerCase())) return false;
-      if (row.aum < debouncedAum[0] || row.aum > debouncedAum[1]) return false;
-      if (row.ter < debouncedTer[0] || row.ter > debouncedTer[1]) return false;
-      if (row.per < debouncedEquity[0] || row.per > debouncedEquity[1]) return false;
-      if (row.score < debouncedScore[0] || row.score > debouncedScore[1]) return false;
-      return true;
-    });
+    if (row.score < score[0] || row.score > score[1]) return false;
+    return true;
+  });
+  onFilterChange(filtered);
+}, [assetClass, category, debouncedMfName, debouncedAum, debouncedTer, equity, score, rows, onFilterChange]);
 
-    onFilterChange(filtered);
-  }, [
-    assetClass,
-    category,
-    debouncedMfName,
-    debouncedAum,
-    debouncedTer,
-    debouncedEquity,
-    debouncedScore,
-    rows,
-  ]);
 
   return (
-    <div className="filter-container">
-      <Typography variant="h5" gutterBottom fontWeight={"bold"}>
-        🔎 Filters
+    <div style={{
+      maxWidth: 320, margin: "0 auto",
+      fontFamily: "'Montserrat', sans-serif", color: "#000000ff",
+      padding:"5%"
+    }}>
+      <Typography variant="h6" gutterBottom fontWeight="bold" align="center">
+         Filter
       </Typography>
-      <Separator mb={5} w={"100%"} />
+      <Separator mb={3} />
 
-      {/* Asset Class */}
-      <FormControl fullWidth>
+      <FormControl fullWidth margin="normal" size="small">
         <InputLabel>Asset Class</InputLabel>
         <Select
           multiple
           value={assetClass}
-          onChange={(e) => setAssetClass(e.target.value)}
+          onChange={e => setAssetClass(e.target.value)}
           input={<OutlinedInput label="Asset Class" />}
-          renderValue={(selected) => selected.join(", ")}
+          renderValue={selected => selected.join(", ")}
           MenuProps={MenuProps}
         >
-          {assetClassOptions.map((name) => (
+          {assetClassOptions.map(name => (
             <MenuItem key={name} value={name}>
               <Checkbox checked={assetClass.includes(name)} />
               <ListItemText primary={name} />
@@ -117,18 +101,17 @@ const Filters = ({ rows, onFilterChange }) => {
         </Select>
       </FormControl>
 
-      {/* Category */}
-      <FormControl fullWidth sx={{ mt: 2 }}>
+      <FormControl fullWidth margin="normal" size="small">
         <InputLabel>Category</InputLabel>
         <Select
           multiple
           value={category}
-          onChange={(e) => setCategory(e.target.value)}
+          onChange={e => setCategory(e.target.value)}
           input={<OutlinedInput label="Category" />}
-          renderValue={(selected) => selected.join(", ")}
+          renderValue={selected => selected.join(", ")}
           MenuProps={MenuProps}
         >
-          {categoryOptions.map((name) => (
+          {categoryOptions.map(name => (
             <MenuItem key={name} value={name}>
               <Checkbox checked={category.includes(name)} />
               <ListItemText primary={name} />
@@ -137,42 +120,41 @@ const Filters = ({ rows, onFilterChange }) => {
         </Select>
       </FormControl>
 
-      {/* MF Name Search */}
       <TextField
         label="Mutual Fund Name"
         variant="outlined"
         fullWidth
-        sx={{ mt: 2 }}
+        size="small"
+        margin="normal"
         value={mfName}
-        onChange={(e) => setMfName(e.target.value)}
+        onChange={e => setMfName(e.target.value)}
       />
 
-      {/* AUM */}
-      <Typography sx={{ mt: 3 }} textAlign={"left"} width={"100%"}>AUM (Cr.)</Typography>
+      <Typography sx={{ mt: 2 }} fontWeight="medium">AUM (Cr.)</Typography>
       <Slider
         value={aum}
         onChange={(e, val) => setAum(val)}
         valueLabelDisplay="auto"
-        getAriaValueText={(val) => `${val}Cr`}
         min={0}
         max={100000}
         step={1000}
+        sx={{ color: "#000000ff" }}
       />
 
-      {/* TER */}
-      <Typography sx={{ mt: 3 }} textAlign={"left"} width={"100%"}>Expense Ratio</Typography>
+      <Typography sx={{ mt: 2 }} fontWeight="medium">Expense Ratio</Typography>
       <Slider
         value={ter}
         onChange={(e, val) => setTer(val)}
         valueLabelDisplay="auto"
-        getAriaValueText={(val) => `${val}%`}
         min={0}
         max={4}
         step={0.1}
+        sx={{ color: "#000000ff" }}
       />
-
-      {/* Equity */}
-      <Typography sx={{ mt: 3 }} textAlign={"left"} width={"100%"}>Equity %</Typography>
+       {/* Equity */}
+      <Typography sx={{ mt: 3 }} fontWeight="medium">
+        Equity %
+      </Typography>
       <Slider
         value={equity}
         onChange={(e, val) => setEquity(val)}
@@ -181,10 +163,13 @@ const Filters = ({ rows, onFilterChange }) => {
         min={0}
         max={100}
         step={1}
+        sx={{ color: "#000000ff" }}
       />
 
       {/* Score */}
-      <Typography sx={{ mt: 3 }} textAlign={"left"} width={"100%"}>Score</Typography>
+      <Typography sx={{ mt: 3 }} fontWeight="medium">
+        Score
+      </Typography>
       <Slider
         value={score}
         onChange={(e, val) => setScore(val)}
@@ -193,18 +178,17 @@ const Filters = ({ rows, onFilterChange }) => {
         min={0}
         max={100}
         step={1}
+        sx={{ color: "#000000ff" }}
       />
 
-      {/* Clear Button */}
+
       <Button
         variant="outlined"
-        color="secondary"
+        color="primary"
         fullWidth
-        sx={{ mt: 3 }}
+        sx={{ mt: 3, fontWeight: "bold", borderColor: "#000000ff", color: "#000000ff" }}
         onClick={clearAllFilters}
-      >
-        Clear All Filters
-      </Button>
+      >Clear All</Button>
     </div>
   );
 };

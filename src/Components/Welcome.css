@@ -1,145 +1,211 @@
-.bgimage{
-    background-image: url("pxfuel.jpg");
-    border-bottom-left-radius: 100px; /* Adjust value as needed */
-    border-bottom-right-radius: 100px;
-    height: 700px;
-    background-size: cover; /* or other background-size values */
-  background-position: center;
-  color: white;
-  position: relative;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap');
 
-  margin-bottom: 20%;
-  padding-bottom: 20%;
-  
-    
-}
-.animationType{
-  left: 22%;
-}
-.animationType>pre,.animationType>span{
-  font-size: 2.5vw;
-}
-.txt{
-
-  font-size: 1.2vw;
-
+/* Flex layout for sticky footer */
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-.EnterBTN>button{
-
-  font-size: 25px;
-
-
-}
-.searchinput{
-  margin: 5% 15% 0% 15%;
-
-}
-.searchbox{
-   width: 30%;
-   height: 30%;
-
+.mainContent {
+  flex: 1;
+  padding-bottom: 12px; /* optional safe space */
 }
 
-.searchinput>input{
-
-   font-size: 15px;
-
-}
-.searchbox>p{
-  font-size: 25px;
-}
-.index-module_type__E-SaG{
-  font-size: 10.5vw;
+.bgimage {
+  min-height: 100vh;
+  width: 100vw;
+  font-family: 'Montserrat', Arial, sans-serif;
+  animation: gradientAnimate 8s ease infinite;
+  background: linear-gradient(120deg, #6e27ff 0%, #b400ff 100%);
+  background-size: 300% 300%;
 }
 
-.searchinput>svg{
-
-   width: 5%;
-   height: 5%;
-
-}
-.searchinput>input:focus{
-
-   outline: none;
-
+@keyframes gradientAnimate {
+  0% { background-position: 0% 100%; }
+  50% { background-position: 100% 0%; }
+  100% { background-position: 0% 100%; }
 }
 
-@media (max-width: 1000px){
-  .footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-
-
-}
+.glassmorph {
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px 0 rgba(31,38,135,.22);
+  padding: 22px 48px;
 }
 
-@media (max-width: 768px){
-  .footer {
-    position: relative;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-}
+.animationType {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #fff;
+  text-align: center;
+  margin-top: 6vh;
+  font-family: 'Montserrat', Arial, sans-serif;
 }
 
-@media (max-width: 780px){
+.mainHeading {
+  font-size: inherit;
+  font-weight: bold;
+  font-family: 'Montserrat';
+  color: #18181b;
+}
+
+.txt {
+  color: #efefef;
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: 500;
+  margin-bottom: 3vh;
+  box-shadow: none;
+}
+
+.EnterBTN {
+  text-align: center;
+  margin: 4vh auto;
+}
+
+.EnterBTN button {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #ef32d9 0%, #89fffd 100%);
+  color: #301d4a;
+  border: none;
+  transition: all 0.32s cubic-bezier(.23,1,.32,1);
+}
+.EnterBTN button:hover {
+  background: linear-gradient(90deg, #b400ff 0%, #6e27ff 100%);
+  color: #fff;
+  transform: scale(1.05);
+}
+
+.searchbox {
+  margin: 0 auto;
+  margin-top: 4vh;
+  box-shadow: 0 10px 36px 6px rgba(100, 22, 180, 0.12);
+  border-radius: 18px;
+  background: rgba(255,255,255,0.22);
+  backdrop-filter: blur(18px);
+  padding: 20px 30px 18px 30px;
+  max-width: 440px;
+}
+
+.searchinput {
+  padding: 12px;
+  margin-top: 2%;
+  box-shadow: 0 2px 12px rgba(140,140,140,0.10);
+  border-radius: 10px;
+  background: rgba(250,250,250,0.85);
+  display: flex;
+  align-items: center;
+}
+
+.searchinput input {
+  background: transparent;
+  border: none;
+  font-size: 1.07rem;
+  font-family: 'Montserrat';
+  outline: none;
+  margin-left: 2px;
+}
+.searchinput input:focus {
+  box-shadow: 0 0 0 2px #b400ff;
+}
+
+.listOfSearch {
+  background: rgba(255,255,255,0.93);
+  border-radius: 10px;
+}
+
+.listOfSearch::-webkit-scrollbar {
+  width: 7px;
+  background: #e5e5e5;
+}
+.listOfSearch::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: #b400ff;
+}
+
+@media (max-width: 800px) {
   .searchbox {
-    width: 200px;
-    height: 100px;
-    margin-top:5%;
-}
-.bgimage{
-  height: 300px;
-  border-bottom-left-radius: 30px; /* Adjust value as needed */
-    border-bottom-right-radius: 30px;
-   margin-bottom: 50%;
-  
-}
-.searchbox>p{
-  font-size: small;
+    max-width: 98vw;
+    padding: 12px 2vw;
+  }
+  .glassmorph {
+    padding: 12px 3vw;
+  }
 }
 
-.searchinput>input{
-
-   font-size: 10px;
-
+@media (max-width: 600px) {
+  .bgimage {
+    background-size: 200% 200%;
+    min-height: 100vh;
+  }
+  .animationType {
+    font-size: 1.2rem;
+    padding: 6px 2vw;
+    margin-top: 9vh;
+  }
+  .mainContent {
+    min-height: 94vh;
+    padding-bottom: 8vh;
+  }
+  .txt {
+    font-size: 1rem;
+    margin-bottom: 2vh;
+  }
+  .EnterBTN {
+    margin: 2vh auto;
+  }
+  .searchbox {
+    width: 98vw;
+    max-width: 99vw;
+    margin-top: 3vh;
+    padding: 10px 2vw;
+    left: 1vw!important;
+  }
+  .glassmorph {
+    padding: 10px 4vw;
+  }
 }
 
-
-.searchinput{
-  height: 35%;
-}
-.searchinput>svg{
-   width: 10%;
-   height: 50%;
-   
-
-}
-.EnterBTN>button{
-
-  font-size: 10px;
-
-
-}
-.txt{
-
-  font-size: small;
-
-}
-.animationType>pre{
-  font-size: 4vw;
-}
-.animationType>span{
-  font-size: 4vw;
+/* Footer normal block, not fixed */
+.footer {
+  width: 100vw;
+  background: #f3f3f3;
+  margin-top: auto; /* push footer to bottom */
 }
 
-.animationType{
-  left: 5%;
- 
+.dynamic-gradient-text {
+  font-weight: bold;
+  font-size: 2.7rem;
+  font-family: 'Montserrat', Arial, sans-serif;
+  background: linear-gradient(90deg, #00eeff, #FFD700, #ff1493 94%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.13);
+  display: inline-block;
 }
 
+.navbar {
 
+  margin-bottom: 2vh;
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    padding-left: 4vw !important;
+    padding-right: 4vw !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+  }
 }

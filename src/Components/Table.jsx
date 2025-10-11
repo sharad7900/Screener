@@ -1,18 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { DataGrid, GridOverlay } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 import "./Table.css";
-import {Flex, Image } from "@chakra-ui/react";
+import { Flex, Image } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Filters from "./Filters.jsx";
 import { Button, Drawer } from "@mui/material";
+import Navbar from "./Navbar.jsx";
+import Tablenav from "./Tablenav.jsx";
+import Footer from "./Footer.jsx";
 
-// 🔄 Custom loading overlay
-
-
+// Custom loading overlay with blur background
 function CustomLoadingOverlay() {
   return (
     <GridOverlay>
@@ -26,7 +27,9 @@ function CustomLoadingOverlay() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "rgba(255, 255, 255, 0.5)",
+          backgroundColor: "rgba(255, 255, 255, 0.7)",
+          backdropFilter: "blur(8px)",
+          zIndex: 10,
         }}
       >
         <CircularProgress />
@@ -41,30 +44,12 @@ export default function Table() {
   const [filteredRows, setFilteredRows] = useState([]);
   const navigate = useNavigate();
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const [open, setOpen] = useState(false);
 
-  const handleFilterChange = (newRows) => {
+  // Filter change handler for Filters component
+  const handleFilterChange = useCallback((newRows) => {
     setFilteredRows(newRows);
-  };
-
-  const columns = [
-    {
-      field: "mfName", headerName: "Mutual Fund Name", flex: 2, minWidth: 200, renderCell: (params) => (
-        <strong>{params.value}</strong>
-      ),
-    },
-    { field: "score", headerName: "Score", flex: 0.5, minWidth: 80 },
-    { field: "cat", headerName: "Category", flex: 0.75, minWidth: 120 },
-    { field: "assetClass", headerName: "Asset Class", flex: 0.5, minWidth: 100 },
-    { field: "nav", headerName: "NAV", flex: 0.4, minWidth: 80 },
-    { field: "aum", headerName: "AUM (Cr.)", flex: 0.5, minWidth: 100 },
-    { field: "ter", headerName: "Expense Ratio", flex: 0.6, minWidth: 120 },
-    { field: "per", headerName: "% Equity", flex: 0.5, minWidth: 100 },
-  ];
-
-  const handleRowClick = (id) => {
-    navigate("/MFinfo", { state: { id } });
-  };
-
+  }, []);
   const batchFetchFundData = async (keysMap, nvdt) => {
    
     const entries = Object.entries(keysMap);
@@ -97,6 +82,28 @@ export default function Table() {
     return allData.filter((d) => d !== null);
   };
 
+  const columns = [
+    {
+      field: "mfName",
+      headerName: "Mutual Fund Name",
+      flex: 2,
+      minWidth: 200,
+      renderCell: (params) => <strong>{params.value}</strong>,
+    },
+    { field: "score", headerName: "Score", flex: 0.5, minWidth: 80 },
+    { field: "cat", headerName: "Category", flex: 0.75, minWidth: 120 },
+    { field: "assetClass", headerName: "Asset Class", flex: 0.5, minWidth: 100 },
+    { field: "nav", headerName: "NAV", flex: 0.4, minWidth: 80 },
+    { field: "aum", headerName: "AUM (Cr.)", flex: 0.5, minWidth: 100 },
+    { field: "ter", headerName: "Expense Ratio", flex: 0.6, minWidth: 120 },
+    { field: "per", headerName: "% Equity", flex: 0.5, minWidth: 100 },
+  ];
+
+  const handleRowClick = (id) => {
+    navigate("/MFinfo", { state: { id } });
+  };
+
+  // Fetch and process data, set initial states
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -110,9 +117,10 @@ export default function Table() {
         });
 
         const navs = await response.json();
-        const formatted = await batchFetchFundData(data, navs);
+        // process fetched data here (batchFetchFundData should be your data processing function)
+        const formatted = await batchFetchFundData(data, navs); // Implement this function accordingly
         setRows(formatted);
-        setFilteredRows(formatted); // initialize with full data
+        setFilteredRows(formatted);
       } catch (err) {
         console.error("Initial data load failed", err);
       } finally {
@@ -122,70 +130,86 @@ export default function Table() {
     fetchData();
   }, []);
 
-  const [open, setOpen] = useState(false);
-
+  // Drawer open/close toggles for mobile filters
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
 
   const DrawerList = (
-    <Box mt={5} position="sticky" top={20} height="fit-content">
+    <Box position="sticky" top={64} height="fit-content" px={2} width={isMobile ? 280 : 320}>
       <Filters rows={rows} onFilterChange={handleFilterChange} />
     </Box>
   );
 
-
   return (
     <>
-      <div className="navbar">
-        <ul>
-          <li>
-            <Image rounded="md" src="sgc.png" alt="SGC" style={{ height: "50px" }} />
-          </li>
-        </ul>
-      </div>
+      {/* Navbar placeholder */}
+      <Tablenav/>
+      {/* <Box className="navbar" position="sticky" top={0} zIndex={1100} backgroundColor="rgba(255,255,255,0.9)" boxShadow="sm" px={2} py={1}>
+        <Flex align="center">
+          <Image src="sgc.png" alt="SGC" h="50px" rounded="md" />
+          <Typography variant="h6" ml={2} fontWeight="bold" fontFamily="Montserrat" color="#6e27ff">
+            ScreenerApp
+          </Typography>
+        </Flex>
+      </Box> */}
 
-      <div className="tableOuter" style={{ marginBottom: "5%", marginTop: isMobile ? "15%" : "5%", overflowX: isMobile ? "auto" : "visible" }}>
+      <Box className="tableOuter" style={{ marginBottom: "5%", marginTop: isMobile ? "15%" : "1%", overflowX: isMobile ? "auto" : "visible" }}>
         <Flex>
-          <Box flex={1} mt={5} position="sticky" top={20} height="fit-content" maxWidth={isMobile ? "0%" : "19%"} visibility={isMobile ? "hidden" : "visible"}>
+          {/* Filters sidebar for desktop */}
+          <Box flex={1} position="sticky" top={64} height="fit-content" maxWidth={isMobile ? "0" : "20%"} visibility={isMobile ? "hidden" : "visible"}>
             <Filters rows={rows} onFilterChange={handleFilterChange} />
           </Box>
 
-          <Box flex={4} sx={{ height: 900, p: 2, overflowX: isMobile ? "auto" : "visible" }} className="tablebox">
-            <Typography variant="h5" gutterBottom sx={{ fontSize: isMobile ? "1rem" : "1.25rem" }}>
+          {/* DataGrid and Title */}
+          <Box
+            flex={4}
+            sx={{ height: 900, p: 2, overflowX: isMobile ? "auto" : "visible", backgroundColor: "rgba(255, 255, 255, 0.12)", backdropFilter: "blur(16px)", borderRadius: "18px", boxShadow: "0 8px 32px rgba(31, 38, 135, 0.2)" }}
+            className="tablebox"
+          >
+            <Typography variant="h5" gutterBottom sx={{ fontSize: isMobile ? "1rem" : "1.25rem", mb: 3, fontFamily: "Montserrat", color: "#4a4a7b" }}>
               Mutual Fund Scores
             </Typography>
             <DataGrid
-              rows={filteredRows}
-              columns={columns}
-              pageSize={10}
-              getRowId={(row) => row.id}
-              onRowClick={(params) => handleRowClick(params.id)}
-              rowHeight={40}
-              loading={loading}
-              initialState={{
-                sorting: {
-                  sortModel: [{ field: "score", sort: "desc" }],
-                },
-              }}
-              slots={{ loadingOverlay: CustomLoadingOverlay }}
-              style={{
-                border: "2px solid",
-                fontFamily: "revert-layer",
-                cursor: "pointer",
-              }}
-            />
+  rows={filteredRows}
+  columns={columns}
+  pageSize={10}
+  getRowId={(row) => row.id}
+  onRowClick={(params) => handleRowClick(params.id)}
+  rowHeight={36}
+  columnBuffer={2}
+  sx={{
+    border: "none",
+    fontFamily: "Montserrat",
+    backgroundColor: "#fff", // use solid or transparent, avoid blur
+    "& .MuiDataGrid-columnHeaders": {
+      backgroundColor: "#6e27ff18",
+      fontWeight: "bold",
+    },
+    "& .MuiDataGrid-row:hover": {
+      backgroundColor: "#eb03ff10",
+      cursor: "pointer",
+    },
+  }}
+/>
           </Box>
         </Flex>
-      </div>
-      <Box visibility={isMobile ? "visible" : "hidden"} position="fixed" bottom={0} left={0} right={0} zIndex={1000} boxShadow="md" display="flex" justifyContent="center">
-        
-        {isMobile && (<><Button onClick={toggleDrawer(true)} style={{backgroundColor:"#0095ffff", width:"100%", color:"white"}}>Apply Filters</Button>
-          <Drawer open={open} onClose={toggleDrawer(false)} >
-            {DrawerList}
-          </Drawer></>)}
-
       </Box>
+
+      {/* Mobile filter button and drawer */}
+      <Box visibility={isMobile ? "visible" : "hidden"} position="fixed" bottom={0} left={0} right={0} zIndex={1500} boxShadow="md" display="flex" justifyContent="center" p={1} backgroundColor="white">
+        {isMobile && (
+          <>
+            <Button variant="contained" onClick={toggleDrawer(true)} sx={{ width: "100%", bgcolor: "#6e27ff", color: "white", fontWeight: "bold" }}>
+              Apply Filters
+            </Button>
+            <Drawer anchor="bottom" open={open} onClose={toggleDrawer(false)}>
+              {DrawerList}
+            </Drawer>
+          </>
+        )}
+      </Box>
+      <Footer/>
     </>
   );
 }

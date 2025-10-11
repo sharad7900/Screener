@@ -1,0 +1,31 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  z-index: 100;
+  margin-bottom: 2vh;
+
+  background-color: rgba(255, 255, 255, 0.06); /* Very transparent white */
+  backdrop-filter: saturate(180%) blur(10px);
+  -webkit-backdrop-filter: saturate(180%) blur(10px);
+
+  /* An inset white overlay to lighten background */
+  box-shadow:
+    inset 0 0 0 1000px rgba(255, 255, 255, 0.06),
+    0 8px 24px rgba(0, 0, 0, 0.12);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+
+
+@media (max-width: 600px) {
+  .navbar {
+    padding-left: 4vw !important;
+    padding-right: 4vw !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+  }
+}
+
+

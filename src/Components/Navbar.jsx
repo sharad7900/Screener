@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 const Navbar = () => {
   const navigate = useNavigate();
 
+
   return (
     <Flex
       className="navbar glassmorph"
@@ -30,7 +31,7 @@ const Navbar = () => {
           p="0.5"
         />
         <Text
-          fontSize={{ base: "lg", md: "2xl" }}
+          fontSize={{ base: "small", md: "2xl" }}
           fontWeight="bold"
           color="#fff"
           fontFamily="Montserrat"
@@ -46,7 +47,7 @@ const Navbar = () => {
           color="#fff"
           fontWeight="bold"
           fontFamily="Montserrat"
-          fontSize={{ base: "sm", md: "md" }}
+          fontSize={{ base: "smaller", md: "md" }}
           onClick={() => navigate("/")}
           _hover={{ color: "#b400ff" }}
           mr={{ base: 2, md: 10 }}
@@ -60,7 +61,7 @@ const Navbar = () => {
           color="#fff"
           fontWeight="bold"
           fontFamily="Montserrat"
-          fontSize={{ base: "sm", md: "md" }}
+          fontSize={{ base: "smaller", md: "md" }}
           onClick={() => navigate("/Screens")}
           _hover={{ color: "#b400ff" }}
           mr={{ base: 2, md: 10 }}
@@ -74,7 +75,7 @@ const Navbar = () => {
           color="#fff"
           fontWeight="bold"
           fontFamily="Montserrat"
-          fontSize={{ base: "sm", md: "md" }}
+          fontSize={{ base: "smaller", md: "md" }}
           onClick={() => window.open("https://www.suigenerisconsulting.com/contact_us.php", "_blank")}
           _hover={{ color: "#b400ff" }}
           whiteSpace="nowrap"

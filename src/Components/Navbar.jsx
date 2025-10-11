@@ -3,78 +3,82 @@ import { useNavigate } from "react-router";
 
 const Navbar = () => {
   const navigate = useNavigate();
+
   return (
     <Flex
       className="navbar glassmorph"
       align="center"
       justify="space-between"
-      px={[4, 8]}
-      py={[2, 3]}
-      style={{
-        position: "sticky",
-        top: 0,
-        width: "100%",
-        zIndex: 100,
-        background: "rgba(255,255,255,0.12)",
-        backdropFilter: "blur(14px)",
-        boxShadow: "0 4px 32px rgba(100, 22, 180, 0.11)"
-      }}
+      px={{ base: 4, md: 8 }}
+      py={{ base: 2, md: 3 }}
+      position="sticky"
+      top={0}
+      width="100%"
+      zIndex={100}
+      background="rgba(255,255,255,0.12)"
+      backdropFilter="blur(14px)"
+      boxShadow="0 4px 32px rgba(100, 22, 180, 0.11)"
     >
       <Flex align="center" cursor="pointer" onClick={() => navigate("/")}>
         <Image
           src="logo.png"
           alt="Logo"
-          boxSize={["51px", "66px"]}
+          boxSize={{ base: "40px", md: "66px" }}
           borderRadius="full"
-          mr="3"
+          mr={{ base: 2, md: 3 }}
           bg="white"
           p="0.5"
         />
         <Text
-          fontSize={["xl", "2xl"]}
+          fontSize={{ base: "lg", md: "2xl" }}
           fontWeight="bold"
-          color="#ffffffff"
+          color="#fff"
           fontFamily="Montserrat"
           letterSpacing="1px"
+          whiteSpace="nowrap"
         >
           SGC Screener
         </Text>
       </Flex>
-      <HStack spacing={[8, 14]}>
+      <HStack spacing={{ base: 4, md: 10 }} overflowX="auto" maxW={{ base: "60vw", md: "auto" }}>
         <Button
-        mr="40px"
-     
           variant="ghost"
-          color="#ffffffff"
+          color="#fff"
           fontWeight="bold"
           fontFamily="Montserrat"
-          fontSize={["sm", "md"]}
+          fontSize={{ base: "sm", md: "md" }}
           onClick={() => navigate("/")}
           _hover={{ color: "#b400ff" }}
+          mr={{ base: 2, md: 10 }}
+          whiteSpace="nowrap"
+          flexShrink={0}
         >
           Home
         </Button>
         <Button
-       mr="40px"
           variant="ghost"
-          color="#ffffffff"
+          color="#fff"
           fontWeight="bold"
           fontFamily="Montserrat"
-          fontSize={["sm", "md"]}
+          fontSize={{ base: "sm", md: "md" }}
           onClick={() => navigate("/Screens")}
           _hover={{ color: "#b400ff" }}
+          mr={{ base: 2, md: 10 }}
+          whiteSpace="nowrap"
+          flexShrink={0}
         >
           MF Table
         </Button>
         <Button
-       mr="40px"
           variant="ghost"
-          color="#ffffffff"
+          color="#fff"
           fontWeight="bold"
           fontFamily="Montserrat"
-          fontSize={["sm", "md"]}
+          fontSize={{ base: "sm", md: "md" }}
           onClick={() => window.open("https://www.suigenerisconsulting.com/contact_us.php", "_blank")}
-          _hover={{ color: "#b400ff"}}
+          _hover={{ color: "#b400ff" }}
+          whiteSpace="nowrap"
+          flexShrink={0}
         >
           Contact Us
         </Button>

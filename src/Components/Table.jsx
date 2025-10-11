@@ -178,6 +178,7 @@ export default function Table() {
   onRowClick={(params) => handleRowClick(params.id)}
   rowHeight={36}
   columnBuffer={2}
+  loading={loading}
   sx={{
     border: "none",
     fontFamily: "Montserrat",

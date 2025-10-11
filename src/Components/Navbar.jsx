@@ -41,49 +41,54 @@ const Navbar = () => {
           SGC Screener
         </Text>
       </Flex>
-      <HStack spacing={{ base: 4, md: 10 }} overflowX="auto" maxW={{ base: "60vw", md: "auto" }}>
-        <Button
-          variant="ghost"
-          color="#fff"
-          fontWeight="bold"
-          fontFamily="Montserrat"
-          fontSize={{ base: "smaller", md: "md" }}
-          onClick={() => navigate("/")}
-          _hover={{ color: "#b400ff" }}
-          mr={{ base: 2, md: 10 }}
-          whiteSpace="nowrap"
-          flexShrink={0}
-        >
-          Home
-        </Button>
-        <Button
-          variant="ghost"
-          color="#fff"
-          fontWeight="bold"
-          fontFamily="Montserrat"
-          fontSize={{ base: "smaller", md: "md" }}
-          onClick={() => navigate("/Screens")}
-          _hover={{ color: "#b400ff" }}
-          mr={{ base: 2, md: 10 }}
-          whiteSpace="nowrap"
-          flexShrink={0}
-        >
-          MF Table
-        </Button>
-        <Button
-          variant="ghost"
-          color="#fff"
-          fontWeight="bold"
-          fontFamily="Montserrat"
-          fontSize={{ base: "smaller", md: "md" }}
-          onClick={() => window.open("https://www.suigenerisconsulting.com/contact_us.php", "_blank")}
-          _hover={{ color: "#b400ff" }}
-          whiteSpace="nowrap"
-          flexShrink={0}
-        >
-          Contact Us
-        </Button>
-      </HStack>
+      <HStack
+  spacing={{ base: 2, md: 10 }}
+  overflowX="auto"
+  maxW={{ base: "calc(100% - 120px)", md: "auto" }} // leave space for logo + text
+  ml={{ base: 2, md: 0 }}
+  flexShrink={0}
+>
+  <Button
+    variant="ghost"
+    color="#fff"
+    fontWeight="bold"
+    fontFamily="Montserrat"
+    fontSize={{ base: "sm", md: "md" }}
+    onClick={() => navigate("/")}
+    _hover={{ color: "#b400ff" }}
+    flexShrink={0}
+    whiteSpace="nowrap"
+  >
+    Home
+  </Button>
+  <Button
+    variant="ghost"
+    color="#fff"
+    fontWeight="bold"
+    fontFamily="Montserrat"
+    fontSize={{ base: "sm", md: "md" }}
+    onClick={() => navigate("/Screens")}
+    _hover={{ color: "#b400ff" }}
+    flexShrink={0}
+    whiteSpace="nowrap"
+  >
+    MF Table
+  </Button>
+  <Button
+    variant="ghost"
+    color="#fff"
+    fontWeight="bold"
+    fontFamily="Montserrat"
+    fontSize={{ base: "sm", md: "md" }}
+    onClick={() => window.open("https://www.suigenerisconsulting.com/contact_us.php", "_blank")}
+    _hover={{ color: "#b400ff" }}
+    flexShrink={0}
+    whiteSpace="nowrap"
+  >
+    Contact Us
+  </Button>
+</HStack>
+
     </Flex>
   );
 };

@@ -26,7 +26,7 @@ function useDebounce(value, delay = 400) {
 
 const assetClassOptions = ["Equity", "Debt", "Solution Oriented", "Other", "Hybrid"];
 const categoryOptions = [
-  "Large Cap", "Mid Cap", "Small Cap", "Flexi Cap", "Sectoral", "Retirement", "Contra", "Value", "Focused"
+  "Large Cap", "Mid Cap", "Small Cap", "Flexi Cap", "Retirement", "Contra", "Value", "Focused", "Banking and PSU", "FoF", "Multi Asset", "Sectoral: Auto", "Sectoral: Other"
 ];
 const MenuProps = {
   PaperProps: { style: { maxHeight: 220, width: 250 } }

@@ -179,6 +179,9 @@ export default function Table() {
   rowHeight={36}
   columnBuffer={2}
   loading={loading}
+  sortModel={[
+    { field: "score", sort: "desc" }, // or "asc" for ascending
+  ]}
   sx={{
     border: "none",
     fontFamily: "Montserrat",

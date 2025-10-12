@@ -40,6 +40,8 @@ const Filters = ({ rows = [], onFilterChange }) => {
   const [ter, setTer] = useState([0, 4]);
   const [equity, setEquity] = useState([0, 100]);
   const [score, setScore] = useState([0, 100]);
+  const [assetClassOpen, setAssetClassOpen] = useState(false);
+const [categoryOpen, setCategoryOpen] = useState(false);
 
   const debouncedMfName = useDebounce(mfName);
   const debouncedAum = useDebounce(aum);
@@ -87,7 +89,10 @@ const Filters = ({ rows = [], onFilterChange }) => {
         <Select
           multiple
           value={assetClass}
-          onChange={e => setAssetClass(e.target.value)}
+          open={assetClassOpen}
+          onOpen={() => setAssetClassOpen(true)}
+          onClose={() => setAssetClassOpen(false)}
+          onChange={e => {setAssetClass(e.target.value); setAssetClassOpen(false);}}
           input={<OutlinedInput label="Asset Class" />}
           renderValue={selected => selected.join(", ")}
           MenuProps={MenuProps}
@@ -106,7 +111,10 @@ const Filters = ({ rows = [], onFilterChange }) => {
         <Select
           multiple
           value={category}
-          onChange={e => setCategory(e.target.value)}
+          open={categoryOpen}
+          onOpen={() => setCategoryOpen(true)}
+          onClose={() => setCategoryOpen(false)}
+          onChange={e => {setCategory(e.target.value); setCategoryOpen(false)}}
           input={<OutlinedInput label="Category" />}
           renderValue={selected => selected.join(", ")}
           MenuProps={MenuProps}

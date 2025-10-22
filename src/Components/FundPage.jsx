@@ -99,14 +99,14 @@ const FundPage = () => {
       </Box> */}
 
       {fundName.MFName ? (
-        <Box px={{ base: 4, md: "10%" }} py={6}>
+        <Box px={{ base: 4, md: "10%" }} py={0}>
           {/* Fund Header */}
           <Typography
             variant={isMobile ? "h5" : "h4"}
             gutterBottom
             textAlign="center"
             fontWeight="bold"
-            mb={4}
+            mb={0}
           >
             {fundName.MFName}
           </Typography>
@@ -115,12 +115,12 @@ const FundPage = () => {
             variant={isMobile ? "h6" : "h5"}
             gutterBottom
             textAlign="left"
-            mb={2}
+            mb={1}
             fontWeight="semibold"
           >
             Stocks Performance :
           </Typography>
-          <Box mb={10} borderRadius="xl" boxShadow="lg">
+          <Box mb={5} borderRadius="xl" boxShadow="lg">
             <Heatmap heatmapData={fundName.heatmap || []} /></Box>
 
 

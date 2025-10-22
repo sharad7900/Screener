@@ -147,7 +147,6 @@ const FundPage = () => {
                 fontFamily: "'Montserrat', sans-serif",
                 "& .MuiDataGrid-row:hover": {
                   backgroundColor: "#6e27ff20",
-                  cursor: "pointer",
                 },
                 "& .MuiDataGrid-columnHeaders": {
                   backgroundColor: "#6e27ff18",

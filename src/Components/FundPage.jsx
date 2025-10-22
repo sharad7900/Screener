@@ -60,6 +60,7 @@ const FundPage = () => {
 
   useEffect(() => {
     const openpage = async () => {
+      //https://screener-back.vercel.app/MFInfo
       const response = await fetch(`https://screener-back.vercel.app/MFInfo`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

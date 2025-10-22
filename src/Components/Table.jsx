@@ -4,16 +4,15 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 import "./Table.css";
-import { Flex, Image } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Filters from "./Filters.jsx";
 import { Button, Drawer } from "@mui/material";
-import Navbar from "./Navbar.jsx";
 import Tablenav from "./Tablenav.jsx";
 import Footer from "./Footer.jsx";
 
-// Custom loading overlay with blur background
+// Custom loading overlay
 function CustomLoadingOverlay() {
   return (
     <GridOverlay>
@@ -46,91 +45,62 @@ export default function Table() {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [open, setOpen] = useState(false);
 
-  // Filter change handler for Filters component
+  // Handle filters
   const handleFilterChange = useCallback((newRows) => {
     setFilteredRows(newRows);
   }, []);
-  const batchFetchFundData = async (keysMap, nvdt) => {
-   
-    const entries = Object.entries(keysMap);
-    
-    const promises = entries.map(async ([key, mfObj]) => {
-      const [mfName, score] = Object.entries(mfObj)[0];
-      
-      const per = Object.entries(mfObj)[1]?.[1] || "N/A";
-    
-      const assetClass = Object.entries(mfObj)[2]?.[1] || "N/A";
-      const cat = Object.entries(mfObj)[3]?.[1] || "NA";
-      const aum = Object.entries(mfObj)[4]?.[1] || "NA";
-      const ter = Object.entries(mfObj)[5]?.[1] || "NA";
-      const nav = nvdt[key];
 
-      return {
-        id: key,
-        mfName,
-        score: parseFloat(score.toFixed(2)),
-        per: (per != null && !isNaN(per)) ? parseFloat(Number(per).toFixed(2)) : 0,
-
-        assetClass,
-        cat,
-        aum,
-        ter,
-        nav,
-      };
-    });
-    const allData = await Promise.all(promises);
-    return allData.filter((d) => d !== null);
-  };
-
-  const columns = [
-    {
-      field: "mfName",
-      headerName: "Mutual Fund Name",
-      flex: 2,
-      minWidth: 200,
-      renderCell: (params) => <strong>{params.value}</strong>,
-    },
-    { field: "score", headerName: "Score", flex: 0.5, minWidth: 80 },
-    { field: "cat", headerName: "Category", flex: 0.75, minWidth: 120 },
-    { field: "assetClass", headerName: "Asset Class", flex: 0.5, minWidth: 100 },
-    { field: "nav", headerName: "NAV", flex: 0.4, minWidth: 80 },
-    { field: "aum", headerName: "AUM (Cr.)", flex: 0.5, minWidth: 100 },
-    { field: "ter", headerName: "Expense Ratio", flex: 0.6, minWidth: 120 },
-    { field: "per", headerName: "% Equity", flex: 0.5, minWidth: 100 },
-  ];
-
-  const handleRowClick = (id) => {
-    navigate("/MFinfo", { state: { id } });
-  };
-
-  // Fetch and process data, set initial states
+  // Fetch data from backend
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("/Final_Table.json");
+        // Replace with your API endpoint that executes the SQL query
+        const res = await fetch("https://screener-back.vercel.app/");
         const data = await res.json();
-        //https://screener-back.vercel.app
-        const response = await fetch(`https://screener-back.vercel.app/`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        });
 
-        const navs = await response.json();
-        // process fetched data here (batchFetchFundData should be your data processing function)
-        const formatted = await batchFetchFundData(data, navs); // Implement this function accordingly
+        // Format rows
+        const formatted = data.map((item, index) => ({
+          id: item.ISIN || index,
+          isin: item.ISIN,
+          scheme: item.Scheme,
+          category: item.Category,
+          assetClass: item.Asset_Class,
+          aum: parseFloat(item.AUM || 0).toFixed(2),
+          pe: parseFloat(item.PE || 0).toFixed(2),
+          nav: parseFloat(item.NAV || 0).toFixed(2),
+          equity: parseFloat(item.Equity || 0).toFixed(2),
+          score: parseFloat(item.Score || 0).toFixed(2),
+        }));
+
         setRows(formatted);
         setFilteredRows(formatted);
       } catch (err) {
-        console.error("Initial data load failed", err);
+        console.error("Data fetch failed:", err);
       } finally {
         setLoading(false);
       }
     };
+
     fetchData();
   }, []);
 
-  // Drawer open/close toggles for mobile filters
+  const handleRowClick = (id) => {
+    // console.log("Row clicked:", id);
+    navigate("/MFinfo", { state: { id } });
+  };
+
+  const columns = [
+    { field: "scheme", headerName: "Scheme", flex: 1.5, minWidth: 200 },
+    { field: "score", headerName: "Score", flex: 0.6, minWidth: 100 },
+    { field: "category", headerName: "Category", flex: 1, minWidth: 120 },
+    { field: "nav", headerName: "NAV", flex: 0.5, minWidth: 80 },
+    { field: "assetClass", headerName: "Asset Class", flex: 1, minWidth: 120 },
+    { field: "aum", headerName: "AUM (Cr.)", flex: 0.7, minWidth: 100 },
+    { field: "pe", headerName: "P/E", flex: 0.5, minWidth: 80 },
+    { field: "equity", headerName: "% Equity", flex: 0.6, minWidth: 100 },
+    
+  ];
+
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
@@ -143,70 +113,109 @@ export default function Table() {
 
   return (
     <>
-      {/* Navbar placeholder */}
-      <Tablenav/>
-      {/* <Box className="navbar" position="sticky" top={0} zIndex={1100} backgroundColor="rgba(255,255,255,0.9)" boxShadow="sm" px={2} py={1}>
-        <Flex align="center">
-          <Image src="sgc.png" alt="SGC" h="50px" rounded="md" />
-          <Typography variant="h6" ml={2} fontWeight="bold" fontFamily="Montserrat" color="#6e27ff">
-            ScreenerApp
-          </Typography>
-        </Flex>
-      </Box> */}
+      <Tablenav />
 
-      <Box className="tableOuter" style={{ marginBottom: "5%", marginTop: isMobile ? "15%" : "1%", overflowX: isMobile ? "auto" : "visible" }}>
+      <Box
+        className="tableOuter"
+        style={{
+          marginBottom: "5%",
+          marginTop: isMobile ? "15%" : "1%",
+          overflowX: isMobile ? "auto" : "visible",
+        }}
+      >
         <Flex>
-          {/* Filters sidebar for desktop */}
-          <Box flex={1} position="sticky" top={64} height="fit-content" maxWidth={isMobile ? "0" : "20%"} visibility={isMobile ? "hidden" : "visible"}>
+          {/* Filters Sidebar */}
+          <Box
+            flex={1}
+            position="sticky"
+            top={64}
+            height="fit-content"
+            maxWidth={isMobile ? "0" : "20%"}
+            visibility={isMobile ? "hidden" : "visible"}
+          >
             <Filters rows={rows} onFilterChange={handleFilterChange} />
           </Box>
 
-          {/* DataGrid and Title */}
+          {/* DataGrid */}
           <Box
             flex={4}
-            sx={{ height: 900, p: 2, overflowX: isMobile ? "auto" : "visible", backgroundColor: "rgba(255, 255, 255, 0.12)", backdropFilter: "blur(16px)", borderRadius: "18px", boxShadow: "0 8px 32px rgba(31, 38, 135, 0.2)" }}
-            className="tablebox"
+            sx={{
+              height: 900,
+              p: 2,
+              overflowX: isMobile ? "auto" : "visible",
+              backgroundColor: "rgba(255, 255, 255, 0.12)",
+              backdropFilter: "blur(16px)",
+              borderRadius: "18px",
+              boxShadow: "0 8px 32px rgba(31, 38, 135, 0.2)",
+            }}
           >
-            <Typography variant="h5" gutterBottom sx={{ fontSize: isMobile ? "1rem" : "1.25rem", mb: 3, fontFamily: "Montserrat", color: "#4a4a7b" }}>
-              Mutual Fund Scores
+            <Typography
+              variant="h5"
+              gutterBottom
+              sx={{
+                fontSize: isMobile ? "1rem" : "1.25rem",
+                mb: 3,
+                fontFamily: "Montserrat",
+                color: "#4a4a7b",
+              }}
+            >
+              Mutual Fund Summary
             </Typography>
+
             <DataGrid
-  rows={filteredRows}
-  columns={columns}
-  pageSize={10}
-  getRowId={(row) => row.id}
-  onRowClick={(params) => handleRowClick(params.id)}
-  rowHeight={36}
-  columnBuffer={2}
-  loading={loading}
-  initialState={{
-    sorting: {
-      sortModel: [{ field: "score", sort: "desc" }],
-    },
-  }}
-  sx={{
-    border: "none",
-    fontFamily: "Montserrat",
-    backgroundColor: "#fff", // use solid or transparent, avoid blur
-    "& .MuiDataGrid-columnHeaders": {
-      backgroundColor: "#6e27ff18",
-      fontWeight: "bold",
-    },
-    "& .MuiDataGrid-row:hover": {
-      backgroundColor: "#eb03ff10",
-      cursor: "pointer",
-    },
-  }}
-/>
+              rows={filteredRows}
+              columns={columns}
+              pageSize={10}
+              getRowId={(row) => row.id}
+              onRowClick={(params) => handleRowClick(params.id)}
+              rowHeight={40}
+              columnBuffer={2}
+              loading={loading}
+              slots={{ loadingOverlay: CustomLoadingOverlay }}
+              initialState={{
+                sorting: {
+                  sortModel: [{ field: "score", sort: "desc" }],
+                },
+              }}
+              sx={{
+                border: "none",
+                fontFamily: "Montserrat",
+                backgroundColor: "#fff",
+                "& .MuiDataGrid-columnHeaders": {
+                  backgroundColor: "#6e27ff18",
+                  fontWeight: "bold",
+                },
+                "& .MuiDataGrid-row:hover": {
+                  backgroundColor: "#eb03ff10",
+                  cursor: "pointer",
+                },
+              }}
+            />
           </Box>
         </Flex>
       </Box>
 
-      {/* Mobile filter button and drawer */}
-      <Box visibility={isMobile ? "visible" : "hidden"} position="fixed" bottom={0} left={0} right={0} zIndex={1500} boxShadow="md" display="flex" justifyContent="center" p={1} backgroundColor="white">
+      {/* Mobile Filters Drawer */}
+      <Box
+        visibility={isMobile ? "visible" : "hidden"}
+        position="fixed"
+        bottom={0}
+        left={0}
+        right={0}
+        zIndex={1500}
+        boxShadow="md"
+        display="flex"
+        justifyContent="center"
+        p={1}
+        backgroundColor="white"
+      >
         {isMobile && (
           <>
-            <Button variant="contained" onClick={toggleDrawer(true)} sx={{ width: "100%", bgcolor: "#6e27ff", color: "white", fontWeight: "bold" }}>
+            <Button
+              variant="contained"
+              onClick={toggleDrawer(true)}
+              sx={{ width: "100%", bgcolor: "#6e27ff", color: "white", fontWeight: "bold" }}
+            >
               Apply Filters
             </Button>
             <Drawer anchor="bottom" open={open} onClose={toggleDrawer(false)}>
@@ -215,7 +224,8 @@ export default function Table() {
           </>
         )}
       </Box>
-      <Footer/>
+
+      <Footer />
     </>
   );
 }

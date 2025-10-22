@@ -59,12 +59,13 @@ const [categoryOpen, setCategoryOpen] = useState(false);
  useEffect(() => {
   if (!Array.isArray(rows)) return;
   const filtered = rows.filter((row) => {
+
     if (assetClass.length && !assetClass.includes(row.assetClass)) return false;
-    if (category.length && !category.some(cat => row.cat?.toLowerCase().includes(cat.toLowerCase()))) return false;
-    if (debouncedMfName && !row.mfName.toLowerCase().includes(debouncedMfName.toLowerCase())) return false;
+    if (category.length && !category.some(cat => row.category?.toLowerCase().includes(cat.toLowerCase()))) return false;
+    if (debouncedMfName && !row.scheme.toLowerCase().includes(debouncedMfName.toLowerCase())) return false;
     if (row.aum < debouncedAum[0] || row.aum > debouncedAum[1]) return false;
-    if (row.ter < debouncedTer[0] || row.ter > debouncedTer[1]) return false;
-    if (row.per < equity[0] || row.per > equity[1]) return false;
+    if (row.pe < debouncedTer[0] || row.pe > debouncedTer[1]) return false;
+    if (row.equity < equity[0] || row.equity > equity[1]) return false;
 
     if (row.score < score[0] || row.score > score[1]) return false;
     return true;

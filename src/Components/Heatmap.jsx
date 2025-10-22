@@ -74,7 +74,7 @@ const Heatmap = ({ heatmapData }) => {
     <div
       ref={chartRef}
       style={{
-        width: "75%",
+        width: "65%",
         height: "max-content",
         margin: "0 auto",
       }}

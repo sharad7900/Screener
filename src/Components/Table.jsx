@@ -55,7 +55,7 @@ export default function Table() {
     const fetchData = async () => {
       try {
         // Replace with your API endpoint that executes the SQL query
-        const res = await fetch("https://screener-back.vercel.app/");
+        const res = await fetch("https://screener-back.vercel.app");
         const data = await res.json();
 
         // Format rows

@@ -21,6 +21,7 @@ import {
 } from "recharts";
 import { useLocation } from "react-router";
 import Tablenav from "./Tablenav";
+import Heatmap from "./Heatmap";
 
 const FundPage = () => {
   const [selectedRange, setSelectedRange] = useState("Max");
@@ -78,7 +79,7 @@ const FundPage = () => {
   return (
     <>
       {/* Navbar */}
-      <Tablenav/>
+      <Tablenav />
       {/* <Box
         className="navbar"
         px={{ base: 4, md: 8 }}
@@ -101,48 +102,62 @@ const FundPage = () => {
         <Box px={{ base: 4, md: "10%" }} py={6}>
           {/* Fund Header */}
           <Typography
-  variant={isMobile ? "h5" : "h4"}
-  gutterBottom
-  textAlign="center"
-  fontWeight="bold"
-  mb={4}
->
-  {fundName.MFName}
-</Typography>
+            variant={isMobile ? "h5" : "h4"}
+            gutterBottom
+            textAlign="center"
+            fontWeight="bold"
+            mb={4}
+          >
+            {fundName.MFName}
+          </Typography>
+
+          <Typography
+            variant={isMobile ? "h6" : "h5"}
+            gutterBottom
+            textAlign="left"
+            mb={2}
+            fontWeight="semibold"
+          >
+            Stocks Performance :
+          </Typography>
+          <Box mb={10} borderRadius="xl" boxShadow="lg" overflow="auto" maxHeight={720}>
+            <Heatmap heatmapData={fundName.heatmap || []} /></Box>
 
 
           {/* Holdings Table */}
           <Typography
-  variant={isMobile ? "h6" : "h5"}
-  gutterBottom
-  textAlign="left"
-  mb={2}
-  fontWeight="semibold"
->
-  Holdings:
-</Typography>
+            variant={isMobile ? "h6" : "h5"}
+            gutterBottom
+            textAlign="left"
+            mb={2}
+            fontWeight="semibold"
+          >
+            Holdings:
+          </Typography>
           <Box mb={10} borderRadius="xl" boxShadow="lg" overflow="auto" maxHeight={520}>
-  <DataGrid
-    rows={rows}
-    columns={columns}
-    getRowId={(row) => row.isin}
-    pageSize={10} // still controls internal pagination
-    rowsPerPageOptions={[10]}
-    hideFooter={true} // hide footer if you want scrolling instead of pagination
-    rowHeight={50}
-    sx={{
-      fontFamily: "'Montserrat', sans-serif",
-      "& .MuiDataGrid-row:hover": {
-        backgroundColor: "#6e27ff20",
-        cursor: "pointer",
-      },
-      "& .MuiDataGrid-columnHeaders": {
-        backgroundColor: "#6e27ff18",
-        fontWeight: "bold",
-      },
-    }}
-  />
-</Box>
+            <DataGrid
+              rows={rows}
+              columns={columns}
+              getRowId={(row) => row.isin}
+              pageSize={10} // still controls internal pagination
+              rowsPerPageOptions={[10]}
+              hideFooter={true} // hide footer if you want scrolling instead of pagination
+              rowHeight={50}
+              sx={{
+                fontFamily: "'Montserrat', sans-serif",
+                "& .MuiDataGrid-row:hover": {
+                  backgroundColor: "#6e27ff20",
+                  cursor: "pointer",
+                },
+                "& .MuiDataGrid-columnHeaders": {
+                  backgroundColor: "#6e27ff18",
+                  fontWeight: "bold",
+                },
+              }}
+            />
+
+          </Box>
+
 
           {/* Fund Info Cards */}
           <Flex
@@ -208,8 +223,8 @@ const FundPage = () => {
             <AreaChart data={filteredGraphData} width={isMobile ? 350 : 1500} height={300}>
               <defs>
                 <linearGradient id="navGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#6e27ff" stopOpacity={0.8}/>
-                  <stop offset="95%" stopColor="#6e27ff" stopOpacity={0}/>
+                  <stop offset="5%" stopColor="#6e27ff" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#6e27ff" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <CartesianGrid stroke="#e0e0e0" vertical={false} />

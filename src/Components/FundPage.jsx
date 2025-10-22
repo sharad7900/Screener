@@ -120,7 +120,7 @@ const FundPage = () => {
           >
             Stocks Performance :
           </Typography>
-          <Box mb={10} borderRadius="xl" boxShadow="lg" overflow="auto" maxHeight={720}>
+          <Box mb={10} borderRadius="xl" boxShadow="lg">
             <Heatmap heatmapData={fundName.heatmap || []} /></Box>
 
 

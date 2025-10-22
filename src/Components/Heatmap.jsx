@@ -47,7 +47,7 @@ const Heatmap = ({ heatmapData }) => {
     const layout = {
       // width: metrics.length * cellWidth,
       height: displayedData.length * cellHeight,
-      margin: { l: 100, r: 30, t: 50, b: 80 },
+      margin: { l: 100, r: 30, t: 50, b: 20 },
       xaxis: { 
     title: "Metrics", 
     side: "top",       // ✅ moves axis title and ticks to top
@@ -93,7 +93,7 @@ const Heatmap = ({ heatmapData }) => {
     ></div>
 
      {data.length > 30 && (
-        <div style={{ textAlign: "center", marginTop: 10 }}>
+        <div style={{ textAlign: "center", marginTop: 1 }}>
           <button
             onClick={() => setShowAll(!showAll)}
             style={{

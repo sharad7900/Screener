@@ -1,15 +1,13 @@
+import React, { useEffect, useRef, useState } from "react";
 import Typography from "@mui/material/Typography";
-import { useEffect, useState } from "react";
-import "./FundPage.css";
 import {
   Box,
   Flex,
   Image,
   Spinner,
   Text,
-  Button
+  Button,
 } from "@chakra-ui/react";
-import Footer from "./Footer";
 import { DataGrid } from "@mui/x-data-grid";
 import {
   AreaChart,
@@ -22,6 +20,50 @@ import {
 import { useLocation } from "react-router";
 import Tablenav from "./Tablenav";
 import Heatmap from "./Heatmap";
+import Footer from "./Footer";
+
+const ChartWrapper = ({ data }) => {
+  const containerRef = useRef(null);
+  const [width, setWidth] = useState(350);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (containerRef.current) {
+        setWidth(containerRef.current.offsetWidth);
+      }
+    };
+    updateWidth();
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
+
+  return (
+    <Box ref={containerRef} width="100%">
+      <AreaChart data={data} width={width} height={300}>
+        <defs>
+          <linearGradient id="navGradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#6e27ff" stopOpacity={0.8} />
+            <stop offset="95%" stopColor="#6e27ff" stopOpacity={0} />
+          </linearGradient>
+        </defs>
+        <CartesianGrid stroke="#e0e0e0" vertical={false} />
+        <XAxis
+          dataKey="markDate"
+          tickFormatter={(d) => new Date(d).getFullYear()}
+        />
+        <YAxis tickLine={false} />
+        <Tooltip />
+        <Area
+          type="monotone"
+          dataKey="nav"
+          stroke="#6e27ff"
+          fill="url(#navGradient)"
+          fillOpacity={0.3}
+        />
+      </AreaChart>
+    </Box>
+  );
+};
 
 const FundPage = () => {
   const [selectedRange, setSelectedRange] = useState("Max");
@@ -36,19 +78,38 @@ const FundPage = () => {
     const now = new Date();
     let fromDate = new Date();
     switch (range) {
-      case "1D": fromDate.setDate(now.getDate() - 1); break;
-      case "5D": fromDate.setDate(now.getDate() - 5); break;
-      case "1M": fromDate.setMonth(now.getMonth() - 1); break;
-      case "6M": fromDate.setMonth(now.getMonth() - 6); break;
-      case "YTD": fromDate = new Date(now.getFullYear(), 0, 1); break;
-      case "1Y": fromDate.setFullYear(now.getFullYear() - 1); break;
-      case "3Y": fromDate.setFullYear(now.getFullYear() - 3); break;
-      case "5Y": fromDate.setFullYear(now.getFullYear() - 5); break;
+      case "1D":
+        fromDate.setDate(now.getDate() - 1);
+        break;
+      case "5D":
+        fromDate.setDate(now.getDate() - 5);
+        break;
+      case "1M":
+        fromDate.setMonth(now.getMonth() - 1);
+        break;
+      case "6M":
+        fromDate.setMonth(now.getMonth() - 6);
+        break;
+      case "YTD":
+        fromDate = new Date(now.getFullYear(), 0, 1);
+        break;
+      case "1Y":
+        fromDate.setFullYear(now.getFullYear() - 1);
+        break;
+      case "3Y":
+        fromDate.setFullYear(now.getFullYear() - 3);
+        break;
+      case "5Y":
+        fromDate.setFullYear(now.getFullYear() - 5);
+        break;
       case "Max":
-      default: return graphData;
+      default:
+        return graphData;
     }
     fromDate.setHours(0, 0, 0, 0);
-    const filtered = graphData.filter((item) => new Date(item.markDate) >= fromDate);
+    const filtered = graphData.filter(
+      (item) => new Date(item.markDate) >= fromDate
+    );
     return filtered.length > 0 ? filtered : graphData;
   };
 
@@ -61,7 +122,6 @@ const FundPage = () => {
 
   useEffect(() => {
     const openpage = async () => {
-      //https://screener-back.vercel.app/MFInfo
       const response = await fetch(`https://screener-back.vercel.app/MFInfo`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -80,23 +140,6 @@ const FundPage = () => {
     <>
       {/* Navbar */}
       <Tablenav />
-      {/* <Box
-        className="navbar"
-        px={{ base: 4, md: 8 }}
-        py={2}
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        bgGradient="linear(to-r, #6e27ff, #ff63c7)"
-        boxShadow="xl"
-        position="sticky"
-        top={0}
-        zIndex={1100}
-        borderRadius="md"
-      >
-        <Image rounded="md" src="sgc.png" alt="SGC" h="50px" />
-        <Text fontWeight="bold" fontSize="xl" color="white">ScreenerApp</Text>
-      </Box> */}
 
       {fundName.MFName ? (
         <Box px={{ base: 4, md: "10%" }} py={0}>
@@ -120,9 +163,9 @@ const FundPage = () => {
           >
             Stocks Performance :
           </Typography>
-          <Box mb={5} borderRadius="xl" boxShadow="lg">
-            <Heatmap heatmapData={fundName.heatmap || []} /></Box>
-
+          <Box mb={15} borderRadius="xl" boxShadow="lg">
+            <Heatmap heatmapData={fundName.heatmap || []} />
+          </Box>
 
           {/* Holdings Table */}
           <Typography
@@ -134,14 +177,20 @@ const FundPage = () => {
           >
             Holdings:
           </Typography>
-          <Box mb={10} borderRadius="xl" boxShadow="lg" overflow="auto" maxHeight={520}>
+          <Box
+            mb={10}
+            borderRadius="xl"
+            boxShadow="lg"
+            overflow="auto"
+            maxHeight={520}
+          >
             <DataGrid
               rows={rows}
               columns={columns}
               getRowId={(row) => row.isin}
-              pageSize={10} // still controls internal pagination
+              pageSize={10}
               rowsPerPageOptions={[10]}
-              hideFooter={true} // hide footer if you want scrolling instead of pagination
+              hideFooter={true}
               rowHeight={50}
               sx={{
                 fontFamily: "'Montserrat', sans-serif",
@@ -154,9 +203,7 @@ const FundPage = () => {
                 },
               }}
             />
-
           </Box>
-
 
           {/* Fund Info Cards */}
           <Flex
@@ -185,8 +232,12 @@ const FundPage = () => {
                 transition="all 0.3s"
                 _hover={{ transform: "scale(1.05)", boxShadow: "2xl" }}
               >
-                <Text fontSize="sm" fontWeight="semibold" color="gray.600">{item.label}</Text>
-                <Text fontSize="lg" fontWeight="bold">{item.value}</Text>
+                <Text fontSize="sm" fontWeight="semibold" color="gray.600">
+                  {item.label}
+                </Text>
+                <Text fontSize="lg" fontWeight="bold">
+                  {item.value}
+                </Text>
               </Box>
             ))}
           </Flex>
@@ -200,10 +251,14 @@ const FundPage = () => {
                 bg={selectedRange === range ? "teal.400" : "gray.100"}
                 color={selectedRange === range ? "white" : "gray.700"}
                 borderRadius="xl"
-                _hover={{ bg: selectedRange === range ? "teal.500" : "gray.200" }}
+                _hover={{
+                  bg: selectedRange === range ? "teal.500" : "gray.200",
+                }}
                 onClick={() => {
                   setSelectedRange(range);
-                  setFilteredGraphData(getFilteredGraph(range, fundName.graph || []));
+                  setFilteredGraphData(
+                    getFilteredGraph(range, fundName.graph || [])
+                  );
                 }}
               >
                 {range}
@@ -212,27 +267,7 @@ const FundPage = () => {
           </Flex>
 
           {/* Chart */}
-          <Box
-            bg="whiteAlpha.900"
-            p={4}
-            borderRadius="2xl"
-            boxShadow="xl"
-            mb={10}
-          >
-            <AreaChart data={filteredGraphData} width={isMobile ? 350 : 1500} height={300}>
-              <defs>
-                <linearGradient id="navGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#6e27ff" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#6e27ff" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <CartesianGrid stroke="#e0e0e0" vertical={false} />
-              <XAxis dataKey="markDate" tickFormatter={(d) => new Date(d).getFullYear()} />
-              <YAxis tickLine={false} />
-              <Tooltip />
-              <Area type="monotone" dataKey="nav" stroke="#6e27ff" fill="url(#navGradient)" fillOpacity={0.3} />
-            </AreaChart>
-          </Box>
+          <ChartWrapper data={filteredGraphData} />
 
           {/* Exit Load */}
           <Box
@@ -245,8 +280,12 @@ const FundPage = () => {
             transition="all 0.3s"
             _hover={{ transform: "scale(1.03)", boxShadow: "2xl" }}
           >
-            <Text fontWeight="semibold" mb={2}>Exit Load:</Text>
-            <Text fontSize="lg" fontWeight="bold">{fundName.exitload}</Text>
+            <Text fontWeight="semibold" mb={2}>
+              Exit Load:
+            </Text>
+            <Text fontSize="lg" fontWeight="bold">
+              {fundName.exitload}
+            </Text>
           </Box>
         </Box>
       ) : (

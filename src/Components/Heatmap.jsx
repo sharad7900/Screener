@@ -4,6 +4,7 @@ import Plotly from "plotly.js-dist-min";
 const Heatmap = ({ heatmapData }) => {
   const chartRef = useRef(null);
   const [data, setData] = useState([]);
+  const [showAll, setShowAll] = useState(false);
 
   // ✅ Define these at the top-level of your component (before useEffect)
   const metrics = ["PE", "ROCE", "ROE", "PromHold", "Salesvar", "ProfitVar", "OPM", "CROIC"];
@@ -15,9 +16,10 @@ const Heatmap = ({ heatmapData }) => {
 
   useEffect(() => {
     if (!chartRef.current || data.length === 0) return;
+    const displayedData = showAll ? data : data.slice(0, 25);
 
-    const stocks = data.map((d) => d.Symbol);
-    const rawMatrix = data.map((row) => metrics.map((col) => parseFloat(row[col]) || 0));
+    const stocks = displayedData.map((d) => d.Symbol);
+    const rawMatrix = displayedData.map((row) => metrics.map((col) => parseFloat(row[col]) || 0));
 
     const normalizedMatrix = rawMatrix[0].map((_, colIndex) => {
       const colValues = rawMatrix.map((row) => row[colIndex]);
@@ -40,7 +42,7 @@ const Heatmap = ({ heatmapData }) => {
     const cellHeight = 25; // fixed height per stock
     const layout = {
       // width: metrics.length * cellWidth,
-      height: data.length * cellHeight,
+      height: displayedData.length * cellHeight,
       margin: { l: 100, r: 30, t: 80, b: 80 },
       xaxis: { 
     title: "Metrics", 
@@ -68,9 +70,10 @@ const Heatmap = ({ heatmapData }) => {
 
     Plotly.newPlot(chartRef.current, plotData, layout, { responsive: false, displaylogo: false });
     return () => Plotly.purge(chartRef.current);
-  }, [data, metrics]); // ✅ metrics included as dependency
+  }, [data, metrics, showAll]); // ✅ metrics included as dependency
 
   return (
+    <>
     <div
       ref={chartRef}
       style={{
@@ -79,6 +82,27 @@ const Heatmap = ({ heatmapData }) => {
         margin: "0 auto",
       }}
     ></div>
+
+     {data.length > 25 && (
+        <div style={{ textAlign: "center", marginTop: 10 }}>
+          <button
+            onClick={() => setShowAll(!showAll)}
+            style={{
+              padding: "8px 16px",
+              fontSize: "14px",
+              cursor: "pointer",
+              borderRadius: "6px",
+              border: "1px solid #6e27ff",
+              backgroundColor: showAll ? "#fff" : "#6e27ff",
+              color: showAll ? "#6e27ff" : "#fff",
+              marginBottom: "3%",
+            }}
+          >
+            {showAll ? "Show Less" : "Show All"}
+          </button>
+        </div>
+      )}
+    </>
   );
 };
 

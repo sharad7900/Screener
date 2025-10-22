@@ -16,10 +16,14 @@ const Heatmap = ({ heatmapData }) => {
 
   useEffect(() => {
     if (!chartRef.current || data.length === 0) return;
-    const displayedData = showAll ? data : data.slice(0, 25);
+    const displayedData = showAll ? data : data.slice(0, 30);
 
-    const stocks = displayedData.map((d) => d.Symbol);
-    const rawMatrix = displayedData.map((row) => metrics.map((col) => parseFloat(row[col]) || 0));
+    const descDisplayedData = [...displayedData].reverse(); // reverse for DESC order display
+
+  const stocks = descDisplayedData.map((d) => d.Symbol);
+  const rawMatrix = descDisplayedData.map((row) =>
+    metrics.map((col) => parseFloat(row[col]) || 0)
+  );
 
     const normalizedMatrix = rawMatrix[0].map((_, colIndex) => {
       const colValues = rawMatrix.map((row) => row[colIndex]);
@@ -49,6 +53,11 @@ const Heatmap = ({ heatmapData }) => {
     side: "top",       // ✅ moves axis title and ticks to top
     automargin: true,
   },
+  yaxis: {
+    tickfont: {
+      size: 10,  // change this value to your desired font size
+    },
+  }
     };
 
     const plotData = [
@@ -83,7 +92,7 @@ const Heatmap = ({ heatmapData }) => {
       }}
     ></div>
 
-     {data.length > 25 && (
+     {data.length > 30 && (
         <div style={{ textAlign: "center", marginTop: 10 }}>
           <button
             onClick={() => setShowAll(!showAll)}

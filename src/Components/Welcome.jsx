@@ -2,8 +2,7 @@ import { Button, Input, useMediaQuery, Box, Flex } from "@chakra-ui/react";
 import { TypeAnimation } from "react-type-animation";
 import Footer from "./Footer";
 import { useNavigate } from "react-router";
-import { useState } from "react";
-import finalTable from "./Final_Table.json";
+import { useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import ListOfSearch from "./ListOfSearch";
 import "./Welcome.css";
@@ -12,17 +11,23 @@ import Navbar from "./Navbar";
 const Welcome = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredFunds, setFilteredFunds] = useState([]);
+  const [table,setTable] = useState({});
   const [isMobile] = useMediaQuery("(max-width: 600px)");
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate("/Screens");
   };
+  useEffect(() => {
+    const collect_table  = async () => {
+      const response = await fetch("https://screener-back.vercel.app/get_final_table");
+      const data = await response.json();
+      setTable(data);
+    }
+    collect_table();
+  }, []);
 
-  const fundNames = Object.values(finalTable).map((fund) => Object.keys(fund)[0]);
-  const NameToId = Object.fromEntries(
-    Object.entries(finalTable).map(([id, obj]) => [Object.keys(obj)[0], id])
-  );
+  
 
   const handleSearchChange = (e) => {
     const value = e.target.value;
@@ -30,9 +35,9 @@ const Welcome = () => {
     if (value.trim() === "") setFilteredFunds([]);
     else
       setFilteredFunds(
-        fundNames.filter((name) =>
-          name.toLowerCase().includes(value.toLowerCase())
-        )
+        table.filter((name) =>
+          name['Scheme'].toLowerCase().includes(value.toLowerCase())
+      )
       );
   };
 
@@ -143,7 +148,7 @@ const Welcome = () => {
                   position: "relative",
                 }}
               >
-                <ListOfSearch params={{ filteredFunds, NameToId }} />
+                <ListOfSearch params={{ filteredFunds, table }} />
               </div>
             )}
           </Box>

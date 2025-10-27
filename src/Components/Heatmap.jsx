@@ -59,23 +59,34 @@ const Heatmap = ({ heatmapData }) => {
     },
   }
     };
-
+  const textMatrix = rawMatrix.map((row) =>
+  row.map((val) => (val ? val.toFixed(2) : "0"))
+);
+console.log("Plot Data:", { stocks, zMatrix, textMatrix });
     const plotData = [
-      {
-        z: zMatrix,
-        x: metrics,
-        y: stocks,
-        type: "heatmap",
-        colorscale: [
-          [0, "red"],
-          [0.5, "yellow"],
-          [1, "green"],
-        ],
-        showscale: true,
-        xgap: 2,
-        ygap: 2,
-      },
-    ];
+  {
+    z: zMatrix, // normalized values for color
+    text: textMatrix, // actual/original values for display
+    texttemplate: "%{text}", // show text values inside cells
+    textfont: {
+      size: 10,
+      color: "black",
+    },
+    x: metrics,
+    y: stocks,
+    type: "heatmap",
+    colorscale: [
+      [0, "red"],
+      [0.5, "yellow"],
+      [1, "green"],
+    ],
+    showscale: true,
+    xgap: 2,
+    ygap: 2,
+    hovertemplate:
+      "Stock: %{y}<br>Metric: %{x}<br>Value: %{text}<extra></extra>", // better hover info
+  },
+];
 
     Plotly.newPlot(chartRef.current, plotData, layout, { responsive: false, displaylogo: false });
     return () => Plotly.purge(chartRef.current);

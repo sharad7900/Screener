@@ -15,7 +15,6 @@ export default function App() {
        <Route path='/' element={<Welcome/>}/>
        <Route path='/MFinfo' element={<FundPage/>}/>
        <Route path='/Screens' element={<Table/>}/>
-       <Route path='/Heat' element={<BasicHeatmap/>}/>
     </Routes>
     
     </BrowserRouter>

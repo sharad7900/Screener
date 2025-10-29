@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Table from "./Components/Table";
 import FundPage from "./Components/FundPage";
 import Welcome from "./Components/Welcome";
-import BasicHeatmap from "./Components/Heatmap";
 
 export default function App() {
 

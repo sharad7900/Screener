@@ -42,11 +42,10 @@ const Navbar = () => {
         </Text>
       </Flex>
       <HStack
-  spacing={{ base: 2, md: 10 }}
-  overflowX="auto"
-  maxW={{ base: "calc(100% - 120px)", md: "auto" }} // leave space for logo + text
-  ml={{ base: 2, md: 0 }}
-  flexShrink={0}
+   spacing={{ base: 4, md: 10 }}
+  flexWrap="wrap"
+  justify="flex-end"
+  flexGrow={1}
 >
   <Button
     variant="ghost"

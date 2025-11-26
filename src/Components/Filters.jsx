@@ -78,7 +78,7 @@ const [categoryOpen, setCategoryOpen] = useState(false);
     <div style={{
       maxWidth: 320, margin: "0 auto",
       fontFamily: "'Montserrat', sans-serif", color: "#000000ff",
-      padding:"5%"
+      padding:"8%"
     }}>
       <Typography variant="h6" gutterBottom fontWeight="bold" align="center">
          Filter

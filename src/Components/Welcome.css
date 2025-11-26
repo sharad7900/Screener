@@ -14,11 +14,14 @@
 
 .bgimage {
   min-height: 100vh;
-  width: 100vw;
+  width: 100%;
   font-family: 'Montserrat', Arial, sans-serif;
   animation: gradientAnimate 8s ease infinite;
-  background: linear-gradient(120deg, #6e27ff 0%, #b400ff 100%);
+  /* background: linear-gradient(120deg, #6e27ff 0%, #b400ff 100%);
+  background: linear-gradient(90deg, #000000, #1a1a1a, #000000); */
+
   background-size: 300% 300%;
+  
 }
 
 @keyframes gradientAnimate {
@@ -53,7 +56,7 @@
   font-size: inherit;
   font-weight: bold;
   font-family: 'Montserrat';
-  color: #18181b;
+  color: #ffffff;
 }
 
 .txt {
@@ -178,7 +181,7 @@
 
 /* Footer normal block, not fixed */
 .footer {
-  width: 100vw;
+  width: 100%;
   background: #f3f3f3;
   margin-top: auto; /* push footer to bottom */
 }
@@ -187,7 +190,7 @@
   font-weight: bold;
   font-size: 2.7rem;
   font-family: 'Montserrat', Arial, sans-serif;
-  background: linear-gradient(90deg, #00eeff, #FFD700, #ff1493 94%);
+  background: linear-gradient(90deg, #000000, #1a1a1a, #000000);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;

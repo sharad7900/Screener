@@ -56,7 +56,7 @@ export default function Table() {
       try {
         // Replace with your API endpoint that executes the SQL query
         //https://screener-back.vercel.app
-        const res = await fetch("https://screener-back.vercel.app");
+        const res = await fetch(import.meta.env.VITE_BACKEND);
         const data = await res.json();
 
         // Format rows
@@ -76,7 +76,7 @@ export default function Table() {
         setRows(formatted);
         setFilteredRows(formatted);
       } catch (err) {
-        console.error("Data fetch failed:", err);
+      
       } finally {
         setLoading(false);
       }
@@ -107,7 +107,7 @@ export default function Table() {
   };
 
   const DrawerList = (
-    <Box position="sticky" top={64} height="fit-content" px={2} width={isMobile ? 280 : 320}>
+    <Box position="sticky" top={64} height="fit-content" px={2} width={isMobile ? 280 : 320} >
       <Filters rows={rows} onFilterChange={handleFilterChange} />
     </Box>
   );
@@ -143,6 +143,7 @@ export default function Table() {
             sx={{
               height: 900,
               p: 2,
+              maxWidth: "80%",
               overflowX: isMobile ? "auto" : "visible",
               backgroundColor: "rgba(255, 255, 255, 0.12)",
               backdropFilter: "blur(16px)",

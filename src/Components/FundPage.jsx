@@ -17,7 +17,7 @@ import {
   YAxis,
   Tooltip,
 } from "recharts";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 import Tablenav from "./Tablenav";
 import Heatmap from "./Heatmap";
 import Footer from "./Footer";
@@ -122,7 +122,7 @@ const FundPage = () => {
 
   useEffect(() => {
     const openpage = async () => {
-      const response = await fetch(`https://screener-back.vercel.app/MFInfo`, {
+      const response = await fetch(import.meta.env.VITE_BACKEND + `/MFInfo`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ code: id }),

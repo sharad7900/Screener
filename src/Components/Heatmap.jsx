@@ -82,62 +82,64 @@ const getColorValue = (metric, value) => {
 
 
   useEffect(() => {
-    if (!chartRef.current || !data.length) {
+  if (!chartRef.current || !data.length) return;
+
+  const displayedData = showAll ? data : data.slice(0, 30);
+  const reversedData = [...displayedData].reverse();
+
+  const stocks = reversedData.map(d => d.Symbol || "N/A");
+
+  const rawMatrix = reversedData.map(row =>
+    metrics.map(col => parseFloat(row[col]) || 0)
+  );
+
+  const zMatrix = rawMatrix.map(row =>
+    row.map((val, colIndex) => getColorValue(metrics[colIndex], val))
+  );
+
+  const textMatrix = rawMatrix.map(row =>
+    row.map(val => val.toFixed(2))
+  );
+
+  const layout = {
+    height: displayedData.length * 25,
+    margin: { l: 100, r: 40, t: 50, b: 20 },
+    xaxis: { side: "top" },
+    yaxis: { tickfont: { size: 10 } },
+  };
+
+  const plotData = [{
+    z: zMatrix,
+    text: textMatrix,
+    texttemplate: "%{text}",
+    type: "heatmap",
+    x: metrics,
+    y: stocks,
+    colorscale: [
+      [0, "red"],
+      [0.5, "yellow"],
+      [1, "green"],
+    ],
+    showscale: true,
+    hovertemplate:
+      "Stock: %{y}<br>Metric: %{x}<br>Value: %{text}<extra></extra>",
+    xgap: 2,
+    ygap: 2
+  }];
+
+  Plotly.react(chartRef.current, plotData, layout, {
+    responsive: true,
+    displayModeBar: false
+  });
+
+  // ✅ SAFE CLEANUP
+  return () => {
+    if (chartRef.current) {
       Plotly.purge(chartRef.current);
-      return;
     }
+  };
+}, [data, showAll]);
 
-    const displayedData = showAll ? data : data.slice(0, 30);
-    const reversedData = [...displayedData].reverse();
-
-    const stocks = reversedData.map(d => d.Symbol || "N/A");
-
-    const rawMatrix = reversedData.map(row =>
-      metrics.map(col => parseFloat(row[col]) || 0)
-    );
-
-    // ✅ Apply custom threshold logic
-    const zMatrix = rawMatrix.map(row =>
-      row.map((val, colIndex) => getColorValue(metrics[colIndex], val))
-    );
-
-    const textMatrix = rawMatrix.map(row =>
-      row.map(val => val.toFixed(2))
-    );
-
-    const layout = {
-      height: displayedData.length * 25,
-      margin: { l: 100, r: 40, t: 50, b: 20 },
-      xaxis: { side: "top" },
-      yaxis: { tickfont: { size: 10 } },
-    };
-
-    const plotData = [{
-      z: zMatrix,
-      text: textMatrix,
-      texttemplate: "%{text}",
-      type: "heatmap",
-      x: metrics,
-      y: stocks,
-      colorscale: [
-        [0, "red"],
-        [0.5, "yellow"],
-        [1, "green"],
-      ],
-      showscale: true,
-      hovertemplate:
-        "Stock: %{y}<br>Metric: %{x}<br>Value: %{text}<extra></extra>",
-      xgap: 2,
-      ygap: 2
-    }];
-
-    Plotly.react(chartRef.current, plotData, layout, {
-      responsive: true,
-      displayModeBar: false
-    });
-
-    return () => Plotly.purge(chartRef.current);
-  }, [data, showAll]);
 
   return (
     <>

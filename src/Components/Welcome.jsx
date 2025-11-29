@@ -1,15 +1,18 @@
 // Welcome.jsx
 
-import { Button, Input, useMediaQuery, Box, Flex } from "@chakra-ui/react";
+import { Button, Input, useMediaQuery, Box, Flex, Image, Text } from "@chakra-ui/react";
 import { TypeAnimation } from "react-type-animation";
 import Footer from "./Footer";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import ListOfSearch from "./ListOfSearch";
-import "./Welcome.css";
+import "./Welcome.css"; // Ensure you remove old .glassmorph styles from here or ignore them
 import Navbar from "./Navbar";
-import LiquidEther from "../Components/ui/LiquidEther";
+
+// TODO: Import your gold logo image here. 
+// Example: import GoldLogo from "../assets/gold-logo.png"; 
+// For now, I will use a placeholder logic in the Image src below.
 
 const Welcome = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -22,11 +25,15 @@ const Welcome = () => {
 
   useEffect(() => {
     const collectTable = async () => {
-      const response = await fetch(
+      try {
+        const response = await fetch(
           import.meta.env.VITE_BACKEND + "/get_final_table"
-      );
-      const data = await response.json();
-      setTable(data);
+        );
+        const data = await response.json();
+        setTable(data);
+      } catch (error) {
+        console.error("Failed to fetch table data", error);
+      }
     };
     collectTable();
   }, []);
@@ -45,178 +52,153 @@ const Welcome = () => {
   };
 
   return (
-    <>
-      <div style={{ position: "relative", width: "100%", minHeight: "100vh" }}>
-        {/* FIXED LIQUID ETHER LAYER */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            zIndex: -1,
-            pointerEvents: "none",
-            background:"black" // prevents interference
-          }}
+    <Box
+      w="100%"
+      minH="100vh"
+      bg="black"
+      color="white"
+      position="relative"
+      overflowX="hidden"
+    >
+      {/* Navbar Wrapper */}
+      <Box position="relative" zIndex={10}>
+        <Navbar />
+      </Box>
+
+      {/* Main Content */}
+      <Flex
+        direction="column"
+        align="center"
+        justify="center"
+        minH="85vh"
+        px={4}
+        pb={10}
+      >
+        {/* 1. ELEGANT GOLD LOGO */}
+        {/* Replace 'src' with your actual imported image variable or path */}
+        
+
+        {/* 2. HEADING - No Boxes, High Contrast */}
+        <Box textAlign="center" mb={4}>
+          <Text
+            as="span"
+            fontSize={isMobile ? "1.8rem" : "3rem"}
+            fontWeight="600"
+            color="white"
+            letterSpacing="tight"
+          >
+            Find the right pick with <br />
+          </Text>
+
+          <Box
+            as="span"
+            fontSize={isMobile ? "2rem" : "3.5rem"}
+            fontWeight="bold"
+            fontFamily="Montserrat, sans-serif"
+            color="#D4AF37" // Elegant Gold Color
+            textShadow="0px 0px 20px rgba(212, 175, 55, 0.4)" // Subtle glow
+          >
+            <TypeAnimation
+              sequence={["Mutual Fund Screener"]}
+              speed={30}
+              cursor={false} 
+            />
+          </Box>
+        </Box>
+
+        {/* 3. SUBTITLE - Clean Grey Text */}
+        <Text
+          fontSize={isMobile ? "1rem" : "1.2rem"}
+          color="gray.400"
+          textAlign="center"
+          maxWidth="600px"
+          mb={10}
         >
-          <LiquidEther
-            colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
-            mouseForce={20}
-            cursorSize={100}
-            isViscous={false}
-            viscous={30}
-            iterationsViscous={32}
-            iterationsPoisson={32}
-            resolution={0.5}
-            isBounce={false}
-            autoDemo={true}
-            autoSpeed={0.5}
-            autoIntensity={2.2}
-            takeoverDuration={0.25}
-            autoResumeDelay={3000}
-            autoRampDuration={0.6}
-          />
-        </div>
+          The tool you need to make wise & effective investment decisions
+        </Text>
 
-        {/* MAIN CONTENT */}
-        <div className="page-wrapper" style={{ position: "relative", zIndex: 2 }}>
-          <div className="bgimage mainContent">
-            <Navbar />
+        {/* 4. BUTTON - Gold & Black Theme */}
+        <Button
+          onClick={handleClick}
+          size="lg"
+          bg="#D4AF37" // Gold background
+          color="black"
+          fontSize="1.1rem"
+          fontWeight="bold"
+          borderRadius="full" // Elegant rounded shape
+          px={10}
+          py={7}
+          _hover={{
+            bg: "#F5C518", // Lighter gold on hover
+            transform: "translateY(-2px)",
+            boxShadow: "0 4px 20px rgba(212, 175, 55, 0.4)",
+          }}
+          transition="all 0.3s ease"
+          mb={12}
+        >
+          Enter in Screener
+        </Button>
 
-            <Flex
-              direction="column"
-              align="center"
-              justify="center"
-              minH="80vh"
-              position="relative"
+        {/* 5. SEARCH - Minimalist Style */}
+        <Box width={isMobile ? "100%" : "500px"} position="relative">
+          <Text
+            textAlign="center"
+            mb={3}
+            fontWeight="500"
+            color="gray.500"
+            fontSize="0.9rem"
+            letterSpacing="1px"
+            textTransform="uppercase"
+          >
+            Search Scheme Name
+          </Text>
+
+          <Flex
+            align="center"
+            borderBottom="1px solid"
+            borderColor="gray.600"
+            pb={2}
+            transition="border-color 0.3s"
+            _focusWithin={{ borderColor: "#D4AF37" }}
+          >
+            <BiSearch color="#D4AF37" size={24} />
+            <Input
+              placeholder="e.g. HDFC Top 100..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+              variant="unstyled"
+              color="black"
+              fontSize="1.2rem"
+              ml={3}
+              pl={3}
+              _placeholder={{ color: "gray.600" }}
+            />
+          </Flex>
+
+          {/* Search Dropdown Results */}
+          {filteredFunds.length > 0 && (
+            <Box
+              position="absolute"
+              top="100%"
+              left={0}
+              right={0}
+              bg="#111" // Dark grey bg for dropdown
+              border="1px solid #333"
+              mt={2}
+              borderRadius="md"
+              maxH="250px"
+              overflowY="auto"
+              zIndex={20}
+              boxShadow="0 10px 30px rgba(0,0,0,0.8)"
             >
-              {/* Heading */}
-              <Box
-                className="animationType glassmorph"
-                mt={isMobile ? "7vh" : "5vh"}
-                mb={isMobile ? "5vh" : "4vh"}
-              >
-                <span
-                  className="mainHeading"
-                  style={{ paddingRight: "0.8vh" }}
-                >
-                  Find the right pick with{" "}
-                </span>
+              <ListOfSearch params={{ filteredFunds, table }} />
+            </Box>
+          )}
+        </Box>
+      </Flex>
 
-                <TypeAnimation
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: isMobile ? "1.6rem" : "2.7rem",
-                    fontFamily: "Montserrat",
-                    background:
-                      "linear-gradient(90deg, #00eeff, #FFD700, #ff1493 90%)",
-                    backgroundClip: "text",
-                    WebkitBackgroundClip: "text",
-                    color: "transparent",
-                    WebkitTextFillColor: "transparent",
-                    textShadow: "0 2px 12px rgba(0,0,0,0.16)",
-                    display: "inline-block",
-                  }}
-                  sequence={[" Mutual Fund Screener"]}
-                  speed={30}
-                />
-              </Box>
-
-              {/* Subtitle */}
-              <Box className="txt glassmorph">
-                The tool you need to make wise & effective investment decisions
-              </Box>
-
-              {/* Enter button */}
-              <Box
-                className="EnterBTN glassmorph"
-                mt={isMobile ? "6vh" : "8vh"}
-                mb={isMobile ? "4vh" : "6vh"}
-              >
-                <Button
-                  p={[2, 4]}
-                  pt={[3, 5]}
-                  pb={[3, 5]}
-                  fontSize={["1rem", "1.1rem", "1.2rem"]}
-                  borderRadius={["12px", "18px"]}
-                  width={["90vw", "auto"]}
-                  background="linear-gradient(90deg, #ef32d9 0%, #89fffd 100%)"
-                  color="black"
-                  boxShadow="0 2px 8px rgba(172, 31, 255, 0.25)"
-                  _hover={{
-                    background:
-                      "linear-gradient(90deg, #b400ff 0%, #6e27ff 100%)",
-                    color: "#fff",
-                    transform: "scale(1.05)",
-                  }}
-                  onClick={handleClick}
-                  transition="all 0.3s"
-                >
-                  Enter in Screener →
-                </Button>
-              </Box>
-
-              {/* Search */}
-              <Box
-                className="searchbox glassmorph"
-                mt={isMobile ? "4vh" : "10vh"}
-                width={isMobile ? "96vw" : "440px"}
-              >
-                <p
-                  style={{
-                    color: "black",
-                    textAlign: "center",
-                    paddingTop: "2%",
-                    fontWeight: "600",
-                    letterSpacing: "1px",
-                  }}
-                >
-                  Search the scheme name:
-                </p>
-
-                <Flex className="searchinput" align="center" mt={2}>
-                  <BiSearch color="black" size={22} />
-                  <Input
-                    placeholder="Search Mutual Fund Scheme"
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                    border="none"
-                    color="black"
-                    fontSize={isMobile ? "1rem" : "1.06rem"}
-                    ml={2}
-                    p={2}
-                    bg="transparent"
-                  />
-                </Flex>
-
-                {filteredFunds.length > 0 && (
-                  <div
-                    style={{
-                      margin: isMobile
-                        ? "2% 2% 0% 2%"
-                        : "2% 15% 0% 15%",
-                      backgroundColor: "rgba(255,255,255,0.98)",
-                      padding: "1%",
-                      borderRadius: "16px",
-                      maxHeight: isMobile ? "110px" : "200px",
-                      overflowY: "scroll",
-                      border: "2px solid #b400ff",
-                      boxShadow: "0 2px 12px rgba(140,140,140,0.12)",
-                      zIndex: 5,
-                      position: "relative",
-                    }}
-                  >
-                    <ListOfSearch params={{ filteredFunds, table }} />
-                  </div>
-                )}
-              </Box>
-            </Flex>
-          </div>
-
-          <div className="footer">
-            <Footer />
-          </div>
-        </div>
-      </div>
-    </>
+      <Footer />
+    </Box>
   );
 };
 

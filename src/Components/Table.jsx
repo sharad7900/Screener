@@ -52,46 +52,75 @@ export default function Table() {
 
   // Fetch data from backend
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Replace with your API endpoint that executes the SQL query
-        //https://screener-back.vercel.app
-        const res = await fetch(import.meta.env.VITE_BACKEND);
-        const data = await res.json();
+  // ⬅️ 1) Try to read cached data first
+  const cached = localStorage.getItem("mfData");
 
-        // Format rows
-        const formatted = data.map((item, index) => ({
-          id: item.ISIN || index,
-          isin: item.ISIN,
-          scheme: item.Scheme,
-          category: item.Category,
-          assetClass: item.Asset_Class,
-          aum: parseFloat(item.AUM || 0).toFixed(2),
-          pe: parseFloat(item.PE || 0).toFixed(2),
-          nav: parseFloat(item.NAV || 0).toFixed(2),
-          equity: parseFloat(item.Equity || 0).toFixed(2),
-          score: parseFloat(item.Score || 0).toFixed(2),
-        }));
+  if (cached) {
+    const parsed = JSON.parse(cached);
 
-        setRows(formatted);
-        setFilteredRows(formatted);
-      } catch (err) {
-      
-      } finally {
-        setLoading(false);
-      }
-    };
+    // ⏱  Check expiry: 24 hours (86400000 ms)
+    if (Date.now() - parsed.time < 86400000) {
+      setRows(parsed.data);
+      setFilteredRows(parsed.data);
+      setLoading(false);
+      return; // ✔ skip API call
+    }
+  }
 
-    fetchData();
-  }, []);
+  // ⬅️ 2) If no cache or expired → fetch API
+  const fetchData = async () => {
+    try {
+      const res = await fetch(import.meta.env.VITE_BACKEND);
+      const data = await res.json();
 
-  const handleRowClick = (id) => {
-    // console.log("Row clicked:", id);
-    navigate("/MFinfo", { state: { id } });
+      const formatted = data.map((item, index) => ({
+        id: item.ISIN || index,
+        isin: item.ISIN,
+        scheme: item.Scheme,
+        category: item.Category,
+        assetClass: item.Asset_Class,
+        aum: parseFloat(item.AUM || 0).toFixed(2),
+        pe: parseFloat(item.PE || 0).toFixed(2),
+        nav: parseFloat(item.NAV || 0).toFixed(2),
+        equity: parseFloat(item.Equity || 0).toFixed(2),
+        score: parseFloat(item.Score || 0).toFixed(2),
+      }));
+
+      setRows(formatted);
+      setFilteredRows(formatted);
+
+      localStorage.setItem(
+        "mfData",
+        JSON.stringify({ time: Date.now(), data: formatted })
+      );
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
+  fetchData();
+}, []);
+
+  const handleRowClick = (id) => {
+  window.open(`${window.location.origin}/MFinfo?id=${id}`, "_blank");
+
+};
+
   const columns = [
-    { field: "scheme", headerName: "Scheme", flex: 1.5, minWidth: 200 },
+    { field: "scheme", headerName: "Scheme", flex: 1.5, minWidth: 200, 
+      renderCell: (params) => (
+      <a
+        href={`/MFinfo?id=${params.row.id}`}       // fallback for new tab
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}
+      >
+        {params.value}
+      </a>
+    ),
+     },
     { field: "score", headerName: "Score", flex: 0.6, minWidth: 100 },
     { field: "category", headerName: "Category", flex: 1, minWidth: 120 },
     { field: "nav", headerName: "NAV", flex: 0.5, minWidth: 80 },
@@ -114,6 +143,7 @@ export default function Table() {
 
   return (
     <>
+    <div style={{backgroundColor:"white"}}>
       <Tablenav />
 
       <Box
@@ -226,7 +256,7 @@ export default function Table() {
           </>
         )}
       </Box>
-
+    </div>
       <Footer />
     </>
   );

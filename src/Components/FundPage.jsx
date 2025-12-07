@@ -17,12 +17,13 @@ import {
   YAxis,
   Tooltip,
 } from "recharts";
-import { useLocation, useParams } from "react-router";
+import { useLocation, useParams } from "react-router-dom"; 
 import Tablenav from "./Tablenav";
 import Heatmap from "./Heatmap";
 import Footer from "./Footer";
 
 const ChartWrapper = ({ data }) => {
+  
   const containerRef = useRef(null);
   const [width, setWidth] = useState(350);
 
@@ -33,6 +34,7 @@ const ChartWrapper = ({ data }) => {
       }
     };
     updateWidth();
+    
     window.addEventListener("resize", updateWidth);
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
@@ -69,7 +71,6 @@ const FundPage = () => {
   const [selectedRange, setSelectedRange] = useState("Max");
   const [filteredGraphData, setFilteredGraphData] = useState([]);
   const location = useLocation();
-  const { id } = location.state || {};
   const [fundName, setFundName] = useState({});
   const [rows, setRows] = useState([]);
   const isMobile = window.innerWidth <= 480;
@@ -121,11 +122,17 @@ const FundPage = () => {
   ];
 
   useEffect(() => {
+     const search = location.search;
+  const query = new URLSearchParams(search);
+  const queryID = query.get("id");
+  console.log(queryID);
+
+
     const openpage = async () => {
       const response = await fetch(import.meta.env.VITE_BACKEND + `/MFInfo`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code: id }),
+        body: JSON.stringify({ code: queryID }),
       });
       const res = await response.json();
       setRows(res.asset);
@@ -134,10 +141,11 @@ const FundPage = () => {
       setFilteredGraphData(getFilteredGraph("Max", fullGraph));
     };
     openpage();
-  }, [id]);
+  }, [location.search]);
 
   return (
     <>
+    <div className="outerBody" style={{backgroundColor:"white"}}>
       {/* Navbar */}
       <Tablenav />
 
@@ -298,6 +306,7 @@ const FundPage = () => {
       <Box mt={6}>
         <Footer />
       </Box>
+      </div>
     </>
   );
 };

@@ -1,0 +1,70 @@
+import React from 'react';
+import { Fund } from '../types';
+import { PieChart, Pie, Cell } from 'recharts';
+
+interface HoldingsTableProps {
+  funds: Fund[];
+}
+
+const HoldingsTable: React.FC<HoldingsTableProps> = ({ funds }) => {
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      {funds.map((fund) => (
+        <div key={fund.id} className="glass-panel rounded-2xl overflow-hidden flex flex-col h-full shadow-sm">
+          {/* Header */}
+          <div className="p-5 border-b border-slate-100 bg-white/40">
+            <h3 className="font-bold text-slate-800 flex items-center gap-2">
+              <span className={`w-2 h-8 rounded-full ${
+                  fund.colorTheme === 'purple' ? 'bg-fintech-purple' : 
+                  fund.colorTheme === 'teal' ? 'bg-fintech-teal' : 'bg-fintech-gold'
+              }`}></span>
+              {fund.name}
+            </h3>
+            
+            <div className="mt-4 flex justify-between items-center text-xs text-slate-500">
+              <span>Top Sector: <strong className="text-slate-700">{fund.holdings[0].sector}</strong></span>
+              <span>Assets: <strong className="text-slate-700">{fund.holdings.length}</strong></span>
+            </div>
+          </div>
+
+          {/* Table Container */}
+          <div className="flex-1 overflow-auto max-h-[350px] hide-scrollbar relative">
+             <table className="w-full text-sm text-left">
+               <thead className="text-xs text-slate-400 bg-slate-50/50 uppercase tracking-wider sticky top-0 backdrop-blur-sm z-10">
+                 <tr>
+                   <th className="px-5 py-3 font-medium">Asset</th>
+                   <th className="px-5 py-3 font-medium">Sector</th>
+                   <th className="px-5 py-3 font-medium text-right">%</th>
+                 </tr>
+               </thead>
+               <tbody className="divide-y divide-slate-100">
+                 {fund.holdings.map((h, idx) => (
+                   <tr key={idx} className="hover:bg-slate-50/50 transition-colors">
+                     <td className="px-5 py-3 font-medium text-slate-700">{h.asset}</td>
+                     <td className="px-5 py-3 text-slate-500 text-xs">{h.sector}</td>
+                     <td className="px-5 py-3 text-right font-semibold text-slate-700">
+                        {h.percentage}%
+                        <div className="w-full bg-slate-100 h-1 mt-1 rounded-full overflow-hidden">
+                           <div className={`h-full ${
+                             fund.colorTheme === 'purple' ? 'bg-fintech-purple' : 
+                             fund.colorTheme === 'teal' ? 'bg-fintech-teal' : 'bg-fintech-gold'
+                           }`} style={{ width: `${h.percentage * 5}%` }}></div> 
+                           {/* Multiplied by 5 just to make bar visible for demo */}
+                        </div>
+                     </td>
+                   </tr>
+                 ))}
+               </tbody>
+             </table>
+          </div>
+          
+          <div className="p-3 border-t border-slate-100 text-center text-xs text-slate-400 bg-slate-50/30 cursor-pointer hover:bg-slate-50 transition-colors">
+            View full portfolio →
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default HoldingsTable;

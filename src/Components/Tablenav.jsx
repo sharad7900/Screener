@@ -15,7 +15,7 @@ const Tablenav = () => {
         top: 0,
         width: "100%",
         zIndex: 100,
-        background: "rgba(255,255,255,0.12)",
+        background: "rgba(242, 242, 242, 0.39)",
         backdropFilter: "blur(14px)",
         boxShadow: "0 4px 32px rgba(100, 22, 180, 0.11)"
       }}
